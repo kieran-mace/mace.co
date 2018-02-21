@@ -1,0 +1,77 @@
+---
+title: "The Modularity of Kaggle NCAA Predictions"
+author: "Kieran Mace"
+date: 2016-04-17T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+
+
+<div id="setup" class="section level1">
+<h1>Setup:</h1>
+<p>We want to look at all the kaggle submissions for 2016. first of all we need to download the data <a href="https://www.kaggle.com/wcukierski/2016-march-ml-mania/downloads/2016-march-machine-learning-mania-predictions.zip" title="Kaggle NCAA Predictions">here</a></p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<p>Now lets run some R! First lets load in the data:</p>
+<pre class="r"><code>library(dplyr)
+library(readr)
+library(stringr)
+library(ggplot2)
+library(reshape2)
+rm(list=ls())
+
+# Get list of all files
+files &lt;- list.files(path=&#39;~/Desktop/predictions/&#39;, pattern=&#39;*.csv&#39;, full.names=T)
+
+# Load all files
+allPredictions &lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))</code></pre>
+</div>
+<div id="join-all-the-predicitons-remove-bad-predictions-and-calulate-correlation" class="section level1">
+<h1>Join all the predicitons, remove bad predictions, and calulate correlation</h1>
+<pre class="r"><code>pred = data.frame(lapply(allPredictions, function(x) x[,2]))
+# some preditions renedered to factor, remove these
+pred.clean = pred[,-which(unlist(lapply(pred,class))==&quot;factor&quot;)]
+cormat &lt;- round(cor(pred.clean),2)
+## Warning in cor(pred.clean): the standard deviation is zero
+# some correlations result in NA, remove those
+idx = which(is.na(cormat[1,]))
+cormat = cormat[-idx,-idx]</code></pre>
+</div>
+<div id="define-a-distance-metric-between-predictions-and-order-them-by-similarity" class="section level1">
+<h1>Define a distance metric between predictions, and order them by similarity</h1>
+<pre class="r"><code>reorder_cormat &lt;- function(cormat){
+# Use correlation between variables as distance
+dd &lt;- as.dist((1-cormat)/2)
+hc &lt;- hclust(dd)
+cormat &lt;-cormat[hc$order, hc$order]
+}</code></pre>
+</div>
+<div id="rename-the-predictions-and-melt-for-plotting" class="section level1">
+<h1>Rename the predictions and melt for plotting</h1>
+<pre class="r"><code>cormat &lt;- reorder_cormat(cormat)
+colnames(cormat) = 1:dim(cormat)[1]
+rownames(cormat) = 1:dim(cormat)[1]
+
+
+melted_cormat &lt;- melt(cormat, na.rm = TRUE)</code></pre>
+</div>
+<div id="create-the-heatmap" class="section level1">
+<h1>Create the heatmap</h1>
+<pre class="r"><code># Create a ggheatmap
+covariance_plot = ggplot(melted_cormat, aes(Var2, Var1, fill = value)) +
+geom_raster() + scale_fill_gradient2(low = &quot;blue&quot;,
+                     high = &quot;red&quot;,
+                     mid = &quot;white&quot;,
+                     midpoint = 0,
+                     limit = c(-1,1),
+                     space = &quot;Lab&quot;,
+                     name=&quot;Pearson\nCorrelation&quot;) +
+                     theme_minimal() +
+                     theme(
+                       axis.title.x = element_blank(),
+                       axis.title.y = element_blank())
+covariance_plot</code></pre>
+<p><img src="/post/2016-04-17-the-modularity-of-kaggle-ncaa-predictions_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>

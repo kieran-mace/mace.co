@@ -1,0 +1,105 @@
+---
+title: Africas GDP over time
+author: Kieran Mace
+date: '2018-02-20'
+slug: africas-gdp-over-time
+categories:
+  - R
+tags: []
+output:
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+library(countrycode)
+library(WDI)
+library(magick)
+library(tidyverse)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(magrittr)
+library(gganimate)
+library(viridis)
+```
+
+
+## Getting the contries in Africa
+
+We also need to fix some of the names slightly
+
+```{r}
+countries = countrycode::codelist_panel
+africa_countries = countries %>% 
+  filter(continent == 'Africa') %>% 
+  select(country.name.en, iso2c) %>%
+  unique.data.frame() %>%
+  rename(Country_Name = country.name.en,
+         Country_Code = iso2c) %>%
+  mutate(Country_Name = if_else(Country_Name == "Congo - Brazzaville", 'Republic of the Congo', Country_Name),
+         Country_Name = if_else(Country_Name == "Congo - Kinshasa",'Democratic Republic of the Congo', Country_Name),
+         Country_Name = if_else(Country_Name == "Côte d’Ivoire",'Ivory Coast', Country_Name),
+         Country_Name = if_else(Country_Name == "Réunion",'Reunion', Country_Name),
+         Country_Name = if_else(Country_Name == "St. Helena",'Saint Helena', Country_Name),
+         Country_Name = if_else(Country_Name ==  "São Tomé & Príncipe",'Sao Tome and Principe', Country_Name))
+
+
+```
+
+## Pulling the GDP info
+
+```{r}
+africa_gdp = WDI(indicator='NY.GDP.PCAP.KD', 
+                 country=africa_countries$Country_Code, 
+                 start=1940, 
+                 end=2018) %>%
+  rename(Country_Code = iso2c,
+         GDP = NY.GDP.PCAP.KD) %>%
+  select(Country_Code, GDP, year)
+
+```
+
+
+Let's look at the GDP as a function of time
+
+```{r}
+ggplot(africa_gdp, aes(year, GDP, color=Country_Code)) + geom_line() + 
+    xlab('Year') + ylab('GDP per capita')
+```
+
+Lets get the map of africa.
+
+```{r map, echo=FALSE}
+world_map = map_data("world")
+africa_map = world_map %>% 
+  filter(region %in% africa_countries$Country_Name) %>% 
+  rename(Country_Name = region)
+
+```
+
+Join it all together
+```{r}
+africa = africa_map %>% left_join(africa_countries) %>% left_join(africa_gdp)
+```
+
+## Putting it all together, a movie of africas GDP over the last 80 years.
+
+```{r}
+p = africa %>% 
+  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP), frame = year)) + 
+  coord_fixed(1.3) +
+  geom_polygon() + theme_minimal() + scale_fill_viridis()
+
+
+
+#gganimate(p)
+gganimate(p, "africa.mp4")
+
+```
+
+![Africa_GPD](africa.mp4){width=450px}
