@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on Mutual Information</title>
+    <link>/categories/r/</link>
+    <description>Recent content in R on Mutual Information</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Africas GDP over time</title>
+      <link>/2018/02/20/africas-gdp-over-time/</link>
+      <pubDate>Tue, 20 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/20/africas-gdp-over-time/</guid>
+      <description>library(countrycode) library(WDI) library(magick) library(tidyverse) library(ggmap) library(maps) library(mapdata) library(magrittr) library(gganimate) library(viridis) Getting the contries in Africa We also need to fix some of the names slightly
+countries = countrycode::codelist_panel africa_countries = countries %&amp;gt;% filter(continent == &amp;#39;Africa&amp;#39;) %&amp;gt;% select(country.name.en, iso2c) %&amp;gt;% unique.data.frame() %&amp;gt;% rename(Country_Name = country.name.en, Country_Code = iso2c) %&amp;gt;% mutate(Country_Name = if_else(Country_Name == &amp;quot;Congo - Brazzaville&amp;quot;, &amp;#39;Republic of the Congo&amp;#39;, Country_Name), Country_Name = if_else(Country_Name == &amp;quot;Congo - Kinshasa&amp;quot;,&amp;#39;Democratic Republic of the Congo&amp;#39;, Country_Name), Country_Name = if_else(Country_Name == &amp;quot;Côte d’Ivoire&amp;quot;,&amp;#39;Ivory Coast&amp;#39;, Country_Name), Country_Name = if_else(Country_Name == &amp;quot;Réunion&amp;quot;,&amp;#39;Reunion&amp;#39;, Country_Name), Country_Name = if_else(Country_Name == &amp;quot;St.</description>
+    </item>
+    
+    <item>
+      <title>The Modularity of Kaggle NCAA Predictions</title>
+      <link>/2016/04/17/the-modularity-of-kaggle-ncaa-predictions/</link>
+      <pubDate>Sun, 17 Apr 2016 21:13:14 -0500</pubDate>
+      
+      <guid>/2016/04/17/the-modularity-of-kaggle-ncaa-predictions/</guid>
+      <description>Setup: We want to look at all the kaggle submissions for 2016. first of all we need to download the data here
+ Analysis Now lets run some R! First lets load in the data:
+library(dplyr) library(readr) library(stringr) library(ggplot2) library(reshape2) rm(list=ls()) # Get list of all files files &amp;lt;- list.files(path=&amp;#39;~/Desktop/predictions/&amp;#39;, pattern=&amp;#39;*.csv&amp;#39;, full.names=T) # Load all files allPredictions &amp;lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))  Join all the predicitons, remove bad predictions, and calulate correlation pred = data.</description>
+    </item>
+    
+  </channel>
+</rss>
