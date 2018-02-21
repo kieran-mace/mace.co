@@ -22,6 +22,16 @@ countries = countrycode::codelist_panel africa_countries = countries %&amp;gt;% 
     </item>
     
     <item>
+      <title>Determining How long it will take to get your EAD from USCIS</title>
+      <link>/2018/02/13/determining-how-long-it-will-take-to-get-your-ead-from-uscis/</link>
+      <pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/13/determining-how-long-it-will-take-to-get-your-ead-from-uscis/</guid>
+      <description>Scraping data off the USCIS website I found some code online (https://github.com/co89757/USCISCasePoll/blob/master/poll_uscis.py) to scrape the USCIS website for status updates. I used it to collect the case status for every 10th case between last October and today.
+from pyquery import PyQuery as pq import requests import smtplib import os import sys import os.path import re import pandas as pd import feather STATUS_OK = 0 STATUS_ERROR = -1 FILENAME_LASTSTATUS = os.path.join(sys.path[0], &amp;quot;LAST_STATUS_{0}.</description>
+    </item>
+    
+    <item>
       <title>The Modularity of Kaggle NCAA Predictions</title>
       <link>/2016/04/17/the-modularity-of-kaggle-ncaa-predictions/</link>
       <pubDate>Sun, 17 Apr 2016 21:13:14 -0500</pubDate>
@@ -29,7 +39,7 @@ countries = countrycode::codelist_panel africa_countries = countries %&amp;gt;% 
       <guid>/2016/04/17/the-modularity-of-kaggle-ncaa-predictions/</guid>
       <description>Setup: We want to look at all the kaggle submissions for 2016. first of all we need to download the data here
  Analysis Now lets run some R! First lets load in the data:
-library(dplyr) library(readr) library(stringr) library(ggplot2) library(reshape2) rm(list=ls()) # Get list of all files files &amp;lt;- list.files(path=&amp;#39;~/Desktop/predictions/&amp;#39;, pattern=&amp;#39;*.csv&amp;#39;, full.names=T) # Load all files allPredictions &amp;lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))  Join all the predicitons, remove bad predictions, and calulate correlation pred = data.</description>
+library(dplyr) library(readr) library(stringr) library(ggplot2) library(reshape2) rm(list=ls()) # Get list of all files files &amp;lt;- list.files(path=&amp;#39;predictions/&amp;#39;, pattern=&amp;#39;*.csv&amp;#39;, full.names=T) # Load all files allPredictions &amp;lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))  Join all the predicitons, remove bad predictions, and calulate correlation pred = data.</description>
     </item>
     
   </channel>

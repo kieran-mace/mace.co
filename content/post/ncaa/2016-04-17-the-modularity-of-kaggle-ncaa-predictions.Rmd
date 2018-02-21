@@ -7,7 +7,7 @@ tags: ["R Markdown", "plot", "regression"]
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(collapse = TRUE, eval = FALSE)
 ```
 # Setup:
 
@@ -26,7 +26,7 @@ library(reshape2)
 rm(list=ls())
 
 # Get list of all files
-files <- list.files(path='~/Desktop/predictions/', pattern='*.csv', full.names=T)
+files <- list.files(path='predictions/', pattern='*.csv', full.names=T)
 
 # Load all files
 allPredictions <- lapply(files, function(f) read.csv(f, stringsAsFactors = F))
@@ -77,4 +77,4 @@ geom_raster() + scale_fill_gradient2(low = "blue",
                        axis.title.y = element_blank())
 covariance_plot
 ```
-
+![Plot](/img/prediction_modularity.png)

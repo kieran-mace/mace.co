@@ -89,17 +89,32 @@ africa = africa_map %>% left_join(africa_countries) %>% left_join(africa_gdp)
 
 ## Putting it all together, a movie of africas GDP over the last 80 years.
 
-```{r}
-p = africa %>% 
-  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP), frame = year)) + 
+```{r, fig.show='animate'}
+p = africa %>%
+ ggplot(aes(x = long, 
+            y = lat, 
+            group = group, 
+            fill = log10(GDP), 
+            frame = year)) +
   coord_fixed(1.3) +
-  geom_polygon() + theme_minimal() + scale_fill_viridis()
+  geom_polygon() + 
+  theme_minimal() + 
+  scale_fill_viridis()
 
+gganimate(p, '../../../static/img/africa.gif')
 
+# for(year in unique(sort(africa$year))){
+# p = africa %>% filter(year == year) %>%
+#  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP))) +
+#   coord_fixed(1.3) +
+#   geom_polygon() + 
+#   theme_minimal() + 
+#   scale_fill_viridis()
+#   print(p)
+# }
 
-#gganimate(p)
-gganimate(p, "africa.mp4")
 
 ```
 
-![Africa_GPD](africa.mp4){width=450px}
+
+![Image](/img/africa.gif)

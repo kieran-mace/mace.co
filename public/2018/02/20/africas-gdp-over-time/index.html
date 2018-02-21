@@ -115,22 +115,45 @@ africa_countries = countries %&gt;%
 </div>
 <div id="putting-it-all-together-a-movie-of-africas-gdp-over-the-last-80-years." class="section level2">
 <h2>Putting it all together, a movie of africas GDP over the last 80 years.</h2>
-<pre class="r"><code>p = africa %&gt;% 
-  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP), frame = year)) + 
+<pre class="r"><code>p = africa %&gt;%
+ ggplot(aes(x = long, 
+            y = lat, 
+            group = group, 
+            fill = log10(GDP), 
+            frame = year)) +
   coord_fixed(1.3) +
-  geom_polygon() + theme_minimal() + scale_fill_viridis()
+  geom_polygon() + 
+  theme_minimal() + 
+  scale_fill_viridis()
 
-
-
-#gganimate(p)
-gganimate(p, &quot;africa.mp4&quot;)</code></pre>
-<pre><code>## Executing: &#39;ffmpeg&#39; -y -framerate 1 -i Rplot%d.png -pix_fmt yuv420p africa.mp4</code></pre>
-<pre><code>## 
-## 
-## Video has been created at: /Users/kieran/Desktop/mace.co/content/post/Africa_GDP/africa.mp4</code></pre>
+gganimate(p, &#39;../../../static/img/africa.gif&#39;)</code></pre>
+<pre><code>## Executing: 
+## convert -loop 0 -delay 100 Rplot1.png Rplot2.png Rplot3.png
+##     Rplot4.png Rplot5.png Rplot6.png Rplot7.png Rplot8.png
+##     Rplot9.png Rplot10.png Rplot11.png Rplot12.png Rplot13.png
+##     Rplot14.png Rplot15.png Rplot16.png Rplot17.png Rplot18.png
+##     Rplot19.png Rplot20.png Rplot21.png Rplot22.png Rplot23.png
+##     Rplot24.png Rplot25.png Rplot26.png Rplot27.png Rplot28.png
+##     Rplot29.png Rplot30.png Rplot31.png Rplot32.png Rplot33.png
+##     Rplot34.png Rplot35.png Rplot36.png Rplot37.png Rplot38.png
+##     Rplot39.png Rplot40.png Rplot41.png Rplot42.png Rplot43.png
+##     Rplot44.png Rplot45.png Rplot46.png Rplot47.png Rplot48.png
+##     Rplot49.png Rplot50.png Rplot51.png Rplot52.png Rplot53.png
+##     Rplot54.png Rplot55.png Rplot56.png Rplot57.png Rplot58.png
+##     &#39;africa.gif&#39;</code></pre>
+<pre><code>## Output at: africa.gif</code></pre>
+<pre class="r"><code># for(year in unique(sort(africa$year))){
+# p = africa %&gt;% filter(year == year) %&gt;%
+#  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP))) +
+#   coord_fixed(1.3) +
+#   geom_polygon() + 
+#   theme_minimal() + 
+#   scale_fill_viridis()
+#   print(p)
+# }</code></pre>
 <div class="figure">
-<embed src="africa.mp4" width="450" />
-<p class="caption">Africa_GPD</p>
+<img src="/img/africa.gif" alt="Image" />
+<p class="caption">Image</p>
 </div>
 </div>
 

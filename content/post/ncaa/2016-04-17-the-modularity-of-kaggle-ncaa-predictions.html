@@ -23,7 +23,7 @@ library(reshape2)
 rm(list=ls())
 
 # Get list of all files
-files &lt;- list.files(path=&#39;~/Desktop/predictions/&#39;, pattern=&#39;*.csv&#39;, full.names=T)
+files &lt;- list.files(path=&#39;predictions/&#39;, pattern=&#39;*.csv&#39;, full.names=T)
 
 # Load all files
 allPredictions &lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))</code></pre>
@@ -34,7 +34,6 @@ allPredictions &lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F)
 # some preditions renedered to factor, remove these
 pred.clean = pred[,-which(unlist(lapply(pred,class))==&quot;factor&quot;)]
 cormat &lt;- round(cor(pred.clean),2)
-## Warning in cor(pred.clean): the standard deviation is zero
 # some correlations result in NA, remove those
 idx = which(is.na(cormat[1,]))
 cormat = cormat[-idx,-idx]</code></pre>
@@ -73,5 +72,8 @@ geom_raster() + scale_fill_gradient2(low = &quot;blue&quot;,
                        axis.title.x = element_blank(),
                        axis.title.y = element_blank())
 covariance_plot</code></pre>
-<p><img src="/post/2016-04-17-the-modularity-of-kaggle-ncaa-predictions_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="figure">
+<img src="/img/prediction_modularity.png" alt="Plot" />
+<p class="caption">Plot</p>
+</div>
 </div>
