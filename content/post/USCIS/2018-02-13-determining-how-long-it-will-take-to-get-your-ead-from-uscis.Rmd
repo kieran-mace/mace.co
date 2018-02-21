@@ -91,7 +91,7 @@ library(magrittr)
 
 
 ```{r, warning=FALSE}
-cases = read_feather("~/Desktop/uscis.feather")
+cases = read_feather("uscis.feather")
 colnames(cases)[1:3] = c('code', 'status', 'details')
 
 my_case_numeric = 1890048782

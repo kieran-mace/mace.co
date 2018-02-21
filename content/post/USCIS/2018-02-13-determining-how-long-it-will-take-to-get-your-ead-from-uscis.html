@@ -72,7 +72,7 @@ feather.write_dataframe(df, &quot;uscis.feather&quot;)</code></pre>
 library(feather)
 library(lubridate)
 library(magrittr)</code></pre>
-<pre class="r"><code>cases = read_feather(&quot;~/Desktop/uscis.feather&quot;)
+<pre class="r"><code>cases = read_feather(&quot;uscis.feather&quot;)
 colnames(cases)[1:3] = c(&#39;code&#39;, &#39;status&#39;, &#39;details&#39;)
 
 my_case_numeric = 1890048782
