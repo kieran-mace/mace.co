@@ -3,4 +3,10 @@ title: "About"
 date: "2016-05-05T21:48:51-07:00"
 ---
 
-This is a "hello world" example website for the [**blogdown**](https://github.com/rstudio/blogdown) package. The theme was forked from [@jrutheiser/hugo-lithium-theme](https://github.com/jrutheiser/hugo-lithium-theme) and modified by [Yihui Xie](https://github.com/yihui/hugo-lithium-theme).
+Hey there,
+
+I hope that this site serves as a resource for data scientists around the world.
+Hopefully you will find some of this information useful.
+Most code will be in R, but I'm beginging to learn TensorFlow and SciKitLearn which is going to be awesome!
+I am a graduate student at UCSF doing high-throughput bioinformatics, with a concentration in Systems Biology and complex biologcal system.
+After I graduate I hope to apply my skills in data analysis to hard problems in Data Science. 
