@@ -1,5 +1,7 @@
 ---
-title: "R Notebook"
+title: Exploring Homoscedasticity in Gene Expression
+author: Kieran Mace
+date: '2018-02-01'
 output:
   html_document:
     df_print: paged

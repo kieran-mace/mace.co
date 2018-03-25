@@ -6,10 +6,21 @@
     <description>Recent content on Mutual Information</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTS Challenge</title>
+      <link>/2018/03/15/hts-challenge/</link>
+      <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/03/15/hts-challenge/</guid>
+      <description>Challenge:  Try to pick out strains you’d promote to the next round of screening.
+ This is meant to be an interactive sport, email with any questions.  Data: Data are 60 96-well plates are filled with:
+88 possibly improved strains (Standard Well), 4 process controls (Process Control), and 4 parent strains (Parent Strain) from which the Standard Well strains derive.   The 60 plates are processed and measured on 3 different robots: Bender, Terminator, and C3P0.</description>
+    </item>
     
     <item>
       <title>Africas GDP over time</title>
@@ -29,6 +40,15 @@ countries = countrycode::codelist_panel africa_countries = countries %&amp;gt;% 
       <guid>/2018/02/13/determining-how-long-it-will-take-to-get-your-ead-from-uscis/</guid>
       <description>Scraping data off the USCIS website I found some code online (https://github.com/co89757/USCISCasePoll/blob/master/poll_uscis.py) to scrape the USCIS website for status updates. I used it to collect the case status for every 10th case between last October and today.
 from pyquery import PyQuery as pq import requests import smtplib import os import sys import os.path import re import pandas as pd import feather STATUS_OK = 0 STATUS_ERROR = -1 FILENAME_LASTSTATUS = os.path.join(sys.path[0], &amp;quot;LAST_STATUS_{0}.</description>
+    </item>
+    
+    <item>
+      <title>Exploring Homoscedasticity in Gene Expression</title>
+      <link>/2018/02/01/exploring-homoscedasticity-in-gene-expression/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/01/exploring-homoscedasticity-in-gene-expression/</guid>
+      <description>library(DESeq2) ## Loading required package: S4Vectors ## Loading required package: stats4 ## Loading required package: BiocGenerics ## Loading required package: parallel ## ## Attaching package: &amp;#39;BiocGenerics&amp;#39; ## The following objects are masked from &amp;#39;package:parallel&amp;#39;: ## ## clusterApply, clusterApplyLB, clusterCall, clusterEvalQ, ## clusterExport, clusterMap, parApply, parCapply, parLapply, ## parLapplyLB, parRapply, parSapply, parSapplyLB ## The following objects are masked from &amp;#39;package:stats&amp;#39;: ## ## IQR, mad, sd, var, xtabs ## The following objects are masked from &amp;#39;package:base&amp;#39;: ## ## anyDuplicated, append, as.</description>
     </item>
     
     <item>
@@ -58,7 +78,8 @@ Well I have, and after a weekend of being forced to play with my little cousin, 
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
+      <description>Hey there,
+I hope that this site serves as a resource for data scientists around the world. Hopefully you will find some of this information useful. Most code will be in R, but I&amp;rsquo;m beginging to learn TensorFlow and SciKitLearn which is going to be awesome! I am a graduate student at UCSF doing high-throughput bioinformatics, with a concentration in Systems Biology and complex biologcal system. After I graduate I hope to apply my skills in data analysis to hard problems in Data Science.</description>
     </item>
     
     <item>

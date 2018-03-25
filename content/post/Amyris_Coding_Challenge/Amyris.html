@@ -1,0 +1,352 @@
+---
+title: "HTS Challenge"
+author: Kieran Mace
+date: '2018-03-15'
+output:
+  html_document:
+    df_print: paged
+---
+
+
+
+<div id="challenge" class="section level2">
+<h2>Challenge:</h2>
+<ul>
+<li>Try to pick out strains you’d promote to the next round of screening.<br />
+</li>
+<li>This is meant to be an interactive sport, email with any questions.</li>
+</ul>
+<div id="data" class="section level3">
+<h3>Data:</h3>
+<p>Data are 60 96-well plates are filled with:</p>
+<ol style="list-style-type: decimal">
+<li>88 possibly improved strains (Standard Well),</li>
+<li>4 process controls (Process Control), and</li>
+<li>4 parent strains (Parent Strain) from which the Standard Well strains derive.</li>
+</ol>
+<ul>
+<li>The 60 plates are processed and measured on 3 different robots: Bender, Terminator, and C3P0.</li>
+<li>On each robot, the 20 plates are loaded onto a stacker and are fed into the analyzer one plate at a time. It takes about 3 minutes to measure all wells of a plate.</li>
+</ul>
+</div>
+<div id="goal" class="section level3">
+<h3>Goal:</h3>
+<p>The goal of our HTS group is to take data like this and pick out standard well strains that have been improved over their parent.</p>
+<ul>
+<li>Pick out improved strains you would promote to the next round of testing.
+<ul>
+<li>Most Standard Well strains are not improved.</li>
+<li>There is noise in the assay.</li>
+<li>What would you promote if you could screen 20, 60, or 180 strains in another round of screening?</li>
+</ul></li>
+<li>Comment about features you see in the data and how you found them and what you would do with them.</li>
+<li>Send us a few graphical visualizations of the raw or transformed data that you found helpful.</li>
+</ul>
+<p>We are less interested in your list of hits as we are in the process by which you arrived at that list and the ways you might have visualized the data. Feel free to use any tools that you think you might want to use. If you want the data in a different format, let us know.</p>
+</div>
+</div>
+<div id="data-exploration" class="section level2">
+<h2>Data Exploration:</h2>
+<pre class="r"><code>library(tidyverse)
+library(magrittr)
+library(skimr)
+theme_set(theme_minimal())
+wells = readxl::read_xlsx(&#39;Sample T1 data.xlsx&#39;)</code></pre>
+<p>Lets just calculate the well number:</p>
+<pre class="r"><code>wells %&lt;&gt;% 
+  mutate(well_number = counter %% 96,
+         well_number = if_else(well_number == 0, 96, well_number)) %&gt;%
+  filter(well_type != &#39;Process Control&#39;)</code></pre>
+<p>Since we want to correct for any confounding variables that are not strain related, we will first explore the <code>Parent Strain</code> and <code>Process Control</code> wells, which <strong>should</strong> only have stochastic variation in the <code>value</code> variable.</p>
+<pre class="r"><code>wells %&gt;% 
+  filter(well_type %in% c(&#39;Parent Strain&#39;)) -&gt; control_wells</code></pre>
+<pre class="r"><code>control_wells %&gt;% 
+  ggplot(aes(x = value, fill = robot)) +
+  geom_density(alpha = 0.4) +
+  facet_wrap(~well_type, ncol = 1)</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>From my experiance with plate readers, I suspect that the robot, and measurement times may affect the value, Lets investigate these hypotheses graphically.</p>
+<p>Lets look to see how the parent strain performs as a function of stacker position and robot.</p>
+<pre class="r"><code>control_wells %&gt;% 
+  ggplot(aes(y=value, x = stacker_position, color = robot)) + 
+  geom_point() + 
+  geom_smooth() +
+  facet_wrap(~well_type, ncol = 1, scales=&quot;free_y&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>It seems that <code>stacker_position</code> has a very strong effect! We will need to model this effect in order to correct for it. Since the line is relativly striaght and smooth, a simple linear model, or spline model should accurately account for the majority of the stacker position effect.</p>
+<p>It is unclear as to whether the <code>stacker_position</code> effect depends on robot. Visually it seems that the effect is independent on the <code>robot</code>, but we can check this with a multifactor anova.</p>
+<pre class="r"><code>control_wells %&gt;% 
+  {lm(value ~ stacker_position + stacker_position:robot, data = .)} -&gt; product_model
+anova(product_model)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: value
+##                         Df   Sum Sq  Mean Sq  F value Pr(&gt;F)    
+## stacker_position         1 81347724 81347724 1083.612 &lt;2e-16 ***
+## stacker_position:robot   2    50152    25076    0.334 0.7164    
+## Residuals              236 17716724    75071                    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Considering the effect of the robot, we cannot regect the null hypothesis, that stacker_position opperates independently of robot, so we can model the stacker effect over all robots.</p>
+</div>
+<div id="correcting-for-confounding-effects" class="section level2">
+<h2>Correcting for confounding effects</h2>
+<p>We will build a spline model from the <code>Parent Strain</code> data, and verify its fit from the <code>Process Control</code> data.</p>
+<pre class="r"><code>control_wells %&gt;% 
+  filter(well_type == &#39;Parent Strain&#39;) %&gt;% 
+  ggplot(aes(x = stacker_position, 
+             y = value)) + 
+  geom_point() + 
+  geom_smooth()</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>control_wells %&gt;% 
+  filter(well_type == &#39;Parent Strain&#39;) %&gt;% 
+  {loess(value~stacker_position, data = .)} -&gt; stacker_effect_model</code></pre>
+<p>Lets now subtract that signal and see if the Parent Strain now performs consitantly across samples.</p>
+<pre class="r"><code>control_wells$value_corrected = control_wells$value - predict(stacker_effect_model, newdata = control_wells)
+
+ggplot(control_wells, aes(x = stacker_position, 
+                          y = value_corrected, 
+                          color = robot)) +
+  geom_point() +
+  facet_wrap(~well_type, ncol = 1)</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The fit seems to do a good job of accounting for the effect, even in the <code>Process Control</code> data that was not explicitly modeled.</p>
+</div>
+<div id="picking-most-promising-strains" class="section level2">
+<h2>Picking most promising strains:</h2>
+<p>First we will calculate corrected values for the <code>Standard Well</code>s.</p>
+<pre class="r"><code>wells$value_corrected = wells$value - predict(stacker_effect_model, newdata = wells)</code></pre>
+<p>Although we have corrected for the dominant confounding signal, we should still check to see if there is a <code>robot</code> effect. Lets start that process by calulating some summary statistics on the corrected values.</p>
+<pre class="r"><code>wells %&gt;% 
+  filter(well_type == &#39;Parent Strain&#39;) %&gt;%
+  group_by(robot) %&gt;% 
+  select(value_corrected) %&gt;%
+  skim() %&gt;% 
+  skimr::kable()</code></pre>
+<pre><code>## Adding missing grouping variables: `robot`</code></pre>
+<pre><code>## Skim summary statistics  
+##  n obs: 240    
+##  n variables: 2    
+## 
+## Variable type: numeric
+## 
+## robot        variable          missing   complete   n    mean     sd       p0        p25       median   p75      p100     hist     
+## -----------  ----------------  --------  ---------  ---  -------  -------  --------  --------  -------  -------  -------  ---------
+## Bender       value_corrected   0         80         80   26.05    269.25   -988.83   -71.64    9.58     158.71   580.27   ▁▁▁▂▇▇▃▂ 
+## C3P0         value_corrected   0         80         80   -31.88   289.82   -657.33   -229.06   -6.32    138.58   899.92   ▂▅▆▇▅▂▁▁ 
+## Terminator   value_corrected   0         80         80   -1.39    252.75   -842.79   -177.33   -21.85   134.7    604.45   ▁▁▁▆▇▅▂▂</code></pre>
+<p>It seems that the robot still has an effect, however it is inclear how to account for the effect. There seems to be a mean effect, as well as some differences in the variance of each measurement. One approach is to assume nothing about the underlying distribution of each <code>robots</code> measurement, but instead split the data on each robot, and analyze them separately. To visualize the differences, lets take a look at the value distribution of the <code>Parent Strain</code> for each <code>robot</code>.</p>
+<pre class="r"><code>wells %&gt;% 
+  filter(well_type %in% c(&#39;Parent Strain&#39;)) %&gt;%
+  ggplot(aes(x = value_corrected, fill = robot)) +
+  geom_density(alpha = .4) +
+  facet_wrap(~well_type, ncol = 1)</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-11-1.png" width="672" /> The distributions here seem to have different variances, however this is hard to act on with only 80 <code>Parent Strain</code> measurements per robot. We know very little about the underlying distributions (we can not assume normailty), but we do have 80 measurements per robot, which is relativly large.</p>
+<p>Null Hypothesis: a strain is no different from its parent strain, and therefore has a value sampled from the same distribution as the parent strain.</p>
+<p>Alturnative Hypothesis: The strain is different from the parent strain</p>
+<p>Since we make no assumpitions about the normaility of the <code>Parent Strain</code> distribution, we can use a wilcox rank sum test.</p>
+<pre class="r"><code>get_pval = function(value, robot){
+  value_distribution = control_wells %&gt;% 
+    filter(robot == robot &amp; well_type == &#39;Parent Strain&#39;) %&gt;% 
+    pull(value_corrected)
+  test = wilcox.test(value_distribution, value, correct=FALSE)
+  return(test$p.value)
+}
+
+wells %&lt;&gt;% 
+  arrange(desc(value_corrected)) %&gt;%
+  mutate(p_value = Vectorize(get_pval)(value_corrected, robot),
+         rank = rank(desc(value_corrected)))</code></pre>
+<p>The following plot shows that althogh each robot has a different distribution, the magnitude of the <code>value_corrected</code> seems to have a robot indepentant relationship with p_value, meaning (as we calculated before) that the robot’s distribution has very little confounding effects.</p>
+<pre class="r"><code>wells %&gt;% ggplot(aes(x = value_corrected, y = -log(p_value), color = robot)) + geom_point(alpha  = .3)</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="picking-strains-to-promote." class="section level2">
+<h2>Picking strains to promote.</h2>
+<p>In order to pick strains to promote, I would pick the strains with the highest corrected values. According the the wilcox test, although I cannot be statistically certain that all of these strains are definitely better than the parent strain, I can say that they have about a 8.5% chance of being the same as the parent strain.</p>
+<pre class="r"><code>wells %&gt;% filter(well_type == &#39;Standard Well&#39;) %&gt;% select(strain, value_corrected, p_value, rank)</code></pre>
+<pre><code>## # A tibble: 5,280 x 4
+##    strain value_corrected p_value  rank
+##    &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+##  1 X2036            1620.  0.0845    1.
+##  2 X2106            1593.  0.0845    2.
+##  3 X2035            1563.  0.0845    3.
+##  4 X3340            1554.  0.0845    4.
+##  5 X4173            1506.  0.0845    5.
+##  6 X5052            1487.  0.0845    6.
+##  7 X4085            1353.  0.0845    7.
+##  8 X1899            1336.  0.0845    8.
+##  9 X3029            1289.  0.0845    9.
+## 10 X894             1288.  0.0845   10.
+## # ... with 5,270 more rows</code></pre>
+<p>One comment I might have going forward in this process is to investigate the investment required to perform replicate measurements for each strain. This of course would come down to the amount of resources required to do so, as well as the expected number of strains that need to be tested in order to find a “sucessor” to the parent strain.</p>
+<p>For example, if we expect that one in every 100 strains will be better than the parent strain, and each strain we move to the next stage will require lots of investment, then we may prefer to make 3 measurements per strain at the initial stages, to weed out bad strains before we invest in developing them further.</p>
+</div>
+<div id="using-prediction-interval" class="section level2">
+<h2>Using Prediction Interval:</h2>
+<pre class="r"><code>wells %&gt;% filter(well_type == &#39;Parent Strain&#39;) %&gt;% {lm(value ~ stacker_position + well_number, data = .)} -&gt; parent_model
+
+wells = cbind(wells, predict(parent_model, wells, interval = &#39;p&#39;, level = .95))</code></pre>
+<pre class="r"><code>ggplot(wells, aes(x = fit, y = value,shape = well_type,  color = value &gt; upr | value &lt; lwr)) + geom_point() + geom_abline(slope = 1, intercept = 0)</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>wells %&gt;% filter(value &gt; upr)</code></pre>
+<pre><code>##    counter plate strain     well_type      robot stacker_position
+## 1     2290    24  X2106 Standard Well Terminator                4
+## 2     3636    38  X3340 Standard Well Terminator               18
+## 3     2067    22  X1899 Standard Well Terminator                2
+## 4     5433    57  X4985 Standard Well       C3P0               17
+## 5     1118    12  X1030 Standard Well     Bender               12
+## 6     2854    30  X2622 Standard Well Terminator               10
+## 7     3544    37  X3256 Standard Well Terminator               17
+## 8     3521    37  X3233 Standard Well Terminator               17
+## 9     5443    57  X4995 Standard Well       C3P0               17
+## 10      66     1    X66 Standard Well     Bender                1
+## 11    5465    57  Y0002 Parent Strain       C3P0               17
+## 12    5645    59  X5181 Standard Well       C3P0               19
+## 13    5258    55  X4826 Standard Well       C3P0               15
+## 14    1815    19  X1671 Standard Well     Bender               19
+## 15    2288    24  X2104 Standard Well Terminator                4
+## 16    2861    30  X2629 Standard Well Terminator               10
+## 17    5458    57  X5010 Standard Well       C3P0               17
+## 18    5560    58  X5104 Standard Well       C3P0               18
+## 19    2964    31  X2724 Standard Well Terminator               11
+## 20    2293    24  X2109 Standard Well Terminator                4
+## 21    5367    56  X4927 Standard Well       C3P0               16
+## 22    1904    20  X1752 Standard Well     Bender               20
+## 23    4780    50  X4388 Standard Well       C3P0               10
+## 24    3535    37  X3247 Standard Well Terminator               17
+## 25    2966    31  X2726 Standard Well Terminator               11
+## 26    5456    57  X5008 Standard Well       C3P0               17
+## 27    5080    53  X4664 Standard Well       C3P0               13
+## 28    2683    28  Y0002 Parent Strain Terminator                8
+## 29    4790    50  X4398 Standard Well       C3P0               10
+## 30    5264    55  X4832 Standard Well       C3P0               15
+## 31    3538    37  X3250 Standard Well Terminator               17
+## 32    2963    31  X2723 Standard Well Terminator               11
+## 33     467     5   X435 Standard Well     Bender                5
+## 34    2674    28  X2458 Standard Well Terminator                8
+## 35      85     1    X85 Standard Well     Bender                1
+## 36    1051    11  Y0002 Parent Strain     Bender               11
+## 37    3159    33  X2903 Standard Well Terminator               13
+## 38    4604    48  Y0002 Parent Strain       C3P0                8
+## 39    5366    56  X4926 Standard Well       C3P0               16
+## 40    2874    30  Y0002 Parent Strain Terminator               10
+## 41    1049    11  Y0002 Parent Strain     Bender               11
+## 42    5178    54  Y0002 Parent Strain       C3P0               14
+## 43    1045    11   X965 Standard Well     Bender               11
+## 44    3063    32  X2815 Standard Well Terminator               12
+## 45    4024    42  X3696 Standard Well       C3P0                2
+##        value well_number value_corrected    p_value rank      fit      lwr
+## 1  11167.832          82       1593.4078 0.08454933    2 9560.733 8957.686
+## 2   9732.683          84       1553.8915 0.08454933    4 8155.165 7576.296
+## 3  11158.265          51       1335.9110 0.08454933    8 9639.543 8295.130
+## 4   9441.698          57       1162.4248 0.08454933   16 8148.896 6973.443
+## 5   9921.827          62       1120.7999 0.08454933   17 8673.580 7634.507
+## 6  10112.969          70       1092.7129 0.08454933   18 8907.283 8070.900
+## 7   9356.668          88       1077.3950 0.08454933   19 8272.017 7724.590
+## 8   9313.908          65       1034.6354 0.08454933   21 8180.669 7219.387
+## 9   9236.488          67        957.2152 0.08454933   27 8188.612 7278.091
+## 10 10886.812          66        927.0124 0.08454933   30 9800.082 8863.420
+## 11  9179.196          89        899.9225 0.08585279   33 8275.988 7732.116
+## 12  8932.832          77        853.7668 0.08717258   39 8026.398 7339.806
+## 13  9301.969          74        818.8406 0.08717258   44 8418.344 7672.172
+## 14  8893.852          87        814.7867 0.08717258   49 8066.115 7512.412
+## 15 10381.800          80        807.3757 0.08717258   50 9552.790 8919.932
+## 16  9786.789          77        766.5330 0.08717258   59 8935.084 8250.406
+## 17  9014.582          82        735.3093 0.08717258   66 8248.187 7645.140
+## 18  8893.368          88        714.5769 0.08717258   77 8171.052 7623.159
+## 19  9606.963          84        690.9786 0.08717258   89 8861.921 8284.817
+## 20 10249.538          85        675.1136 0.08717258   94 9572.648 9004.366
+## 21  9046.955          87        666.2832 0.08717258   96 8369.010 7816.692
+## 22  8640.344          80        660.2472 0.08717258   99 7937.348 7303.110
+## 23  9670.005          76        649.7495 0.08717258  102 8931.113 8226.888
+## 24  8928.484          79        649.2108 0.08717258  103 8236.272 7586.781
+## 25  9556.655          86        640.6704 0.08717258  109 8869.864 8311.546
+## 26  8905.034          80        625.7605 0.08717258  117 8240.244 7607.386
+## 27  9302.675          88        613.1424 0.08717258  130 8675.877 8129.650
+## 28  9782.097          91        604.4510 0.08850855  135 9192.617 8651.742
+## 29  9624.026          86        603.7701 0.08986112  137 8970.829 8412.512
+## 30  9084.416          80        601.2878 0.08986112  140 8442.174 7809.950
+## 31  8878.794          82        599.5208 0.08986112  145 8248.187 7645.140
+## 32  9515.107          83        599.1225 0.08986112  147 8857.949 8269.203
+## 33 10059.577          83        596.5561 0.08986112  148 9463.740 8874.065
+## 34  9765.398          82        587.7517 0.08986112  158 9156.873 8554.915
+## 35 10547.296          85        587.4966 0.08986112  159 9875.543 9305.724
+## 36  9496.251          91        580.2668 0.09123014  163 8889.722 8349.049
+## 37  9260.850          87        571.3171 0.09261602  168 8671.905 8120.380
+## 38  9748.087          92        570.4404 0.09401861  170 9196.589 8653.924
+## 39  8938.449          86        557.7778 0.09832908  185 8365.038 7805.743
+## 40  9577.722          90        557.4660 0.09980038  186 8986.716 8446.042
+## 41  9471.107          89        555.1225 0.10279579  190 8881.779 8339.315
+## 42  9127.551          90        541.7236 0.10900087  205 8582.855 8041.778
+## 43  9449.799          85        533.8142 0.11059761  212 8865.892 8298.959
+## 44  9326.375          87        525.3479 0.11384630  220 8772.870 8221.477
+## 45 10337.796          88        515.4417 0.11384630  232 9786.493 9238.069
+##          upr
+## 1  10163.780
+## 2   8734.034
+## 3  10983.955
+## 4   9324.349
+## 5   9712.653
+## 6   9743.666
+## 7   8819.443
+## 8   9141.951
+## 9   9099.133
+## 10 10736.744
+## 11  8819.861
+## 12  8712.991
+## 13  9164.516
+## 14  8619.817
+## 15 10185.647
+## 16  9619.763
+## 17  8851.234
+## 18  8718.944
+## 19  9439.024
+## 20 10140.930
+## 21  8921.328
+## 22  8571.586
+## 23  9635.337
+## 24  8885.763
+## 25  9428.181
+## 26  8873.101
+## 27  9222.104
+## 28  9733.493
+## 29  9529.147
+## 30  9074.397
+## 31  8851.234
+## 32  9446.695
+## 33 10053.414
+## 34  9758.831
+## 35 10445.363
+## 36  9430.395
+## 37  9223.431
+## 38  9739.254
+## 39  8924.334
+## 40  9527.389
+## 41  9424.242
+## 42  9123.933
+## 43  9432.826
+## 44  9324.264
+## 45 10334.917</code></pre>
+<p>There are 43 Strains that I am more than 95% percent confident are better than the parent strain.</p>
+<p>So we did a stistical prediction interval so that we could have a sense of the confidence interval. Lets take a look at the number of parent strains that exceed the prediction interval:</p>
+<pre class="r"><code>wells %&gt;% filter(well_type == &#39;Parent Strain&#39;) %&gt;% mutate(outlier = value &gt; upr | value &lt; lwr) %&gt;% pull(outlier) %&gt;% table() %&gt;% prop.table()</code></pre>
+<pre><code>## .
+##      FALSE       TRUE 
+## 0.94166667 0.05833333</code></pre>
+<pre class="r"><code>wells %&gt;% filter(well_type == &#39;Standard Well&#39;) %&gt;% mutate(outlier = value &gt; upr | value &lt; lwr) %&gt;% pull(outlier) %&gt;% table() %&gt;% prop.table()</code></pre>
+<pre><code>## .
+##      FALSE       TRUE 
+## 0.98939394 0.01060606</code></pre>
+<p>So as expected we have a 5% false discovery rate for the parent strains. Interestingly, we have a 10% of candidate strains that do not conform to the parent strain model. Meaning to me that out selected strains are about half falsely labled and half worth promoting to the next stage.</p>
+<p>Lets compare the two methods:</p>
+<pre class="r"><code>ggplot(wells, aes(x = value_corrected, y = value - upr, color = well_type)) + geom_point()</code></pre>
+<p><img src="/post/Amyris_Coding_Challenge/Amyris_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="downstream-analysis" class="section level2">
+<h2>Downstream analysis</h2>
+<p>One thing I would love to know is the cost to Amgen to promote and test a strain, as well as the expected margins of improvment a given percentage would yeild. With this information, one could use something like Lagrangian constrained optimizaiton to maximize the productivity of the strain improvment process.</p>
+</div>
