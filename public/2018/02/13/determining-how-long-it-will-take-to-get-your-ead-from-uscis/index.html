@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.37.1" />
+<meta name="generator" content="Hugo 0.42.1" />
 
 
 <title>Determining How long it will take to get your EAD from USCIS - Mutual Information</title>
@@ -81,10 +81,12 @@ import os.path
 import re
 import pandas as pd
 import feather
+
 STATUS_OK = 0
 STATUS_ERROR = -1
 FILENAME_LASTSTATUS = os.path.join(sys.path[0], &quot;LAST_STATUS_{0}.txt&quot;)
 mynum = 1890048782 # THis is my case number
+
 def poll_optstatus(casenumber):
     &quot;&quot;&quot;
     poll USCIS case status given receipt number (casenumber)
@@ -110,17 +112,21 @@ def poll_optstatus(casenumber):
     }
     url = &quot;https://egov.uscis.gov/casestatus/mycasestatus.do&quot;
     data = {&quot;appReceiptNum&quot;: casenumber, &#39;caseStatusSearchBtn&#39;: &#39;CHECK+STATUS&#39;}
+
     res = requests.post(url, data=data, headers=headers)
     doc = pq(res.text)
     status = doc(&#39;h1&#39;).text()
     code = STATUS_OK if status else STATUS_ERROR
     details = doc(&#39;.text-center p&#39;).text()
     return (code, status, details)
+
 # Get every 10th case status
 case_nums = [&#39;YSC&#39; + str(i) for i in range(1890038932, 1890079632)]
 vals = [poll_optstatus(case) for case in case_nums]
+
 df = pd.DataFrame.from_records(vals)
 df[&#39;case&#39;] = case_nums
+
 feather.write_dataframe(df, &quot;uscis.feather&quot;)</code></pre>
 </div>
 <div id="data-transformations-and-cleaning" class="section level2">

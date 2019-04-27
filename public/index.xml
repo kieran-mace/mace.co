@@ -6,10 +6,21 @@
     <description>Recent content on Mutual Information</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Plotting the Mandelbrot Set</title>
+      <link>/2019/04/27/plotting-the-mandelbrot-set/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/04/27/plotting-the-mandelbrot-set/</guid>
+      <description>Setup: When considering a geometric series in the form: \[ z_{n+1} = z_{n} + c \] Where \(z\) and \(c\) are complex numbers. One can ask if \(z_{inf}\) is stable for a given \(z_{0}\) and \(c\)
+It is also mathimatically convienent that if the magnitude of \(z_{n}\) ever exceeds 2, we can be garunteed that the series will not converge.
+Lastly, for computational simplicity, we make the assumption that if the magnitude does not exceed 2 in the first 200 ittterations, that it will converge.</description>
+    </item>
     
     <item>
       <title>Africas GDP over time</title>

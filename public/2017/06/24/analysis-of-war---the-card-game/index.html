@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.37.1" />
+<meta name="generator" content="Hugo 0.42.1" />
 
 
 <title>Analysis of War - the card game - Mutual Information</title>
@@ -93,6 +93,7 @@
 <p>Since I am not too used to dealing with numerical simulations of card games, I’m going to set up some classes in python. Once the simulations are done I’ll import the data into R to do some analysis.</p>
 <p>Here are the two classes I set up:</p>
 <pre class="python"><code>from random import shuffle
+
 class Player():
     &quot;&quot;&quot;Player is the class that represents a player. Each player has a hand of cards. The class also includes getting cards from a players hand, and adding the winnings to the bottom of the players hand&quot;&quot;&quot;
     def __init__(self, hand, name):
@@ -109,6 +110,7 @@ class Player():
         else:
             next_card = self.hand.pop(0)
             return(next_card)
+
 class Game():
     &quot;&quot;&quot;docstring for Game.&quot;&quot;&quot;
     def __init__(self, war_ante):
@@ -149,6 +151,7 @@ class Game():
 <pre class="python"><code>import numpy as np
 import pandas as pd
 from game import *
+
 for ante in range(0,11):
     games = [Game(ante) for i in range(0,10000)]
     [g.play() for g in games]
@@ -196,12 +199,15 @@ colnames(results_all) = c(&#39;war_ante&#39;, &#39;winner&#39;, &#39;num_turns&#
 ## 6          2          1          2          1</code></pre>
 <p>For normal games, the war ante is 2, so lets analyze that first:</p>
 <pre class="r"><code>results = results_all %&gt;% filter(war_ante == 2)</code></pre>
-<p>Now lets get to the questions: ### How long does the average game take Lets use a histogram to look at the distribution of games</p>
+<p>Now lets get to the questions:
+### How long does the average game take
+Lets use a histogram to look at the distribution of games</p>
 <pre class="r"><code>hist(results[,&quot;num_turns&quot;], 
      breaks = 100,
      xlab = &#39;Number of turns&#39;,
      main = &#39;Distribution of Game Lengths&#39;)</code></pre>
-<p><img src="/post/war/2017-06-19-Analysis-of-war-the-card-game_files/figure-html/unnamed-chunk-4-1.png" width="672" /> The number of turns seems to have a very large right sided tail, and is not normally distributed. Since I’m interested in knowing the number of turns in terms of order of magnitude, lets log the data. Logging the data will also make the distribution resemble the normal distribution.</p>
+<p><img src="/post/war/2017-06-19-Analysis-of-war-the-card-game_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+The number of turns seems to have a very large right sided tail, and is not normally distributed. Since I’m interested in knowing the number of turns in terms of order of magnitude, lets log the data. Logging the data will also make the distribution resemble the normal distribution.</p>
 <pre class="r"><code>hist(log10(results[,&quot;num_turns&quot;]), 
      breaks = 100,
      xlab = &#39;log10(Number of turns)&#39;,
@@ -212,7 +218,8 @@ qqline(results[,&#39;num_turns&#39;])</code></pre>
 <p><img src="/post/war/2017-06-19-Analysis-of-war-the-card-game_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
 <pre class="r"><code>qqnorm(log10(results[,&#39;num_turns&#39;]), main = &#39;QQ plot for log10 transformed number of turns&#39;)
 qqline(log10(results[,&#39;num_turns&#39;]))</code></pre>
-<p><img src="/post/war/2017-06-19-Analysis-of-war-the-card-game_files/figure-html/unnamed-chunk-5-3.png" width="672" /> So it looks like 80% of regular games of war last between 85 and 657 turns, with a mean of ~320 turns.</p>
+<p><img src="/post/war/2017-06-19-Analysis-of-war-the-card-game_files/figure-html/unnamed-chunk-5-3.png" width="672" />
+So it looks like 80% of regular games of war last between 85 and 657 turns, with a mean of ~320 turns.</p>
 <div id="how-does-the-initial-hand-affect-your-winning-percentage" class="section level3">
 <h3>How does the initial hand affect your winning percentage?</h3>
 <div id="how-often-will-i-win-if-i-have-all-the-aces" class="section level4">

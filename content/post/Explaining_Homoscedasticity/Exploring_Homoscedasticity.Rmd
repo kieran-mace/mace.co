@@ -9,7 +9,7 @@ output:
 
 ```{r}
 library(DESeq2)
-dds <- makeExampleDESeqDataSet(n=50000,m=2)
+dds <- makeExampleDESeqDataSet(n=50000,m=4)
 reads = counts(dds)
 plot(log2(reads[,1]),log2(reads[,2]))
 ```
@@ -26,7 +26,7 @@ Now lets normalize library size and esimate dispersion:
 
 ```{r}
 dds = estimateSizeFactors(dds)
-estimateDispersions(dds)
+#estimateDispersions(dds)
 ntd = assay(normTransform(dds)) # regular log2 with a psudocount
 rld = assay(rlog(dds)) # doing the same thing as log2, but not allowing low counts to explode 
 ```

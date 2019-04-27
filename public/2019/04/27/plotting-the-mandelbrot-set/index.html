@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.42.1" />
+
+
+<title>Plotting the Mandelbrot Set - Mutual Information</title>
+<meta property="og:title" content="Plotting the Mandelbrot Set - Mutual Information">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/kmace">GitHub</a></li>
+    
+    <li><a href="/resume.pdf">Resume</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">2 min read</span>
+    
+
+    <h1 class="article-title">Plotting the Mandelbrot Set</h1>
+
+    
+    <span class="article-date">2019/04/27</span>
+    
+
+    <div class="article-content">
+      <div id="setup" class="section level1">
+<h1>Setup:</h1>
+<p>When considering a geometric series in the form:
+<span class="math display">\[ z_{n+1} = z_{n} + c \]</span>
+Where <span class="math inline">\(z\)</span> and <span class="math inline">\(c\)</span> are complex numbers. One can ask if <span class="math inline">\(z_{inf}\)</span> is stable for a given <span class="math inline">\(z_{0}\)</span> and <span class="math inline">\(c\)</span></p>
+<p>It is also mathimatically convienent that if the magnitude of <span class="math inline">\(z_{n}\)</span> ever exceeds 2, we can be garunteed that the series will not converge.</p>
+<p>Lastly, for computational simplicity, we make the assumption that if the magnitude does not exceed 2 in the first 200 ittterations, that it will converge. Let’s define that function:</p>
+<pre class="r"><code>num_to_explode = function(z = complex(real = 0, imaginary = 0), 
+                          c = complex(real = 0, imaginary = 0), 
+                          max = 200){
+  num = 0
+  while(num &lt; max){
+    if(Mod(z) &gt; 2){
+      return(num)
+    }
+    z = z^2 + c
+    num = num + 1
+  }
+  return(num)
+}
+
+num_to_explode = Vectorize(num_to_explode)</code></pre>
+<p>For the mandelbrot set, <span class="math inline">\(z_{0}\)</span> is set to (0,0). Now we ask, for what values of <span class="math inline">\(c\)</span> does the series converge? lets test that:</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(magrittr)
+library(ggplot2)
+
+real &lt;- seq(-1, 1, length.out = 500)
+imag &lt;- seq(-1, 1, length.out = 500)
+points_to_test = expand.grid(real = real, imag = imag)
+points_to_test %&lt;&gt;%
+  mutate(z = complex(real = 0, imaginary = 0),
+         c = complex(real = real, imaginary = imag),
+         num = num_to_explode(z, c))</code></pre>
+<p>Now we will plot the number of itterations needed to explode, if the geometric series does not explode (converges), it will have the maximum number of itterations (in this case 200)</p>
+<pre class="r"><code>ggplot(points_to_test,
+       aes(x = real,
+           y = imag,
+           fill = num)) + 
+  geom_tile() + 
+  scale_fill_viridis_c() +
+  theme_minimal()</code></pre>
+<p><img src="/post/Mandelbrot/2019-04-27-plotting-the-mandelbrot-set_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
