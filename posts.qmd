@@ -1,0 +1,13 @@
+---
+title: "Posts"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: table
+  categories: true
+  fields: [title, date, author, categories]
+  page-size: 20
+page-layout: full
+---
+
+Browse all posts by date, category, or title.

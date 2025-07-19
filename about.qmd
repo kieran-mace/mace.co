@@ -1,0 +1,11 @@
+---
+title: "About"
+---
+
+Hey there,
+
+I hope that this site serves as a resource for data scientists around the world.
+Hopefully you will find some of this information useful.
+Most code will be in R, but I'm beginging to learn TensorFlow and SciKitLearn which is going to be awesome!
+I am a graduate student at UCSF doing high-throughput bioinformatics, with a concentration in Systems Biology and complex biologcal system.
+After I graduate I hope to apply my skills in data analysis to hard problems in Data Science.

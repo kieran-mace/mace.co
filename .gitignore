@@ -4,3 +4,7 @@
 .Ruserdata
 **/.DS_Store
 packrat/lib*/
+
+/.quarto/
+/_site/
+/_freeze/

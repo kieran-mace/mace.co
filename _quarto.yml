@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Mutual Information"
+  description: "A data science blog by Kieran Mace"
+  site-url: "/"
+  navbar:
+    left:
+      - text: "About"
+        href: about.qmd
+      - text: "Posts"
+        href: posts.qmd
+    right:
+      - text: "Resume"
+        href: resume.pdf
+      - icon: github
+        href: https://github.com/kieran-mace
+  
+  page-footer:
+    center: "© 2025 Kieran Mace"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+    code-tools: true
+    highlight-style: github
+    
+execute:
+  freeze: auto
+  warning: false
+  message: false

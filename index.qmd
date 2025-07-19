@@ -1,0 +1,15 @@
+---
+title: "Mutual Information"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+page-layout: full
+title-block-banner: true
+---
+
+Welcome to Mutual Information, a data science blog exploring statistical analysis, visualization, and computational problems.
+
+## Recent Posts
