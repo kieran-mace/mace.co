@@ -1,0 +1,163 @@
+[
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "Posts",
+    "section": "",
+    "text": "Browse all posts by date, category, or title.\n\n\n\n\n\n\n\n\n   \n    \n    \n      Order By\n      Default\n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Title\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\n\nDate\n\n\n\nAuthor\n\n\n\nCategories\n\n\n\n\n\n\n\n\nPlotting the Mandelbrot Set\n\n\nApr 27, 2019\n\n\nKieran Mace\n\n\n \n\n\n\n\n\n\nAfricas GDP over time\n\n\nFeb 20, 2018\n\n\nKieran Mace\n\n\nR\n\n\n\n\n\n\nDetermining How long it will take to get your EAD from USCIS\n\n\nFeb 13, 2018\n\n\nKieran Mace\n\n\nR\n\n\n\n\n\n\nExploring Homoscedasticity in Gene Expression\n\n\nFeb 1, 2018\n\n\nKieran Mace\n\n\n \n\n\n\n\n\n\nAnalysis of War - the card game\n\n\nJun 24, 2017\n\n\nKieran Mace\n\n\n \n\n\n\n\n\n\nThe Modularity of Kaggle NCAA Predictions\n\n\nApr 17, 2016\n\n\nKieran Mace\n\n\nR\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Mutual Information",
+    "section": "",
+    "text": "Welcome to Mutual Information, a data science blog exploring statistical analysis, visualization, and computational problems."
+  },
+  {
+    "objectID": "index.html#recent-posts",
+    "href": "index.html#recent-posts",
+    "title": "Mutual Information",
+    "section": "Recent Posts",
+    "text": "Recent Posts"
+  },
+  {
+    "objectID": "posts/africa-gdp/index.html",
+    "href": "posts/africa-gdp/index.html",
+    "title": "Africas GDP over time",
+    "section": "",
+    "text": "Code\nlibrary(tidyverse)\nlibrary(countrycode)\nlibrary(WDI)\nlibrary(magick)\nlibrary(tidyverse)\nlibrary(ggmap)\nlibrary(maps)\nlibrary(mapdata)\nlibrary(magrittr)\nlibrary(gganimate)\nlibrary(viridis)"
+  },
+  {
+    "objectID": "posts/africa-gdp/index.html#getting-the-contries-in-africa",
+    "href": "posts/africa-gdp/index.html#getting-the-contries-in-africa",
+    "title": "Africas GDP over time",
+    "section": "Getting the contries in Africa",
+    "text": "Getting the contries in Africa\nWe also need to fix some of the names slightly\n\n\nCode\ncountries = countrycode::codelist_panel\nafrica_countries = countries %&gt;% \n  filter(continent == 'Africa') %&gt;% \n  select(country.name.en, iso2c) %&gt;%\n  unique.data.frame() %&gt;%\n  rename(Country_Name = country.name.en,\n         Country_Code = iso2c) %&gt;%\n  mutate(Country_Name = if_else(Country_Name == \"Congo - Brazzaville\", 'Republic of the Congo', Country_Name),\n         Country_Name = if_else(Country_Name == \"Congo - Kinshasa\",'Democratic Republic of the Congo', Country_Name),\n         Country_Name = if_else(Country_Name == \"Côte d'Ivoire\",'Ivory Coast', Country_Name),\n         Country_Name = if_else(Country_Name == \"Réunion\",'Reunion', Country_Name),\n         Country_Name = if_else(Country_Name == \"St. Helena\",'Saint Helena', Country_Name),\n         Country_Name = if_else(Country_Name ==  \"São Tomé & Príncipe\",'Sao Tome and Principe', Country_Name))"
+  },
+  {
+    "objectID": "posts/africa-gdp/index.html#pulling-the-gdp-info",
+    "href": "posts/africa-gdp/index.html#pulling-the-gdp-info",
+    "title": "Africas GDP over time",
+    "section": "Pulling the GDP info",
+    "text": "Pulling the GDP info\n\n\nCode\nafrica_gdp = WDI(indicator='NY.GDP.PCAP.KD', \n                 country=africa_countries$Country_Code, \n                 start=1960, \n                 end=2018) %&gt;%\n  rename(Country_Code = iso2c,\n         GDP = NY.GDP.PCAP.KD) %&gt;%\n  select(Country_Code, GDP, year)\n\n\nLet’s look at the GDP as a function of time\n\n\nCode\nggplot(africa_gdp, aes(year, GDP, color=Country_Code)) + geom_line() + \n    xlab('Year') + ylab('GDP per capita')\n\n\n\n\n\n\n\n\n\nLets get the map of africa.\nJoin it all together\n\n\nCode\nafrica = africa_map %&gt;% left_join(africa_countries) %&gt;% left_join(africa_gdp)"
+  },
+  {
+    "objectID": "posts/africa-gdp/index.html#putting-it-all-together-a-movie-of-africas-gdp-over-the-last-80-years.",
+    "href": "posts/africa-gdp/index.html#putting-it-all-together-a-movie-of-africas-gdp-over-the-last-80-years.",
+    "title": "Africas GDP over time",
+    "section": "Putting it all together, a movie of africas GDP over the last 80 years.",
+    "text": "Putting it all together, a movie of africas GDP over the last 80 years.\n\n\nCode\np = africa %&gt;%\n ggplot(aes(x = long, \n            y = lat, \n            group = group, \n            fill = log10(GDP))) +\n  coord_fixed(1.3) +\n  geom_polygon() + \n  theme_minimal() + \n  scale_fill_viridis() +\n  transition_time(year) +\n  labs(title = 'Year: {frame_time}')\n\nanim &lt;- animate(p)\nanim_save(\"africa.gif\", animation = anim)\n\n# for(year in unique(sort(africa$year))){\n# p = africa %&gt;% filter(year == year) %&gt;%\n#  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP))) +\n#   coord_fixed(1.3) +\n#   geom_polygon() + \n#   theme_minimal() + \n#   scale_fill_viridis()\n#   print(p)\n# }\n\n\n\n\n\nImage"
+  },
+  {
+    "objectID": "posts/war-card-game/index.html",
+    "href": "posts/war-card-game/index.html",
+    "title": "Analysis of War - the card game",
+    "section": "",
+    "text": "Have you ever played War? have you ever wondered When will this be over!?\nWell I have, and after a weekend of being forced to play with my little cousin, I decided enough is enough. Lets do some simulation and some data analysis to answer some basic questions:\n\nHow long does the average game take?\nHow does the initial hand affect your winning percentage?\n\nHow often will I win if I have all the aces?\nHow often will I win depending on the average hand strength?\n\nHow does the ante size affect game duration?"
+  },
+  {
+    "objectID": "posts/war-card-game/index.html#setup",
+    "href": "posts/war-card-game/index.html#setup",
+    "title": "Analysis of War - the card game",
+    "section": "Setup",
+    "text": "Setup\nSince I am not too used to dealing with numerical simulations of card games, I’m going to set up some classes in python. Once the simulations are done I’ll import the data into R to do some analysis.\nHere are the two classes I set up:\n\n\nCode\nfrom random import shuffle\n\nclass Player():\n    \"\"\"Player is the class that represents a player. Each player has a hand of cards. The class also includes getting cards from a players hand, and adding the winnings to the bottom of the players hand\"\"\"\n    def __init__(self, hand, name):\n        self.hand = hand[:]\n        self.name = name\n    # Once a player wins a battle, they need to add their winnings to the bottom of their hand. Since the rules don't seem to indicate their order, I explicitly shuffle the winnings before adding them.\n    def add_winnings(self, cards):\n        shuffle(cards)\n        self.hand += cards\n    # Method to get next card. If the player has run out of cards, this method returns None, which indicates to the Game class that the game is over and the player has lost. \n    def get_next_card(self):\n        if len(self.hand)==0:\n            return(None)\n        else:\n            next_card = self.hand.pop(0)\n            return(next_card)\n\nclass Game():\n    \"\"\"docstring for Game.\"\"\"\n    def __init__(self, war_ante):\n        self.war_ante = war_ante\n        self.deck = [i for i in range(1,14) for j in range(0,4)]\n        shuffle(self.deck)\n        self.p0_start = self.deck[:26]\n        self.p1_start = self.deck[26:]\n        self.player_0 = Player(self.p0_start, \"Player 0\")\n        self.player_1 = Player(self.p1_start, \"Player 1\")\n        self.winner = None\n        self.num_turns = 0\n    def war(self, pot, extra_cards):\n        pot += [self.player_0.get_next_card() for i in range(0,extra_cards)] + [self.player_1.get_next_card() for i in range(0,extra_cards)]\n        card_0 = self.player_0.get_next_card()\n        card_1 = self.player_1.get_next_card()\n        if card_0 == None:\n            self.winner = 1\n            return()\n        elif card_1 == None:\n            self.winner = 0\n            return()\n        pot += [card_0, card_1]\n        if card_0 &gt; card_1:\n            self.player_0.add_winnings(pot)\n        elif card_0 &lt; card_1:\n            self.player_1.add_winnings(pot)\n        elif card_0 == card_1:\n            self.war(pot, self.war_ante)\n    def play(self):\n        while self.winner == None:\n            self.num_turns += 1\n            self.war([], 0)"
+  },
+  {
+    "objectID": "posts/war-card-game/index.html#simulation",
+    "href": "posts/war-card-game/index.html#simulation",
+    "title": "Analysis of War - the card game",
+    "section": "Simulation",
+    "text": "Simulation\nNow lets run the simulations:\n\n\nCode\nimport numpy as np\nimport pandas as pd\nfrom game import *\n\nfor ante in range(0,11):\n    games = [Game(ante) for i in range(0,10000)]\n    [g.play() for g in games]\n    all = [[g.war_ante, g.winner, g.num_turns, np.mean(g.p0_start)] + [g.p0_start.count(c) for c in range(1,14)] for g in games]\n    all_df = pd.DataFrame.from_records(all)\n    all_df.to_csv('output/results_' + str(anti) + '.csv', index = False)"
+  },
+  {
+    "objectID": "posts/war-card-game/index.html#setup-1",
+    "href": "posts/war-card-game/index.html#setup-1",
+    "title": "Analysis of War - the card game",
+    "section": "Setup",
+    "text": "Setup\nFirst lets load up packages and set up the data from python\n\n\nCode\nlibrary(dplyr)\nlibrary(ggplot2)\n\n\n\n\nCode\nresults_paths = list.files('output', 'results_[0-9]+.csv', full.names = T)\nresults_all = do.call(rbind, lapply(results_paths, read.csv))\n\ncolnames(results_all) = c('war_ante', 'winner', 'num_turns','player0_mean', paste0(\"player0_\", c(as.character(2:10), 'J', 'Q', 'K', 'A'),'s'))"
+  },
+  {
+    "objectID": "posts/war-card-game/index.html#analysis",
+    "href": "posts/war-card-game/index.html#analysis",
+    "title": "Analysis of War - the card game",
+    "section": "Analysis",
+    "text": "Analysis\nLets take a look at the data:\n\n\nCode\nhead(results_all)\n\n\n  war_ante winner num_turns player0_mean player0_2s player0_3s player0_4s\n1        0      1       180     6.576923          3          2          4\n2        0      0       109     7.423077          2          3          2\n3        0      0       538     7.692308          1          1          3\n4        0      0       330     7.307692          1          2          1\n5        0      1       865     7.807692          1          1          2\n6        0      1       292     6.307692          1          3          3\n  player0_5s player0_6s player0_7s player0_8s player0_9s player0_10s player0_Js\n1          0          1          3          3          1           1          1\n2          2          1          0          2          1           2          3\n3          2          2          2          2          0           1          4\n4          2          2          4          2          1           4          1\n5          2          3          2          2          1           2          1\n6          4          2          2          1          1           3          2\n  player0_Qs player0_Ks player0_As\n1          4          2          1\n2          2          4          2\n3          3          3          2\n4          2          2          2\n5          2          4          3\n6          1          2          1\n\n\nFor normal games, the war ante is 2, so lets analyze that first:\n\n\nCode\nresults = results_all %&gt;% filter(war_ante == 2)\n\n\nNow lets get to the questions: ### How long does the average game take Lets use a histogram to look at the distribution of games\n\n\nCode\nhist(results[,\"num_turns\"], \n     breaks = 100,\n     xlab = 'Number of turns',\n     main = 'Distribution of Game Lengths')\n\n\n\n\n\n\n\n\n\nThe number of turns seems to have a very large right sided tail, and is not normally distributed. Since I’m interested in knowing the number of turns in terms of order of magnitude, lets log the data. Logging the data will also make the distribution resemble the normal distribution.\n\n\nCode\nhist(log10(results[,\"num_turns\"]), \n     breaks = 100,\n     xlab = 'log10(Number of turns)',\n     main = 'Distribution of Game Lengths')\n\n\n\n\n\n\n\n\n\nCode\nqqnorm(results[,'num_turns'], main = 'QQ plot for untransformed number of turns')\nqqline(results[,'num_turns'])\n\n\n\n\n\n\n\n\n\nCode\nqqnorm(log10(results[,'num_turns']), main = 'QQ plot for log10 transformed number of turns')\nqqline(log10(results[,'num_turns']))\n\n\n\n\n\n\n\n\n\nSo it looks like 80% of regular games of war last between 85 and 657 turns, with a mean of ~320 turns.\n\nHow does the initial hand affect your winning percentage?\n\nHow often will I win if I have all the aces?\n\n\nCode\ntab = results %&gt;% select(winner, player0_As) %&gt;% table\nper = apply(tab,2,function(x) x / sum(x))\n\ntab\n\n\n      player0_As\nwinner    0    1    2    3    4\n     0   93  825 1924 1681  493\n     1  445 1649 1974  813  103\n\n\nCode\nper\n\n\n      player0_As\nwinner         0         1         2         3         4\n     0 0.1728625 0.3334681 0.4935865 0.6740176 0.8271812\n     1 0.8271375 0.6665319 0.5064135 0.3259824 0.1728188\n\n\nIt seems that with 4 aces, a player will win 82% of the time. with 3 aces they will win 67% of the time, and will have about even chances if each player has 2 aces.\n\n\nHow often will I win depending on the average hand strength?\n\n\nCode\nresults %&gt;% ggplot(aes(player0_mean, fill=as.factor(winner))) + geom_density(alpha=.2)\n\n\n\n\n\n\n\n\n\nCode\nmodel = glm(winner~player0_mean, family=binomial(link='logit'), data = results)\n\nplot(results$player0_mean, \n     predict(model, type='response'), \n     xlim=c(5,9), ylim=c(0,1), \n     xlab = 'Player zero\\'s starting strength', \n     ylab = 'Chance of player zero winning')\n\n\n\n\n\n\n\n\n\n\n\n\nHow does the ante size affect game duration?\n\n\nCode\nresults_all %&gt;% ggplot(aes(x = factor(war_ante), y=log10(num_turns))) + geom_violin()\n\n\n\n\n\n\n\n\n\nIt seems that the larger the war_ante, the faster the game will be over! So if you’re playing your cousin and want the average game over in about 100 turns, changing the rules to have an ante of 6 cards during a “war” is the way to go!"
+  },
+  {
+    "objectID": "posts/exploring-homoscedasticity/index.html",
+    "href": "posts/exploring-homoscedasticity/index.html",
+    "title": "Exploring Homoscedasticity in Gene Expression",
+    "section": "",
+    "text": "Code\nlibrary(DESeq2)\ndds &lt;- makeExampleDESeqDataSet(n=50000,m=4)\nreads = counts(dds)\nplot(log2(reads[,1]),log2(reads[,2]))\n\n\n\n\n\n\n\n\n\n\n\nCode\nreads_mean = apply(reads,1,mean)\nreads_sd = apply(reads,1, sd)\nplot(reads_mean, reads_sd)\n\n\n\n\n\n\n\n\n\nNow lets normalize library size and esimate dispersion:\n\n\nCode\ndds = estimateSizeFactors(dds)\n#estimateDispersions(dds)\nntd = assay(normTransform(dds)) # regular log2 with a psudocount\nrld = assay(rlog(dds)) # doing the same thing as log2, but not allowing low counts to explode \n\n\n\n\nCode\nlibrary(\"vsn\")\nmeanSdPlot(ntd, ranks=F)\n\n\n\n\n\n\n\n\n\nCode\nmeanSdPlot(rld, ranks=F)\n\n\n\n\n\n\n\n\n\nSo here we can see that we have shrunk the sd at low levels\n\n\nCode\nplot(rld[,1],rld[,2])\n\n\n\n\n\n\n\n\n\nnow lets do it ourselves:\n\n\nCode\nntd_mean = apply(ntd,1,mean)\nntd_sd = apply(ntd,1,sd)\nplot(ntd_mean,ntd_sd)\n\n\n\n\n\n\n\n\n\n\n\nCode\nlibrary(mgcv)\nmodel &lt;- smooth.spline(ntd_mean, ntd_sd) # build the model\nfit &lt;- predict( model , se = TRUE )$fit # estimated values\nse &lt;- predict( model , se = TRUE)$se.fit # standard error\n\n# Confidence interval:\nlcl &lt;- fit - 1.96 * se\nucl &lt;- fit + 1.96 * se\n\n\nfit &lt;- smooth.spline(ntd_mean, ntd_sd)      # smooth.spline fit\nres &lt;- (fit$yin - fit$y)/(1-fit$lev)      # jackknife residuals\nsigma &lt;- sqrt(var(res))                     # estimate sd\n\nupper &lt;- fit$y + 2.0*sigma*sqrt(fit$lev)   # upper 95% conf. band\nlower &lt;- fit$y - 2.0*sigma*sqrt(fit$lev) \n\ndata = data.frame(estimated_mean = fit$x,\n                  estimated_sd = fit$y,\n                  lower_bound = lower,\n                  upper_bound = upper)\n\nlibrary(ggplot2)\n\nggplot(data) +\n       geom_line(aes(x = estimated_mean,\n                     y = estimated_sd)) + \n       geom_ribbon(aes(x = estimated_mean,\n                       ymax = upper_bound,\n                       ymin = lower_bound), alpha=0.5)"
+  },
+  {
+    "objectID": "posts/ncaa-predictions/index.html",
+    "href": "posts/ncaa-predictions/index.html",
+    "title": "The Modularity of Kaggle NCAA Predictions",
+    "section": "",
+    "text": "Setup:\nWe want to look at all the kaggle submissions for 2016. first of all we need to download the data here\n\n\nAnalysis\nNow lets run some R! First lets load in the data:\n\n\nCode\nlibrary(dplyr)\nlibrary(readr)\nlibrary(stringr)\nlibrary(ggplot2)\nlibrary(reshape2)\nrm(list=ls())\n\n# Get list of all files\nfiles &lt;- list.files(path='predictions/', pattern='*.csv', full.names=T)\n\n# Load all files\nallPredictions &lt;- lapply(files, function(f) read.csv(f, stringsAsFactors = F))\n\n\n\n\nJoin all the predicitons, remove bad predictions, and calulate correlation\n\n\nCode\npred = data.frame(lapply(allPredictions, function(x) x[,2]))\n# some preditions renedered to factor, remove these\npred.clean = pred[,-which(unlist(lapply(pred,class))==\"factor\")]\ncormat &lt;- round(cor(pred.clean),2)\n# some correlations result in NA, remove those\nidx = which(is.na(cormat[1,]))\ncormat = cormat[-idx,-idx]\n\n\n\n\nDefine a distance metric between predictions, and order them by similarity\n\n\nCode\nreorder_cormat &lt;- function(cormat){\n# Use correlation between variables as distance\ndd &lt;- as.dist((1-cormat)/2)\nhc &lt;- hclust(dd)\ncormat &lt;-cormat[hc$order, hc$order]\n}\n\n\n\n\nRename the predictions and melt for plotting\n\n\nCode\ncormat &lt;- reorder_cormat(cormat)\ncolnames(cormat) = 1:dim(cormat)[1]\nrownames(cormat) = 1:dim(cormat)[1]\n\n\nmelted_cormat &lt;- melt(cormat, na.rm = TRUE)\n\n\n\n\nCreate the heatmap\n\n\nCode\n# Create a ggheatmap\ncovariance_plot = ggplot(melted_cormat, aes(Var2, Var1, fill = value)) +\ngeom_raster() + scale_fill_gradient2(low = \"blue\",\n                     high = \"red\",\n                     mid = \"white\",\n                     midpoint = 0,\n                     limit = c(-1,1),\n                     space = \"Lab\",\n                     name=\"Pearson\\nCorrelation\") +\n                     theme_minimal() +\n                     theme(\n                       axis.title.x = element_blank(),\n                       axis.title.y = element_blank())\ncovariance_plot\n\n\n\n\n\nPlot"
+  },
+  {
+    "objectID": "posts/mandelbrot/index.html",
+    "href": "posts/mandelbrot/index.html",
+    "title": "Plotting the Mandelbrot Set",
+    "section": "",
+    "text": "Setup:\nWhen considering a geometric series in the form: \\[ z_{n+1} = z_{n} + c \\] Where \\(z\\) and \\(c\\) are complex numbers. One can ask if \\(z_{inf}\\) is stable for a given \\(z_{0}\\) and \\(c\\)\nIt is also mathimatically convienent that if the magnitude of \\(z_{n}\\) ever exceeds 2, we can be garunteed that the series will not converge.\nLastly, for computational simplicity, we make the assumption that if the magnitude does not exceed 2 in the first 200 ittterations, that it will converge. Let’s define that function:\n\n\nCode\nnum_to_explode = function(z = complex(real = 0, imaginary = 0), \n                          c = complex(real = 0, imaginary = 0), \n                          max = 200){\n  num = 0\n  while(num &lt; max){\n    if(Mod(z) &gt; 2){\n      return(num)\n    }\n    z = z^2 + c\n    num = num + 1\n  }\n  return(num)\n}\n\nnum_to_explode = Vectorize(num_to_explode)\n\n\nFor the mandelbrot set, \\(z_{0}\\) is set to (0,0). Now we ask, for what values of \\(c\\) does the series converge? lets test that:\n\n\nCode\nlibrary(dplyr)\nlibrary(magrittr)\nlibrary(ggplot2)\n\nreal &lt;- seq(-1, 1, length.out = 500)\nimag &lt;- seq(-1, 1, length.out = 500)\npoints_to_test = expand.grid(real = real, imag = imag)\npoints_to_test %&lt;&gt;%\n  mutate(z = complex(real = 0, imaginary = 0),\n         c = complex(real = real, imaginary = imag),\n         num = num_to_explode(z, c))\n\n\nNow we will plot the number of itterations needed to explode, if the geometric series does not explode (converges), it will have the maximum number of itterations (in this case 200)\n\n\nCode\nggplot(points_to_test,\n       aes(x = real,\n           y = imag,\n           fill = num)) + \n  geom_tile() + \n  scale_fill_viridis_c() +\n  theme_minimal()"
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html",
+    "href": "posts/uscis-ead/index.html",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "",
+    "text": "I found some code online (https://github.com/co89757/USCISCasePoll/blob/master/poll_uscis.py) to scrape the USCIS website for status updates. I used it to collect the case status for every 10th case between last October and today.\n\n\nCode\nfrom pyquery import PyQuery as pq\nimport requests\nimport smtplib\nimport os\nimport sys\nimport os.path\nimport re\nimport pandas as pd\nimport feather\n\nSTATUS_OK = 0\nSTATUS_ERROR = -1\nFILENAME_LASTSTATUS = os.path.join(sys.path[0], \"LAST_STATUS_{0}.txt\")\nmynum = 1890048782 # THis is my case number\n\ndef poll_optstatus(casenumber):\n    \"\"\"\n    poll USCIS case status given receipt number (casenumber)\n    Args:\n        param1: casenumber the case receipt number\n    Returns:\n        a tuple (status, details) containing status and detailed info\n    Raise:\n        error:\n    \"\"\"\n    headers = {\n        'Accept': 'text/html, application/xhtml+xml, image/jxr, */*',\n        'Accept-Encoding': 'gzip, deflate',\n        'Accept-Language':\n        'en-US, en; q=0.8, zh-Hans-CN; q=0.5, zh-Hans; q=0.3',\n        'Cache-Control': 'no-cache',\n        'Connection': 'Keep-Alive',\n        'Content-Type': 'application/x-www-form-urlencoded',\n        'Host': 'egov.uscis.gov',\n        'Referer': 'https://egov.uscis.gov/casestatus/mycasestatus.do',\n        'User-Agent':\n        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'\n    }\n    url = \"https://egov.uscis.gov/casestatus/mycasestatus.do\"\n    data = {\"appReceiptNum\": casenumber, 'caseStatusSearchBtn': 'CHECK+STATUS'}\n\n    res = requests.post(url, data=data, headers=headers)\n    doc = pq(res.text)\n    status = doc('h1').text()\n    code = STATUS_OK if status else STATUS_ERROR\n    details = doc('.text-center p').text()\n    return (code, status, details)\n\n# Get every 10th case status\ncase_nums = ['YSC' + str(i) for i in range(1890038932, 1890079632)]\nvals = [poll_optstatus(case) for case in case_nums]\n\ndf = pd.DataFrame.from_records(vals)\ndf['case'] = case_nums\n\nfeather.write_dataframe(df, \"uscis.feather\")"
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#scraping-data-off-the-uscis-website",
+    "href": "posts/uscis-ead/index.html#scraping-data-off-the-uscis-website",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "",
+    "text": "I found some code online (https://github.com/co89757/USCISCasePoll/blob/master/poll_uscis.py) to scrape the USCIS website for status updates. I used it to collect the case status for every 10th case between last October and today.\n\n\nCode\nfrom pyquery import PyQuery as pq\nimport requests\nimport smtplib\nimport os\nimport sys\nimport os.path\nimport re\nimport pandas as pd\nimport feather\n\nSTATUS_OK = 0\nSTATUS_ERROR = -1\nFILENAME_LASTSTATUS = os.path.join(sys.path[0], \"LAST_STATUS_{0}.txt\")\nmynum = 1890048782 # THis is my case number\n\ndef poll_optstatus(casenumber):\n    \"\"\"\n    poll USCIS case status given receipt number (casenumber)\n    Args:\n        param1: casenumber the case receipt number\n    Returns:\n        a tuple (status, details) containing status and detailed info\n    Raise:\n        error:\n    \"\"\"\n    headers = {\n        'Accept': 'text/html, application/xhtml+xml, image/jxr, */*',\n        'Accept-Encoding': 'gzip, deflate',\n        'Accept-Language':\n        'en-US, en; q=0.8, zh-Hans-CN; q=0.5, zh-Hans; q=0.3',\n        'Cache-Control': 'no-cache',\n        'Connection': 'Keep-Alive',\n        'Content-Type': 'application/x-www-form-urlencoded',\n        'Host': 'egov.uscis.gov',\n        'Referer': 'https://egov.uscis.gov/casestatus/mycasestatus.do',\n        'User-Agent':\n        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'\n    }\n    url = \"https://egov.uscis.gov/casestatus/mycasestatus.do\"\n    data = {\"appReceiptNum\": casenumber, 'caseStatusSearchBtn': 'CHECK+STATUS'}\n\n    res = requests.post(url, data=data, headers=headers)\n    doc = pq(res.text)\n    status = doc('h1').text()\n    code = STATUS_OK if status else STATUS_ERROR\n    details = doc('.text-center p').text()\n    return (code, status, details)\n\n# Get every 10th case status\ncase_nums = ['YSC' + str(i) for i in range(1890038932, 1890079632)]\nvals = [poll_optstatus(case) for case in case_nums]\n\ndf = pd.DataFrame.from_records(vals)\ndf['case'] = case_nums\n\nfeather.write_dataframe(df, \"uscis.feather\")"
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#data-transformations-and-cleaning",
+    "href": "posts/uscis-ead/index.html#data-transformations-and-cleaning",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "Data Transformations and cleaning",
+    "text": "Data Transformations and cleaning\n\n\nCode\nlibrary(tidyverse)\nlibrary(feather)\nlibrary(lubridate)\nlibrary(magrittr)\n\n\n\n\nCode\ncases = read_feather(\"uscis.feather\")\ncolnames(cases)[1:3] = c('code', 'status', 'details')\n\nmy_case_numeric = 1890048782\nmy_case_date = parse_date(\"2017-11-21\")\n\n\nI filtered out all cases that were rejected or cancelled for any reason.\nThis leaves behind cases that have either been processed, or cases that are still unprocessed.\n\n\nCode\ncases %&lt;&gt;% \n  filter(code == 0 & ((status == \"Case Was Received\" & grepl(\"765\", details)) | \n         status == 'New Card Is Being Produced')) %&gt;%\n  mutate(status_date = parse_date(word(details,2,4),format=\"%B %d, %Y,\"),\n         case_numeric = as.numeric(str_extract(case,\"[0-9]+\")))"
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#unprocessed-cases",
+    "href": "posts/uscis-ead/index.html#unprocessed-cases",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "Unprocessed cases",
+    "text": "Unprocessed cases\nFirst lets look at the distribution of cases that have not yet been processed, including mine:\n\n\n\n\n\n\n\n\n\nWe can see that UCSIS is falling behind on their promise to process applications between 75-90 days. they seem to have finished cases that were submitted in the beginning of November, which was 106 days ago."
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#newly-processed-cases",
+    "href": "posts/uscis-ead/index.html#newly-processed-cases",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "Newly processed cases",
+    "text": "Newly processed cases\nNow we will look at the cases that USCIS has recently completed.\n\n\nCode\nfit &lt;- smooth.spline(cases_pending$case_numeric, cases_pending$status_date)\ncases$predicted_receival_date = as.Date(\n                                  predict(fit, cases$case_numeric)$y, \n                                  origin=\"1970-01-01\", \n                                  tz=\"EST\")\n\ncases_pending$predicted_receival_date = as.Date(\n                                          predict(fit, cases_pending$case_numeric)$y, \n                                          origin=\"1970-01-01\", \n                                          tz=\"EST\")\n\nggplot(cases, aes(x=predicted_receival_date, \n                  y = status, \n                  color = status)) + \n  geom_jitter() + \n  geom_vline(xintercept = my_case_date) +\n  ggtitle('Case Status by Date Recieved', 'My case is indicated by the vertical line') +\n  xlab('Date Recieved') +\n  ylab('Case Status') +\n  theme_classic() +\n  scale_color_discrete(name=\"Process Status\",\n                         breaks=c(\"Case Was Received\", \"New Card Is Being Produced\"),\n                         labels=c(\"Unprocessed\", \"Processed\"))\n\n\n\n\n\n\n\n\n\nFrom this plot, it seems like cases around mid November are currently being processed, my official date is November 21st."
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#conclusion",
+    "href": "posts/uscis-ead/index.html#conclusion",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "Conclusion",
+    "text": "Conclusion\nFrom this data, I can make the following observations:\n\nCases with the same date as mine have just started being processed\nIt seems like it takes about 21 days for an application date to go from completely unprocessed to completely processed.\n\nTherefore:\n\nThere is a small, but non-zero chance it will be processed in the next 4 days.\nThere is a 50% chance it will be processed in the next 10 days.\nThere is close to a 100% chance that my case will be processed in the next 21 days."
+  },
+  {
+    "objectID": "posts/uscis-ead/index.html#appendix",
+    "href": "posts/uscis-ead/index.html#appendix",
+    "title": "Determining How long it will take to get your EAD from USCIS",
+    "section": "Appendix",
+    "text": "Appendix\n\nConverting Case number to date recieved\nCases with “New Card Is Being Produced” catagory do not indicate the date that those cases were first recieved, therefore I needed to convert the case number to the date the application was recieved. This is well approximated using a simple spline:\n\n\nCode\nggplot(cases_pending, aes(x=case_numeric, y = status_date)) + geom_point() +\n  geom_line(aes(y=predicted_receival_date), color = 'red') + xlab('Case Number') + ylab('Case Recieved') + theme_classic()"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Hey there,\nI hope that this site serves as a resource for data scientists around the world. Hopefully you will find some of this information useful. Most code will be in R, but I’m beginging to learn TensorFlow and SciKitLearn which is going to be awesome! I am a graduate student at UCSF doing high-throughput bioinformatics, with a concentration in Systems Biology and complex biologcal system. After I graduate I hope to apply my skills in data analysis to hard problems in Data Science."
+  }
+]

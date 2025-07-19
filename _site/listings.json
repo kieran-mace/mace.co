@@ -1,0 +1,24 @@
+[
+  {
+    "listing": "/posts.html",
+    "items": [
+      "/posts/mandelbrot/index.html",
+      "/posts/africa-gdp/index.html",
+      "/posts/uscis-ead/index.html",
+      "/posts/exploring-homoscedasticity/index.html",
+      "/posts/war-card-game/index.html",
+      "/posts/ncaa-predictions/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/mandelbrot/index.html",
+      "/posts/africa-gdp/index.html",
+      "/posts/uscis-ead/index.html",
+      "/posts/exploring-homoscedasticity/index.html",
+      "/posts/war-card-game/index.html",
+      "/posts/ncaa-predictions/index.html"
+    ]
+  }
+]

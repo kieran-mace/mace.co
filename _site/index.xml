@@ -1,0 +1,2991 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Mutual Information</title>
+<link>/</link>
+<atom:link href="/index.xml" rel="self" type="application/rss+xml"/>
+<description>A data science blog by Kieran Mace</description>
+<generator>quarto-1.7.32</generator>
+<lastBuildDate>Sat, 27 Apr 2019 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Plotting the Mandelbrot Set</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/mandelbrot/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="setup" class="level1">
+<h1>Setup:</h1>
+<p>When considering a geometric series in the form: <img src="https://latex.codecogs.com/png.latex?%20z_%7Bn+1%7D%20=%20z_%7Bn%7D%20+%20c%20"> Where <img src="https://latex.codecogs.com/png.latex?z"> and <img src="https://latex.codecogs.com/png.latex?c"> are complex numbers. One can ask if <img src="https://latex.codecogs.com/png.latex?z_%7Binf%7D"> is stable for a given <img src="https://latex.codecogs.com/png.latex?z_%7B0%7D"> and <img src="https://latex.codecogs.com/png.latex?c"></p>
+<p>It is also mathimatically convienent that if the magnitude of <img src="https://latex.codecogs.com/png.latex?z_%7Bn%7D"> ever exceeds 2, we can be garunteed that the series will not converge.</p>
+<p>Lastly, for computational simplicity, we make the assumption that if the magnitude does not exceed 2 in the first 200 ittterations, that it will converge. Let’s define that function:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">num_to_explode <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">z =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">complex</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">real =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imaginary =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), </span>
+<span id="cb1-2">                          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">c =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">complex</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">real =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imaginary =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), </span>
+<span id="cb1-3">                          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">max =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>){</span>
+<span id="cb1-4">  num <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-5">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span>(num <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> max){</span>
+<span id="cb1-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Mod</span>(z) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>){</span>
+<span id="cb1-7">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(num)</span>
+<span id="cb1-8">    }</span>
+<span id="cb1-9">    z <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> z<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> c</span>
+<span id="cb1-10">    num <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> num <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-11">  }</span>
+<span id="cb1-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(num)</span>
+<span id="cb1-13">}</span>
+<span id="cb1-14"></span>
+<span id="cb1-15">num_to_explode <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Vectorize</span>(num_to_explode)</span></code></pre></div>
+</details>
+</div>
+<p>For the mandelbrot set, <img src="https://latex.codecogs.com/png.latex?z_%7B0%7D"> is set to (0,0). Now we ask, for what values of <img src="https://latex.codecogs.com/png.latex?c"> does the series converge? lets test that:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(magrittr)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb2-4"></span>
+<span id="cb2-5">real <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">length.out =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>)</span>
+<span id="cb2-6">imag <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">length.out =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>)</span>
+<span id="cb2-7">points_to_test <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand.grid</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">real =</span> real, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imag =</span> imag)</span>
+<span id="cb2-8">points_to_test <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&lt;&gt;%</span></span>
+<span id="cb2-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">z =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">complex</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">real =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imaginary =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>),</span>
+<span id="cb2-10">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">c =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">complex</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">real =</span> real, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">imaginary =</span> imag),</span>
+<span id="cb2-11">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">num =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">num_to_explode</span>(z, c))</span></code></pre></div>
+</details>
+</div>
+<p>Now we will plot the number of itterations needed to explode, if the geometric series does not explode (converges), it will have the maximum number of itterations (in this case 200)</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(points_to_test,</span>
+<span id="cb3-2">       <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> real,</span>
+<span id="cb3-3">           <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> imag,</span>
+<span id="cb3-4">           <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> num)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb3-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_tile</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb3-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_viridis_c</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>()</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/mandelbrot/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <guid>/posts/mandelbrot/</guid>
+  <pubDate>Sat, 27 Apr 2019 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Africas GDP over time</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/africa-gdp/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(countrycode)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(WDI)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(magick)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggmap)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maps)</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mapdata)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(magrittr)</span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(gganimate)</span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(viridis)</span></code></pre></div>
+</details>
+</div>
+<section id="getting-the-contries-in-africa" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-contries-in-africa">Getting the contries in Africa</h2>
+<p>We also need to fix some of the names slightly</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">countries <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> countrycode<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span>codelist_panel</span>
+<span id="cb2-2">africa_countries <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> countries <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(continent <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Africa'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> </span>
+<span id="cb2-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(country.name.en, iso2c) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unique.data.frame</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rename</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> country.name.en,</span>
+<span id="cb2-7">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Code =</span> iso2c) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Congo - Brazzaville"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Republic of the Congo'</span>, Country_Name),</span>
+<span id="cb2-9">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Congo - Kinshasa"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Democratic Republic of the Congo'</span>, Country_Name),</span>
+<span id="cb2-10">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Côte d'Ivoire"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ivory Coast'</span>, Country_Name),</span>
+<span id="cb2-11">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Réunion"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Reunion'</span>, Country_Name),</span>
+<span id="cb2-12">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"St. Helena"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Saint Helena'</span>, Country_Name),</span>
+<span id="cb2-13">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if_else</span>(Country_Name <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span>  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"São Tomé &amp; Príncipe"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sao Tome and Principe'</span>, Country_Name))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="pulling-the-gdp-info" class="level2">
+<h2 class="anchored" data-anchor-id="pulling-the-gdp-info">Pulling the GDP info</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">africa_gdp <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">WDI</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">indicator=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'NY.GDP.PCAP.KD'</span>, </span>
+<span id="cb3-2">                 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">country=</span>africa_countries<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>Country_Code, </span>
+<span id="cb3-3">                 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">start=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1960</span>, </span>
+<span id="cb3-4">                 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">end=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2018</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rename</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Country_Code =</span> iso2c,</span>
+<span id="cb3-6">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">GDP =</span> NY.GDP.PCAP.KD) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(Country_Code, GDP, year)</span></code></pre></div>
+</details>
+</div>
+<p>Let’s look at the GDP as a function of time</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(africa_gdp, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(year, GDP, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color=</span>Country_Code)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb4-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Year'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'GDP per capita'</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/africa-gdp/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Lets get the map of africa.</p>
+<p>Join it all together</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">africa <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> africa_map <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(africa_countries) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(africa_gdp)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="putting-it-all-together-a-movie-of-africas-gdp-over-the-last-80-years." class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together-a-movie-of-africas-gdp-over-the-last-80-years.">Putting it all together, a movie of africas GDP over the last 80 years.</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">p <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> africa <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb6-2"> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> long, </span>
+<span id="cb6-3">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> lat, </span>
+<span id="cb6-4">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">group =</span> group, </span>
+<span id="cb6-5">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log10</span>(GDP))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_fixed</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.3</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_polygon</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb6-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_viridis</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">transition_time</span>(year) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Year: {frame_time}'</span>)</span>
+<span id="cb6-12"></span>
+<span id="cb6-13">anim <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">animate</span>(p)</span>
+<span id="cb6-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">anim_save</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"africa.gif"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">animation =</span> anim)</span>
+<span id="cb6-15"></span>
+<span id="cb6-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># for(year in unique(sort(africa$year))){</span></span>
+<span id="cb6-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># p = africa %&gt;% filter(year == year) %&gt;%</span></span>
+<span id="cb6-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#  ggplot(aes(x = long, y = lat, group = group, fill = log10(GDP))) +</span></span>
+<span id="cb6-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   coord_fixed(1.3) +</span></span>
+<span id="cb6-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   geom_polygon() + </span></span>
+<span id="cb6-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   theme_minimal() + </span></span>
+<span id="cb6-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   scale_fill_viridis()</span></span>
+<span id="cb6-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#   print(p)</span></span>
+<span id="cb6-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># }</span></span></code></pre></div>
+</details>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="/posts/africa-gdp/africa.gif" class="img-fluid figure-img"></p>
+<figcaption>Image</figcaption>
+</figure>
+</div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <guid>/posts/africa-gdp/</guid>
+  <pubDate>Tue, 20 Feb 2018 06:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Determining How long it will take to get your EAD from USCIS</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/uscis-ead/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="scraping-data-off-the-uscis-website" class="level2">
+<h2 class="anchored" data-anchor-id="scraping-data-off-the-uscis-website">Scraping data off the USCIS website</h2>
+<p>I found some code online (https://github.com/co89757/USCISCasePoll/blob/master/poll_uscis.py) to scrape the USCIS website for status updates. I used it to collect the case status for every 10th case between last October and today.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pyquery <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PyQuery <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pq</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> requests</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> smtplib</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> os</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> sys</span>
+<span id="cb1-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> os.path</span>
+<span id="cb1-7"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> re</span>
+<span id="cb1-8"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-9"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> feather</span>
+<span id="cb1-10"></span>
+<span id="cb1-11">STATUS_OK <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-12">STATUS_ERROR <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-13">FILENAME_LASTSTATUS <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> os.path.join(sys.path[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"LAST_STATUS_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{0}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.txt"</span>)</span>
+<span id="cb1-14">mynum <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1890048782</span> <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># THis is my case number</span></span>
+<span id="cb1-15"></span>
+<span id="cb1-16"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> poll_optstatus(casenumber):</span>
+<span id="cb1-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    poll USCIS case status given receipt number (casenumber)</span></span>
+<span id="cb1-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    Args:</span></span>
+<span id="cb1-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        param1: casenumber the case receipt number</span></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    Returns:</span></span>
+<span id="cb1-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        a tuple (status, details) containing status and detailed info</span></span>
+<span id="cb1-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    Raise:</span></span>
+<span id="cb1-24"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">        error:</span></span>
+<span id="cb1-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">    """</span></span>
+<span id="cb1-26">    headers <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {</span>
+<span id="cb1-27">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Accept'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'text/html, application/xhtml+xml, image/jxr, */*'</span>,</span>
+<span id="cb1-28">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Accept-Encoding'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'gzip, deflate'</span>,</span>
+<span id="cb1-29">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Accept-Language'</span>:</span>
+<span id="cb1-30">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'en-US, en; q=0.8, zh-Hans-CN; q=0.5, zh-Hans; q=0.3'</span>,</span>
+<span id="cb1-31">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Cache-Control'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'no-cache'</span>,</span>
+<span id="cb1-32">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Connection'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Keep-Alive'</span>,</span>
+<span id="cb1-33">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Content-Type'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'application/x-www-form-urlencoded'</span>,</span>
+<span id="cb1-34">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Host'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'egov.uscis.gov'</span>,</span>
+<span id="cb1-35">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Referer'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'https://egov.uscis.gov/casestatus/mycasestatus.do'</span>,</span>
+<span id="cb1-36">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'User-Agent'</span>:</span>
+<span id="cb1-37">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'</span></span>
+<span id="cb1-38">    }</span>
+<span id="cb1-39">    url <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://egov.uscis.gov/casestatus/mycasestatus.do"</span></span>
+<span id="cb1-40">    data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"appReceiptNum"</span>: casenumber, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'caseStatusSearchBtn'</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CHECK+STATUS'</span>}</span>
+<span id="cb1-41"></span>
+<span id="cb1-42">    res <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> requests.post(url, data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>data, headers<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>headers)</span>
+<span id="cb1-43">    doc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pq(res.text)</span>
+<span id="cb1-44">    status <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> doc(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'h1'</span>).text()</span>
+<span id="cb1-45">    code <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> STATUS_OK <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> status <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> STATUS_ERROR</span>
+<span id="cb1-46">    details <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> doc(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.text-center p'</span>).text()</span>
+<span id="cb1-47">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (code, status, details)</span>
+<span id="cb1-48"></span>
+<span id="cb1-49"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get every 10th case status</span></span>
+<span id="cb1-50">case_nums <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'YSC'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(i) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1890038932</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1890079632</span>)]</span>
+<span id="cb1-51">vals <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [poll_optstatus(case) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> case <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> case_nums]</span>
+<span id="cb1-52"></span>
+<span id="cb1-53">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame.from_records(vals)</span>
+<span id="cb1-54">df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'case'</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> case_nums</span>
+<span id="cb1-55"></span>
+<span id="cb1-56">feather.write_dataframe(df, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"uscis.feather"</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="data-transformations-and-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="data-transformations-and-cleaning">Data Transformations and cleaning</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(feather)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(lubridate)</span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(magrittr)</span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">cases <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_feather</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"uscis.feather"</span>)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(cases)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>] <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'code'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'status'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'details'</span>)</span>
+<span id="cb3-3"></span>
+<span id="cb3-4">my_case_numeric <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1890048782</span></span>
+<span id="cb3-5">my_case_date <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">parse_date</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"2017-11-21"</span>)</span></code></pre></div>
+</details>
+</div>
+<p>I filtered out all cases that were rejected or cancelled for any reason.</p>
+<p>This leaves behind cases that have either been <strong>processed</strong>, or cases that are still <strong>unprocessed</strong>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">cases <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&lt;&gt;%</span> </span>
+<span id="cb4-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(code <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> ((status <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Case Was Received"</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&amp;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"765"</span>, details)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|</span> </span>
+<span id="cb4-3">         status <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'New Card Is Being Produced'</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">status_date =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">parse_date</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">word</span>(details,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>),<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">format=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%B %d, %Y,"</span>),</span>
+<span id="cb4-5">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">case_numeric =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.numeric</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_extract</span>(case,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"[0-9]+"</span>)))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="unprocessed-cases" class="level2">
+<h2 class="anchored" data-anchor-id="unprocessed-cases">Unprocessed cases</h2>
+<p>First lets look at the distribution of cases that have not yet been processed, including mine:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/uscis-ead/index_files/figure-html/pressure-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see that UCSIS is falling behind on their promise to process applications between 75-90 days. they seem to have finished cases that were submitted in the beginning of November, which was 106 days ago.</p>
+</section>
+<section id="newly-processed-cases" class="level2">
+<h2 class="anchored" data-anchor-id="newly-processed-cases">Newly processed cases</h2>
+<p>Now we will look at the cases that USCIS has recently completed.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">fit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">smooth.spline</span>(cases_pending<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>case_numeric, cases_pending<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>status_date)</span>
+<span id="cb5-2">cases<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>predicted_receival_date <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.Date</span>(</span>
+<span id="cb5-3">                                  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">predict</span>(fit, cases<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>case_numeric)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y, </span>
+<span id="cb5-4">                                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">origin=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1970-01-01"</span>, </span>
+<span id="cb5-5">                                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">tz=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"EST"</span>)</span>
+<span id="cb5-6"></span>
+<span id="cb5-7">cases_pending<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>predicted_receival_date <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.Date</span>(</span>
+<span id="cb5-8">                                          <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">predict</span>(fit, cases_pending<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>case_numeric)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y, </span>
+<span id="cb5-9">                                          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">origin=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1970-01-01"</span>, </span>
+<span id="cb5-10">                                          <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">tz=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"EST"</span>)</span>
+<span id="cb5-11"></span>
+<span id="cb5-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(cases, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>predicted_receival_date, </span>
+<span id="cb5-13">                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> status, </span>
+<span id="cb5-14">                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> status)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb5-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_jitter</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb5-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_vline</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xintercept =</span> my_case_date) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-17">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggtitle</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Case Status by Date Recieved'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'My case is indicated by the vertical line'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-18">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Date Recieved'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Case Status'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-20">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_classic</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_color_discrete</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Process Status"</span>,</span>
+<span id="cb5-22">                         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Case Was Received"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"New Card Is Being Produced"</span>),</span>
+<span id="cb5-23">                         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">labels=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Unprocessed"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Processed"</span>))</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/uscis-ead/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From this plot, it seems like cases around mid November are currently being processed, my official date is November 21st.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>From this data, I can make the following observations:</p>
+<ul>
+<li>Cases with the same date as mine have just started being processed</li>
+<li>It seems like it takes about 21 days for an application date to go from <strong>completely unprocessed</strong> to <strong>completely processed</strong>.</li>
+</ul>
+<p><strong><strong>Therefore:</strong></strong></p>
+<ul>
+<li>There is a small, but non-zero chance it will be processed in the next 4 days.</li>
+<li>There is a 50% chance it will be processed in the next 10 days.</li>
+<li>There is close to a 100% chance that my case will be processed in the next 21 days.</li>
+</ul>
+</section>
+<section id="appendix" class="level2">
+<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<section id="converting-case-number-to-date-recieved" class="level3">
+<h3 class="anchored" data-anchor-id="converting-case-number-to-date-recieved">Converting Case number to date recieved</h3>
+<p>Cases with “New Card Is Being Produced” catagory do not indicate the date that those cases were first recieved, therefore I needed to convert the <code>case number</code> to the date the application was recieved. This is well approximated using a simple spline:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(cases_pending, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x=</span>case_numeric, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> status_date)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span>predicted_receival_date), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Case Number'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylab</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Case Recieved'</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_classic</span>()</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/uscis-ead/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <guid>/posts/uscis-ead/</guid>
+  <pubDate>Tue, 13 Feb 2018 06:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Exploring Homoscedasticity in Gene Expression</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/exploring-homoscedasticity/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(DESeq2)</span>
+<span id="cb1-2">dds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">makeExampleDESeqDataSet</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50000</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">m=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb1-3">reads <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">counts</span>(dds)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log2</span>(reads[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]),<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log2</span>(reads[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]))</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">reads_mean <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apply</span>(reads,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,mean)</span>
+<span id="cb2-2">reads_sd <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apply</span>(reads,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, sd)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(reads_mean, reads_sd)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now lets normalize library size and esimate dispersion:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">dds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">estimateSizeFactors</span>(dds)</span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#estimateDispersions(dds)</span></span>
+<span id="cb3-3">ntd <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">assay</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">normTransform</span>(dds)) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># regular log2 with a psudocount</span></span>
+<span id="cb3-4">rld <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">assay</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rlog</span>(dds)) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># doing the same thing as log2, but not allowing low counts to explode </span></span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"vsn"</span>)</span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">meanSdPlot</span>(ntd, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ranks=</span>F)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">meanSdPlot</span>(rld, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ranks=</span>F)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So here we can see that we have shrunk the sd at low levels</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(rld[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],rld[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>])</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>now lets do it ourselves:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">ntd_mean <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apply</span>(ntd,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,mean)</span>
+<span id="cb7-2">ntd_sd <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apply</span>(ntd,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,sd)</span>
+<span id="cb7-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(ntd_mean,ntd_sd)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mgcv)</span>
+<span id="cb8-2">model <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">smooth.spline</span>(ntd_mean, ntd_sd) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># build the model</span></span>
+<span id="cb8-3">fit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">predict</span>( model , <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">se =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span> )<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>fit <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># estimated values</span></span>
+<span id="cb8-4">se <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">predict</span>( model , <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">se =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>se.fit <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># standard error</span></span>
+<span id="cb8-5"></span>
+<span id="cb8-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Confidence interval:</span></span>
+<span id="cb8-7">lcl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> fit <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.96</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> se</span>
+<span id="cb8-8">ucl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> fit <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.96</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> se</span>
+<span id="cb8-9"></span>
+<span id="cb8-10"></span>
+<span id="cb8-11">fit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">smooth.spline</span>(ntd_mean, ntd_sd)      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># smooth.spline fit</span></span>
+<span id="cb8-12">res <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> (fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>yin <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>lev)      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># jackknife residuals</span></span>
+<span id="cb8-13">sigma <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">var</span>(res))                     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># estimate sd</span></span>
+<span id="cb8-14"></span>
+<span id="cb8-15">upper <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>sigma<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>lev)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># upper 95% conf. band</span></span>
+<span id="cb8-16">lower <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>sigma<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>lev) </span>
+<span id="cb8-17"></span>
+<span id="cb8-18">data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">estimated_mean =</span> fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>x,</span>
+<span id="cb8-19">                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">estimated_sd =</span> fit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>y,</span>
+<span id="cb8-20">                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lower_bound =</span> lower,</span>
+<span id="cb8-21">                  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">upper_bound =</span> upper)</span>
+<span id="cb8-22"></span>
+<span id="cb8-23"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb8-24"></span>
+<span id="cb8-25"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(data) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb8-26">       <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_line</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> estimated_mean,</span>
+<span id="cb8-27">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> estimated_sd)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb8-28">       <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_ribbon</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> estimated_mean,</span>
+<span id="cb8-29">                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> upper_bound,</span>
+<span id="cb8-30">                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> lower_bound), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">alpha=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/exploring-homoscedasticity/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <guid>/posts/exploring-homoscedasticity/</guid>
+  <pubDate>Thu, 01 Feb 2018 06:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Analysis of War - the card game</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/war-card-game/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduciton" class="level1">
+<h1>Introduciton</h1>
+<p>Have you ever played War? have you ever wondered <strong>When will this be over!?</strong></p>
+<p>Well I have, and after a weekend of being forced to play with my little cousin, I decided enough is enough. Lets do some simulation and some data analysis to answer some basic questions:</p>
+<ul>
+<li>How long does the average game take?</li>
+<li>How does the initial hand affect your winning percentage?
+<ul>
+<li>How often will I win if I have all the aces?</li>
+<li>How often will I win depending on the average hand strength?</li>
+</ul></li>
+<li>How does the ante size affect game duration?</li>
+</ul>
+<section id="rules" class="level2">
+<h2 class="anchored" data-anchor-id="rules">Rules</h2>
+</section>
+</section>
+<section id="simulation-in-python" class="level1">
+<h1>Simulation in python</h1>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>Since I am not too used to dealing with numerical simulations of card games, I’m going to set up some classes in python. Once the simulations are done I’ll import the data into R to do some analysis.</p>
+<p>Here are the two classes I set up:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> random <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> shuffle</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Player():</span>
+<span id="cb1-4">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""Player is the class that represents a player. Each player has a hand of cards. The class also includes getting cards from a players hand, and adding the winnings to the bottom of the players hand"""</span></span>
+<span id="cb1-5">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, hand, name):</span>
+<span id="cb1-6">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.hand <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hand[:]</span>
+<span id="cb1-7">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> name</span>
+<span id="cb1-8">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Once a player wins a battle, they need to add their winnings to the bottom of their hand. Since the rules don't seem to indicate their order, I explicitly shuffle the winnings before adding them.</span></span>
+<span id="cb1-9">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> add_winnings(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, cards):</span>
+<span id="cb1-10">        shuffle(cards)</span>
+<span id="cb1-11">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.hand <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> cards</span>
+<span id="cb1-12">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Method to get next card. If the player has run out of cards, this method returns None, which indicates to the Game class that the game is over and the player has lost. </span></span>
+<span id="cb1-13">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> get_next_card(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb1-14">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.hand)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>:</span>
+<span id="cb1-15">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span>
+<span id="cb1-16">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span>:</span>
+<span id="cb1-17">            next_card <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.hand.pop(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb1-18">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>(next_card)</span>
+<span id="cb1-19"></span>
+<span id="cb1-20"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> Game():</span>
+<span id="cb1-21">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">"""docstring for Game."""</span></span>
+<span id="cb1-22">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, war_ante):</span>
+<span id="cb1-23">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.war_ante <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> war_ante</span>
+<span id="cb1-24">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.deck <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [i <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)]</span>
+<span id="cb1-25">        shuffle(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.deck)</span>
+<span id="cb1-26">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.p0_start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.deck[:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>]</span>
+<span id="cb1-27">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.p1_start <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.deck[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">26</span>:]</span>
+<span id="cb1-28">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Player(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.p0_start, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Player 0"</span>)</span>
+<span id="cb1-29">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Player(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.p1_start, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Player 1"</span>)</span>
+<span id="cb1-30">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.winner <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span></span>
+<span id="cb1-31">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.num_turns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-32">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> war(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, pot, extra_cards):</span>
+<span id="cb1-33">        pot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> [<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_0.get_next_card() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,extra_cards)] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> [<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_1.get_next_card() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,extra_cards)]</span>
+<span id="cb1-34">        card_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_0.get_next_card()</span>
+<span id="cb1-35">        card_1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_1.get_next_card()</span>
+<span id="cb1-36">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> card_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb1-37">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.winner <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-38">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>()</span>
+<span id="cb1-39">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> card_1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb1-40">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.winner <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb1-41">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span>()</span>
+<span id="cb1-42">        pot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> [card_0, card_1]</span>
+<span id="cb1-43">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> card_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> card_1:</span>
+<span id="cb1-44">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_0.add_winnings(pot)</span>
+<span id="cb1-45">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> card_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> card_1:</span>
+<span id="cb1-46">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.player_1.add_winnings(pot)</span>
+<span id="cb1-47">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">elif</span> card_0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> card_1:</span>
+<span id="cb1-48">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.war(pot, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.war_ante)</span>
+<span id="cb1-49">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> play(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb1-50">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.winner <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb1-51">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.num_turns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-52">            <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.war([], <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="simulation" class="level2">
+<h2 class="anchored" data-anchor-id="simulation">Simulation</h2>
+<p>Now lets run the simulations:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> numpy <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> np</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb2-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> game <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> ante <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">11</span>):</span>
+<span id="cb2-6">    games <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [Game(ante) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)]</span>
+<span id="cb2-7">    [g.play() <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> g <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> games]</span>
+<span id="cb2-8">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [[g.war_ante, g.winner, g.num_turns, np.mean(g.p0_start)] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> [g.p0_start.count(c) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> c <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">14</span>)] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> g <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> games]</span>
+<span id="cb2-9">    all_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame.from_records(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">all</span>)</span>
+<span id="cb2-10">    all_df.to_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'output/results_'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>(anti) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'.csv'</span>, index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="running-the-analysis-in-r" class="level1">
+<h1>Running the analysis in R</h1>
+<section id="setup-1" class="level2">
+<h2 class="anchored" data-anchor-id="setup-1">Setup</h2>
+<p>First lets load up packages and set up the data from python</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">results_paths <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list.files</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'output'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'results_[0-9]+.csv'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">full.names =</span> T)</span>
+<span id="cb4-2">results_all <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">do.call</span>(rbind, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(results_paths, read.csv))</span>
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(results_all) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'war_ante'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'winner'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'num_turns'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'player0_mean'</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">paste0</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"player0_"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.character</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'J'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Q'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'K'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'A'</span>),<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'s'</span>))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<p>Lets take a look at the data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(results_all)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  war_ante winner num_turns player0_mean player0_2s player0_3s player0_4s
+1        0      1       180     6.576923          3          2          4
+2        0      0       109     7.423077          2          3          2
+3        0      0       538     7.692308          1          1          3
+4        0      0       330     7.307692          1          2          1
+5        0      1       865     7.807692          1          1          2
+6        0      1       292     6.307692          1          3          3
+  player0_5s player0_6s player0_7s player0_8s player0_9s player0_10s player0_Js
+1          0          1          3          3          1           1          1
+2          2          1          0          2          1           2          3
+3          2          2          2          2          0           1          4
+4          2          2          4          2          1           4          1
+5          2          3          2          2          1           2          1
+6          4          2          2          1          1           3          2
+  player0_Qs player0_Ks player0_As
+1          4          2          1
+2          2          4          2
+3          3          3          2
+4          2          2          2
+5          2          4          3
+6          1          2          1</code></pre>
+</div>
+</div>
+<p>For normal games, the war ante is 2, so lets analyze that first:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">results <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> results_all <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(war_ante <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+</details>
+</div>
+<p>Now lets get to the questions: ### How long does the average game take Lets use a histogram to look at the distribution of games</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"num_turns"</span>], </span>
+<span id="cb8-2">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,</span>
+<span id="cb8-3">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Number of turns'</span>,</span>
+<span id="cb8-4">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Distribution of Game Lengths'</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The number of turns seems to have a very large right sided tail, and is not normally distributed. Since I’m interested in knowing the number of turns in terms of order of magnitude, lets log the data. Logging the data will also make the distribution resemble the normal distribution.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log10</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"num_turns"</span>]), </span>
+<span id="cb9-2">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>,</span>
+<span id="cb9-3">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'log10(Number of turns)'</span>,</span>
+<span id="cb9-4">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Distribution of Game Lengths'</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qqnorm</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'num_turns'</span>], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'QQ plot for untransformed number of turns'</span>)</span>
+<span id="cb10-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qqline</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'num_turns'</span>])</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qqnorm</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log10</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'num_turns'</span>]), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'QQ plot for log10 transformed number of turns'</span>)</span>
+<span id="cb11-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qqline</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log10</span>(results[,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'num_turns'</span>]))</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So it looks like 80% of regular games of war last between 85 and 657 turns, with a mean of ~320 turns.</p>
+<section id="how-does-the-initial-hand-affect-your-winning-percentage" class="level3">
+<h3 class="anchored" data-anchor-id="how-does-the-initial-hand-affect-your-winning-percentage">How does the initial hand affect your winning percentage?</h3>
+<section id="how-often-will-i-win-if-i-have-all-the-aces" class="level4">
+<h4 class="anchored" data-anchor-id="how-often-will-i-win-if-i-have-all-the-aces">How often will I win if I have all the aces?</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">tab <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> results <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(winner, player0_As) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> table</span>
+<span id="cb12-2">per <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">apply</span>(tab,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(x))</span>
+<span id="cb12-3"></span>
+<span id="cb12-4">tab</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      player0_As
+winner    0    1    2    3    4
+     0   93  825 1924 1681  493
+     1  445 1649 1974  813  103</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">per</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      player0_As
+winner         0         1         2         3         4
+     0 0.1728625 0.3334681 0.4935865 0.6740176 0.8271812
+     1 0.8271375 0.6665319 0.5064135 0.3259824 0.1728188</code></pre>
+</div>
+</div>
+<p>It seems that with 4 aces, a player will win 82% of the time. with 3 aces they will win 67% of the time, and will have about even chances if each player has 2 aces.</p>
+</section>
+<section id="how-often-will-i-win-depending-on-the-average-hand-strength" class="level4">
+<h4 class="anchored" data-anchor-id="how-often-will-i-win-depending-on-the-average-hand-strength">How often will I win depending on the average hand strength?</h4>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">results <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(player0_mean, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.factor</span>(winner))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_density</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">alpha=</span>.<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">model <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">glm</span>(winner<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span>player0_mean, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">binomial</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">link=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'logit'</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> results)</span>
+<span id="cb17-2"></span>
+<span id="cb17-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(results<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>player0_mean, </span>
+<span id="cb17-4">     <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">predict</span>(model, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'response'</span>), </span>
+<span id="cb17-5">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), </span>
+<span id="cb17-6">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Player zero</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\'</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">s starting strength'</span>, </span>
+<span id="cb17-7">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Chance of player zero winning'</span>)</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="how-does-the-ante-size-affect-game-duration" class="level3">
+<h3 class="anchored" data-anchor-id="how-does-the-ante-size-affect-game-duration">How does the ante size affect game duration?</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">results_all <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">factor</span>(war_ante), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log10</span>(num_turns))) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_violin</span>()</span></code></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/war-card-game/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It seems that the larger the war_ante, the faster the game will be over! So if you’re playing your cousin and want the average game over in about 100 turns, changing the rules to have an ante of 6 cards during a “war” is the way to go!</p>
+
+
+<!-- -->
+
+</section>
+</section>
+</section>
+
+ ]]></description>
+  <guid>/posts/war-card-game/</guid>
+  <pubDate>Sat, 24 Jun 2017 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>The Modularity of Kaggle NCAA Predictions</title>
+  <dc:creator>Kieran Mace</dc:creator>
+  <link>/posts/ncaa-predictions/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="setup" class="level1">
+<h1>Setup:</h1>
+<p>We want to look at all the kaggle submissions for 2016. first of all we need to download the data <a href="https://www.kaggle.com/wcukierski/2016-march-ml-mania/downloads/2016-march-machine-learning-mania-predictions.zip" title="Kaggle NCAA Predictions">here</a></p>
+</section>
+<section id="analysis" class="level1">
+<h1>Analysis</h1>
+<p>Now lets run some R! First lets load in the data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(readr)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(stringr)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(reshape2)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rm</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">list=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span>())</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get list of all files</span></span>
+<span id="cb1-9">files <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list.files</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">path=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'predictions/'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pattern=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'*.csv'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">full.names=</span>T)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load all files</span></span>
+<span id="cb1-12">allPredictions <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(files, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(f) <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(f, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">stringsAsFactors =</span> F))</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="join-all-the-predicitons-remove-bad-predictions-and-calulate-correlation" class="level1">
+<h1>Join all the predicitons, remove bad predictions, and calulate correlation</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">pred <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(allPredictions, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) x[,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]))</span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># some preditions renedered to factor, remove these</span></span>
+<span id="cb2-3">pred.clean <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> pred[,<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unlist</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(pred,class))<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"factor"</span>)]</span>
+<span id="cb2-4">cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cor</span>(pred.clean),<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb2-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># some correlations result in NA, remove those</span></span>
+<span id="cb2-6">idx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is.na</span>(cormat[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,]))</span>
+<span id="cb2-7">cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> cormat[<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>idx,<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>idx]</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="define-a-distance-metric-between-predictions-and-order-them-by-similarity" class="level1">
+<h1>Define a distance metric between predictions, and order them by similarity</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">reorder_cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(cormat){</span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Use correlation between variables as distance</span></span>
+<span id="cb3-3">dd <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.dist</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>cormat)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb3-4">hc <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hclust</span>(dd)</span>
+<span id="cb3-5">cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span>cormat[hc<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>order, hc<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>order]</span>
+<span id="cb3-6">}</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="rename-the-predictions-and-melt-for-plotting" class="level1">
+<h1>Rename the predictions and melt for plotting</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reorder_cormat</span>(cormat)</span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(cormat) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dim</span>(cormat)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rownames</span>(cormat) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dim</span>(cormat)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-4"></span>
+<span id="cb4-5"></span>
+<span id="cb4-6">melted_cormat <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">melt</span>(cormat, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">na.rm =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+</details>
+</div>
+</section>
+<section id="create-the-heatmap" class="level1">
+<h1>Create the heatmap</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create a ggheatmap</span></span>
+<span id="cb5-2">covariance_plot <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>(melted_cormat, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(Var2, Var1, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> value)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_raster</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_fill_gradient2</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">low =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"blue"</span>,</span>
+<span id="cb5-4">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">high =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>,</span>
+<span id="cb5-5">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mid =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb5-6">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">midpoint =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,</span>
+<span id="cb5-7">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">limit =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb5-8">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">space =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Lab"</span>,</span>
+<span id="cb5-9">                     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">name=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Pearson</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Correlation"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-10">                     <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-11">                     <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb5-12">                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title.x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>(),</span>
+<span id="cb5-13">                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axis.title.y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_blank</span>())</span>
+<span id="cb5-14">covariance_plot</span></code></pre></div>
+</details>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="/posts/ncaa-predictions/prediction_modularity.png" class="img-fluid figure-img"></p>
+<figcaption>Plot</figcaption>
+</figure>
+</div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <guid>/posts/ncaa-predictions/</guid>
+  <pubDate>Sun, 17 Apr 2016 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
