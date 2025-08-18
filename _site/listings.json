@@ -2,6 +2,8 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/firearm-storage/context.html",
+      "/posts/firearm-storage/firearm-storage-analysis.html",
       "/posts/mandelbrot/index.html",
       "/posts/africa-gdp/index.html",
       "/posts/uscis-ead/index.html",
@@ -13,6 +15,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/firearm-storage/context.html",
+      "/posts/firearm-storage/firearm-storage-analysis.html",
       "/posts/mandelbrot/index.html",
       "/posts/africa-gdp/index.html",
       "/posts/uscis-ead/index.html",

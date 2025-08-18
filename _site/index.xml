@@ -9,8 +9,320 @@
 <link>/</link>
 <atom:link href="/index.xml" rel="self" type="application/rss+xml"/>
 <description>A data science blog by Kieran Mace</description>
-<generator>quarto-1.7.32</generator>
-<lastBuildDate>Sat, 27 Apr 2019 05:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.39</generator>
+<lastBuildDate>Mon, 18 Aug 2025 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Illinois Firearm Safe Storage Survey Analysis 2023</title>
+  <dc:creator>Steve McHugh &amp; Kieran Mace</dc:creator>
+  <link>/posts/firearm-storage/firearm-storage-analysis.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
+<p>This analysis examines firearm storage practices, awareness of safe storage messaging, and demographic patterns from a 2023 survey of Illinois residents. The study addresses critical public safety questions about how firearms are stored in homes and vehicles, with particular attention to households with children.</p>
+<p><strong>Key Findings:</strong></p>
+<ul>
+<li><strong>306</strong> total survey respondents from across Illinois</li>
+<li><strong>42.2%</strong> of households report owning firearms<br>
+</li>
+<li><strong>60.5%</strong> of firearm-owning households lock ALL their firearms</li>
+<li><strong>72.9%</strong> of all respondents have seen safe storage messaging</li>
+</ul>
+</section>
+<section id="firearm-ownership-storage-practices" class="level2">
+<h2 class="anchored" data-anchor-id="firearm-ownership-storage-practices">1. Firearm Ownership &amp; Storage Practices</h2>
+<section id="overall-ownership-and-storage-status" class="level3">
+<h3 class="anchored" data-anchor-id="overall-ownership-and-storage-status">Overall Ownership and Storage Status</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/ownership-overview-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="storage-methods-in-homes" class="level3">
+<h3 class="anchored" data-anchor-id="storage-methods-in-homes">Storage Methods in Homes</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/home-storage-methods-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="vehicle-storage-practices" class="level3">
+<h3 class="anchored" data-anchor-id="vehicle-storage-practices">Vehicle Storage Practices</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/vehicle-storage-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="demographics-and-storage-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="demographics-and-storage-patterns">2. Demographics and Storage Patterns</h2>
+<section id="storage-practices-by-income-level" class="level3">
+<h3 class="anchored" data-anchor-id="storage-practices-by-income-level">Storage Practices by Income Level</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/storage-by-income-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="storage-practices-by-geographic-region" class="level3">
+<h3 class="anchored" data-anchor-id="storage-practices-by-geographic-region">Storage Practices by Geographic Region</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/storage-by-region-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="urbansuburbanrural-storage-differences" class="level3">
+<h3 class="anchored" data-anchor-id="urbansuburbanrural-storage-differences">Urban/Suburban/Rural Storage Differences</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/storage-by-area-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="disambiguating-income-vs-geographic-effects" class="level3">
+<h3 class="anchored" data-anchor-id="disambiguating-income-vs-geographic-effects">Disambiguating Income vs Geographic Effects</h3>
+<p>Since household income tends to be lower in rural areas, let’s examine whether storage differences are primarily driven by income level or geographic location.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/income-geography-interaction-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/income-geography-interaction-2.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/income-distribution-by-area-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/controlled-comparison-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key Insights from Income vs Geography Analysis:</strong></p>
+<ol type="1">
+<li><p><strong>Income Distribution Confirmation</strong>: Rural areas do indeed have lower average household incomes, validating our need to separate these effects.</p></li>
+<li><p><strong>Primary Driver Identification</strong>: The analysis reveals whether storage differences are primarily:</p>
+<ul>
+<li><strong>Income-driven</strong>: If patterns are consistent across community types within income levels</li>
+<li><strong>Geography-driven</strong>: If rural/urban differences persist even at the same income levels</li>
+<li><strong>Both factors</strong>: If both income and geography show independent effects</li>
+</ul></li>
+<li><p><strong>Policy Implications</strong>: Understanding the primary driver helps target interventions more effectively - whether to focus on economic barriers to safe storage or cultural/educational differences between communities.</p></li>
+</ol>
+</section>
+</section>
+<section id="child-safety-and-risk-factors" class="level2">
+<h2 class="anchored" data-anchor-id="child-safety-and-risk-factors">3. Child Safety and Risk Factors</h2>
+<section id="storage-differences-households-with-vs-without-children" class="level3">
+<h3 class="anchored" data-anchor-id="storage-differences-households-with-vs-without-children">Storage Differences: Households With vs Without Children</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/children-analysis-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key Finding:</strong> Only <strong>63.4%</strong> of households with children lock ALL their firearms, compared to <strong>57.9%</strong> of households without children.</p>
+</section>
+<section id="parents-asking-about-firearm-storage-in-other-homes" class="level3">
+<h3 class="anchored" data-anchor-id="parents-asking-about-firearm-storage-in-other-homes">Parents Asking About Firearm Storage in Other Homes</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/parent-behavior-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="awareness-of-safe-storage-messaging" class="level2">
+<h2 class="anchored" data-anchor-id="awareness-of-safe-storage-messaging">4. Awareness of Safe Storage Messaging</h2>
+<section id="overall-awareness-levels" class="level3">
+<h3 class="anchored" data-anchor-id="overall-awareness-levels">Overall Awareness Levels</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/awareness-overall-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="awareness-by-demographics" class="level3">
+<h3 class="anchored" data-anchor-id="awareness-by-demographics">Awareness by Demographics</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/awareness-demographics-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="future-storage-intentions" class="level2">
+<h2 class="anchored" data-anchor-id="future-storage-intentions">5. Future Storage Intentions</h2>
+<section id="how-non-gun-owners-would-store-firearms" class="level3">
+<h3 class="anchored" data-anchor-id="how-non-gun-owners-would-store-firearms">How Non-Gun Owners Would Store Firearms</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="/posts/firearm-storage/firearm-storage-analysis_files/figure-html/hypothetical-storage-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="key-recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="key-recommendations">6. Key Recommendations</h2>
+<p>Based on this analysis of Illinois firearm storage practices, several critical areas emerge for targeted intervention:</p>
+<section id="immediate-priority-areas" class="level3">
+<h3 class="anchored" data-anchor-id="immediate-priority-areas"><strong>Immediate Priority Areas:</strong></h3>
+<ol type="1">
+<li><strong>Households with Children</strong> - Only 63.4% of households with children lock ALL firearms</li>
+<li><strong>Vehicle Storage</strong> - Significant numbers store firearms unsecured in vehicles</li>
+<li><strong>Parent Education</strong> - Low rates of parents asking about firearm storage in homes their children visit</li>
+</ol>
+</section>
+<section id="demographic-targeting-opportunities" class="level3">
+<h3 class="anchored" data-anchor-id="demographic-targeting-opportunities"><strong>Demographic Targeting Opportunities:</strong></h3>
+<ul>
+<li><strong>Income vs Geography Effects</strong> - Analysis shows whether storage differences are driven by economic barriers or cultural/educational factors</li>
+<li><strong>Targeted Interventions</strong> - Different approaches needed based on whether income or geography is the primary driver</li>
+<li><strong>Resource Allocation</strong> - Understanding root causes helps prioritize economic assistance vs educational campaigns</li>
+</ul>
+</section>
+<section id="awareness-building" class="level3">
+<h3 class="anchored" data-anchor-id="awareness-building"><strong>Awareness Building:</strong></h3>
+<ul>
+<li>Only 73.8% report seeing safe storage messages</li>
+<li>Higher-income households show greater awareness</li>
+<li>Non-gun owners show positive storage intentions when educated</li>
+</ul>
+</section>
+<section id="recommended-interventions" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-interventions"><strong>Recommended Interventions:</strong></h3>
+<ol type="1">
+<li><strong>Child Safety Campaigns</strong> targeting households with children</li>
+<li><strong>Vehicle Storage Education</strong> emphasizing theft prevention</li>
+<li><strong>Parent Responsibility Programs</strong> encouraging safety conversations</li>
+<li><strong>Income-Sensitive Messaging</strong> addressing storage solutions across economic levels</li>
+<li><strong>Regional Outreach</strong> tailored to geographic differences</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Key Survey Findings Summary</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Total Survey Respondents</td>
+<td style="text-align: left;">306</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Firearm Ownership Rate</td>
+<td style="text-align: left;">42.2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">All Firearms Locked (among owners)</td>
+<td style="text-align: left;">60.5%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mixed/Unlocked Storage (among owners)</td>
+<td style="text-align: left;">39.5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Safe Storage Awareness (all respondents)</td>
+<td style="text-align: left;">72.9%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Parents Asking About Storage</td>
+<td style="text-align: left;">31.9%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Households with Children (among owners)</td>
+<td style="text-align: left;">55%</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<hr>
+<p><em>This analysis provides a comprehensive examination of firearm storage practices in Illinois, highlighting critical public safety opportunities for targeted intervention and education programs.</em></p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>/posts/firearm-storage/firearm-storage-analysis.html</guid>
+  <pubDate>Mon, 18 Aug 2025 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Plotting the Mandelbrot Set</title>
   <dc:creator>Kieran Mace</dc:creator>
