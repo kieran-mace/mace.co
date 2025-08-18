@@ -159,5 +159,68 @@
     "title": "About",
     "section": "",
     "text": "Hey there,\nI hope that this site serves as a resource for data scientists around the world. Hopefully you will find some of this information useful. Most code will be in R, but I’m beginging to learn TensorFlow and SciKitLearn which is going to be awesome! I am a graduate student at UCSF doing high-throughput bioinformatics, with a concentration in Systems Biology and complex biologcal system. After I graduate I hope to apply my skills in data analysis to hard problems in Data Science."
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "",
+    "text": "This analysis examines firearm storage practices, awareness of safe storage messaging, and demographic patterns from a 2023 survey of Illinois residents. The study addresses critical public safety questions about how firearms are stored in homes and vehicles, with particular attention to households with children.\nKey Findings:\n\n306 total survey respondents from across Illinois\n42.2% of households report owning firearms\n\n60.5% of firearm-owning households lock ALL their firearms\n72.9% of all respondents have seen safe storage messaging"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#executive-summary",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#executive-summary",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "",
+    "text": "This analysis examines firearm storage practices, awareness of safe storage messaging, and demographic patterns from a 2023 survey of Illinois residents. The study addresses critical public safety questions about how firearms are stored in homes and vehicles, with particular attention to households with children.\nKey Findings:\n\n306 total survey respondents from across Illinois\n42.2% of households report owning firearms\n\n60.5% of firearm-owning households lock ALL their firearms\n72.9% of all respondents have seen safe storage messaging"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#firearm-ownership-storage-practices",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#firearm-ownership-storage-practices",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "1. Firearm Ownership & Storage Practices",
+    "text": "1. Firearm Ownership & Storage Practices\n\nOverall Ownership and Storage Status\n\n\n\n\n\n\n\n\n\n\n\nStorage Methods in Homes\n\n\n\n\n\n\n\n\n\n\n\nVehicle Storage Practices"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#demographics-and-storage-patterns",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#demographics-and-storage-patterns",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "2. Demographics and Storage Patterns",
+    "text": "2. Demographics and Storage Patterns\n\nStorage Practices by Income Level\n\n\n\n\n\n\n\n\n\n\n\nStorage Practices by Geographic Region\n\n\n\n\n\n\n\n\n\n\n\nUrban/Suburban/Rural Storage Differences\n\n\n\n\n\n\n\n\n\n\n\nDisambiguating Income vs Geographic Effects\nSince household income tends to be lower in rural areas, let’s examine whether storage differences are primarily driven by income level or geographic location.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nKey Insights from Income vs Geography Analysis:\n\nIncome Distribution Confirmation: Rural areas do indeed have lower average household incomes, validating our need to separate these effects.\nPrimary Driver Identification: The analysis reveals whether storage differences are primarily:\n\nIncome-driven: If patterns are consistent across community types within income levels\nGeography-driven: If rural/urban differences persist even at the same income levels\nBoth factors: If both income and geography show independent effects\n\nPolicy Implications: Understanding the primary driver helps target interventions more effectively - whether to focus on economic barriers to safe storage or cultural/educational differences between communities."
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#child-safety-and-risk-factors",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#child-safety-and-risk-factors",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "3. Child Safety and Risk Factors",
+    "text": "3. Child Safety and Risk Factors\n\nStorage Differences: Households With vs Without Children\n\n\n\n\n\n\n\n\n\nKey Finding: Only 63.4% of households with children lock ALL their firearms, compared to 57.9% of households without children.\n\n\nParents Asking About Firearm Storage in Other Homes"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#awareness-of-safe-storage-messaging",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#awareness-of-safe-storage-messaging",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "4. Awareness of Safe Storage Messaging",
+    "text": "4. Awareness of Safe Storage Messaging\n\nOverall Awareness Levels\n\n\n\n\n\n\n\n\n\n\n\nAwareness by Demographics"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#future-storage-intentions",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#future-storage-intentions",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "5. Future Storage Intentions",
+    "text": "5. Future Storage Intentions\n\nHow Non-Gun Owners Would Store Firearms"
+  },
+  {
+    "objectID": "posts/firearm-storage/firearm-storage-analysis.html#key-recommendations",
+    "href": "posts/firearm-storage/firearm-storage-analysis.html#key-recommendations",
+    "title": "Illinois Firearm Safe Storage Survey Analysis 2023",
+    "section": "6. Key Recommendations",
+    "text": "6. Key Recommendations\nBased on this analysis of Illinois firearm storage practices, several critical areas emerge for targeted intervention:\n\nImmediate Priority Areas:\n\nHouseholds with Children - Only 63.4% of households with children lock ALL firearms\nVehicle Storage - Significant numbers store firearms unsecured in vehicles\nParent Education - Low rates of parents asking about firearm storage in homes their children visit\n\n\n\nDemographic Targeting Opportunities:\n\nIncome vs Geography Effects - Analysis shows whether storage differences are driven by economic barriers or cultural/educational factors\nTargeted Interventions - Different approaches needed based on whether income or geography is the primary driver\nResource Allocation - Understanding root causes helps prioritize economic assistance vs educational campaigns\n\n\n\nAwareness Building:\n\nOnly 73.8% report seeing safe storage messages\nHigher-income households show greater awareness\nNon-gun owners show positive storage intentions when educated\n\n\n\nRecommended Interventions:\n\nChild Safety Campaigns targeting households with children\nVehicle Storage Education emphasizing theft prevention\nParent Responsibility Programs encouraging safety conversations\nIncome-Sensitive Messaging addressing storage solutions across economic levels\nRegional Outreach tailored to geographic differences\n\n\n\n\nKey Survey Findings Summary\n\n\nMetric\nValue\n\n\n\n\nTotal Survey Respondents\n306\n\n\nFirearm Ownership Rate\n42.2%\n\n\nAll Firearms Locked (among owners)\n60.5%\n\n\nMixed/Unlocked Storage (among owners)\n39.5%\n\n\nSafe Storage Awareness (all respondents)\n72.9%\n\n\nParents Asking About Storage\n31.9%\n\n\nHouseholds with Children (among owners)\n55%\n\n\n\n\n\n\n\n\nThis analysis provides a comprehensive examination of firearm storage practices in Illinois, highlighting critical public safety opportunities for targeted intervention and education programs."
+  },
+  {
+    "objectID": "posts/firearm-storage/context.html",
+    "href": "posts/firearm-storage/context.html",
+    "title": "",
+    "section": "",
+    "text": "Code\n\n\n\n\nKey Research Questions to Address: 1. Awareness & Education\nWhat percentage of households are aware of firearm safe storage messages and recommendations? Where are people encountering these messages (gun shops, news, billboards, etc.)? How does awareness vary by demographics (region, urban/suburban/rural, income level)?\n\nOwnership & Storage Practices\n\nWhat percentage of households own firearms? Of firearm-owning households:\nWhat percentage lock ALL their firearms? What percentage leave some or all firearms unlocked? What storage methods are used (safes, biometric safes, cable locks, trigger locks, unlocked locations)? How many store firearms in vehicles, and how are these secured?\n\nRisk Factors & Demographics\n\nHow do storage practices differ between households with and without children? What are the storage differences by income level, geographic region, and urban/rural status? What percentage of firearms in vehicles are stored unsecured?\n\nChild Safety Behaviors\n\nAmong parents/guardians, what percentage ask about firearm presence and storage when their children visit other homes? How does this behavior correlate with awareness of safe storage messaging?\n\nFuture Intentions\n\nAmong non-gun owners, how would they store a firearm if they obtained one?\nData Collection Requirements:\nSample size: Minimum 300 respondents per wave Demographics: Age 21+, capture location (region/urban-rural), income, household composition Survey length: Keep under 2 minutes Platform: Online survey accessible on mobile devices Frequency: Annual or bi-annual tracking\nCritical Metrics to Track Over Time:\nPercentage with all firearms locked (goal: increase year-over-year) Percentage storing unsecured firearms in vehicles (goal: decrease) Awareness of safe storage messaging (goal: increase) Parents asking about firearms in homes children visit (goal: increase)\nAnalysis Segments:\nGeographic: Northeast, Northwest, Central, South regions Community type: Urban, Suburban, Rural Household composition: With/without children Income levels: &lt;$50K, $50-100K, $100K+ Gun ownership status"
   }
 ]
