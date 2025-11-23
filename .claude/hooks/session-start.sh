@@ -6,6 +6,9 @@ if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
 
+# Enable async mode for faster session startup
+echo '{"async": true, "asyncTimeout": 300000}'
+
 echo "Setting up Quarto blog environment..."
 
 # Install R if not present
