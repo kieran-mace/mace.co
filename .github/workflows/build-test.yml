@@ -1,0 +1,81 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.2'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev
+
+      - name: Cache R packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.qmd') }}
+          restore-keys: |
+            ${{ runner.os }}-r-
+
+      - name: Install R packages
+        run: |
+          Rscript -e '
+          repos <- "https://cloud.r-project.org"
+          packages <- c("tidyverse", "scales", "viridis", "reticulate", "knitr", "rmarkdown")
+          install.packages(packages, repos = repos)
+          '
+
+      - name: Install Python packages
+        run: |
+          pip3 install numpy pandas matplotlib
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.4.553'
+
+      - name: Render Quarto site
+        run: quarto render
+
+      - name: Check build output
+        run: |
+          if [ ! -d "_site" ]; then
+            echo "Error: _site directory not created"
+            exit 1
+          fi
+          if [ ! -f "_site/index.html" ]; then
+            echo "Error: index.html not created"
+            exit 1
+          fi
+          echo "Build successful!"
+          ls -la _site/
