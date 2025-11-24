@@ -68,7 +68,8 @@ jobs:
 
       - name: Install Python packages
         run: |
-          pip3 install numpy pandas matplotlib
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib seaborn pyquery feather-format requests
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
