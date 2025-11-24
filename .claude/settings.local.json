@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(quarto render:*)",
+      "Bash(pip3 install:*)",
+      "Bash(python3:*)",
+      "WebSearch",
+      "Bash(Rscript:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

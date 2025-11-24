@@ -7,3 +7,5 @@ packrat/lib*/
 
 /.quarto/
 /_freeze/
+
+**/*.quarto_ipynb
