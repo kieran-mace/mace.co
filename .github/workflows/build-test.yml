@@ -1,3 +1,23 @@
+# Build and Test Workflow for Quarto + R (renv) + Python (reticulate)
+#
+# This workflow demonstrates the proper setup for a Quarto project that uses:
+# - R packages managed by renv
+# - Python packages called from R via reticulate
+# - requirements.txt for Python dependency tracking
+#
+# Key insight: Python must be set up BEFORE renv, so reticulate knows
+# which Python to use. The RETICULATE_PYTHON env var tells reticulate
+# to use the CI's Python instead of the local virtualenv path in renv.lock.
+#
+# Order of operations:
+# 1. Checkout
+# 2. Setup Python + install packages (BEFORE R/renv)
+# 3. Set RETICULATE_PYTHON
+# 4. Setup R
+# 5. Setup renv (now aware of Python)
+# 6. Install Quarto
+# 7. Render
+
 name: Build and Test
 
 on:
@@ -15,21 +35,44 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ============================================================
+      # PYTHON SETUP - Must come BEFORE R/renv
+      # ============================================================
+      # reticulate needs to know which Python to use before renv loads.
+      # We use Python 3.12 (stable) and install packages from requirements.txt.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'  # Cache pip packages for faster builds
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Tell reticulate to use the CI's Python, not the local virtualenv
+      # path stored in renv.lock (which doesn't exist in CI)
+      - name: Configure Python for reticulate
+        run: |
+          echo "RETICULATE_PYTHON=$(which python)" >> $GITHUB_ENV
+
+      # ============================================================
+      # R SETUP - After Python is configured
+      # ============================================================
+
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.3'
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.14'
-
-      - name: Configure Python for renv
-        run: echo "RETICULATE_PYTHON=${{ env.pythonLocation }}/bin/python" >> $GITHUB_ENV
-
       - name: Set up renv
         uses: r-lib/actions/setup-renv@v2
+
+      # ============================================================
+      # QUARTO SETUP AND RENDER
+      # ============================================================
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -38,6 +81,10 @@ jobs:
 
       - name: Render Quarto site
         run: quarto render
+
+      # ============================================================
+      # VALIDATION AND ARTIFACTS
+      # ============================================================
 
       - name: Check build output
         run: |
