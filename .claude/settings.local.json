@@ -8,7 +8,8 @@
       "WebSearch",
       "Bash(Rscript:*)",
       "Bash(cat:*)",
-      "Bash(/Users/kieran/dev/mace.co/renv/python/virtualenvs/renv-python-3.14/bin/pip list)"
+      "Bash(/Users/kieran/dev/mace.co/renv/python/virtualenvs/renv-python-3.14/bin/pip list)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []

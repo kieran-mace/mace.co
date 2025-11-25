@@ -2,7 +2,7 @@
 title: "Illinois Firearm Safe Storage Survey Analysis 2023"
 subtitle: "Understanding Awareness, Practices, and Demographics of Firearm Storage"
 author: "Steve McHugh & Kieran Mace"
-date: today
+date: "2025-08-18"
 format: 
   html:
     theme: cosmo
