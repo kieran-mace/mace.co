@@ -170,7 +170,6 @@ We'll simulate 10,000 possible scenarios for the final three races:
 ```{python}
 #| label: run-simulation
 #| echo: true
-#| cache: true
 
 N = 10000
 norris_earned = []
