@@ -5,6 +5,7 @@ on:
     branches:
       - master
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build:
@@ -62,3 +63,8 @@ jobs:
           fi
           echo "Build successful!"
           ls -la _site/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
