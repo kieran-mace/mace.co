@@ -25,6 +25,9 @@ jobs:
         with:
           python-version: '3.14'
 
+      - name: Configure Python for renv
+        run: echo "RETICULATE_PYTHON=${{ env.pythonLocation }}/bin/python" >> $GITHUB_ENV
+
       - name: Set up renv
         uses: r-lib/actions/setup-renv@v2
 
