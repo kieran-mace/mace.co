@@ -67,6 +67,28 @@ jobs:
         with:
           r-version: '4.3'
 
+      # Install system dependencies required by R packages
+      # (RCurl needs libcurl, sf needs gdal/geos/proj, etc.)
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libgdal-dev \
+            libgeos-dev \
+            libproj-dev \
+            libudunits2-dev \
+            libmagick++-dev
+
       - name: Set up renv
         uses: r-lib/actions/setup-renv@v2
 
