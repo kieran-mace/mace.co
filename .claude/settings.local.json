@@ -9,7 +9,10 @@
       "Bash(Rscript:*)",
       "Bash(cat:*)",
       "Bash(/Users/kieran/dev/mace.co/renv/python/virtualenvs/renv-python-3.14/bin/pip list)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:rstudio.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []
