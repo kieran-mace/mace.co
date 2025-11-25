@@ -88,6 +88,7 @@ africa = africa_map %>% left_join(africa_countries) %>% left_join(africa_gdp)
 ## Putting it all together, a movie of africas GDP over the last 80 years.
 
 ```{r}
+#| eval: false
 p = africa %>%
  ggplot(aes(x = long, 
             y = lat, 
