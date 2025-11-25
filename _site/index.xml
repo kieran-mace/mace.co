@@ -10,7 +10,7 @@
 <atom:link href="/index.xml" rel="self" type="application/rss+xml"/>
 <description>A data science blog by Kieran Mace</description>
 <generator>quarto-1.8.26</generator>
-<lastBuildDate>Mon, 24 Nov 2025 06:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 18 Aug 2025 05:00:00 GMT</lastBuildDate>
 <item>
   <title>Illinois Firearm Safe Storage Survey Analysis 2023</title>
   <dc:creator>Steve McHugh &amp; Kieran Mace</dc:creator>
@@ -319,7 +319,7 @@
 
  ]]></description>
   <guid>/posts/firearm-storage/firearm-storage-analysis.html</guid>
-  <pubDate>Mon, 24 Nov 2025 06:00:00 GMT</pubDate>
+  <pubDate>Mon, 18 Aug 2025 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Can Lando Norris Still Win the 2024 F1 Championship?</title>
