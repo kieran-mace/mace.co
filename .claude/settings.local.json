@@ -12,7 +12,8 @@
       "Bash(git fetch:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:rstudio.github.io)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(gh run view:*)"
     ],
     "deny": [],
     "ask": []
