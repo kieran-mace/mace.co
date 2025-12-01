@@ -2,7 +2,7 @@
 title: "Can Lando Norris Still Win the 2024 F1 Championship?"
 subtitle: "A Monte Carlo Exploration of Championship Probabilities"
 author: "Kieran Mace"
-date: "2024-11-23"
+date: "2025-11-23"
 categories: [R, Python, Formula 1, Monte Carlo, Simulation]
 format:
   html:
