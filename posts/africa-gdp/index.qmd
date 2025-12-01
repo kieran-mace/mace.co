@@ -32,9 +32,10 @@ library(viridis)
 We also need to fix some of the names slightly
 
 ```{r}
+#| eval: false
 countries = countrycode::codelist_panel
-africa_countries = countries %>% 
-  filter(continent == 'Africa') %>% 
+africa_countries = countries %>%
+  filter(continent == 'Africa') %>%
   select(country.name.en, iso2c) %>%
   unique.data.frame() %>%
   rename(Country_Name = country.name.en,
@@ -45,21 +46,29 @@ africa_countries = countries %>%
          Country_Name = if_else(Country_Name == "Réunion",'Reunion', Country_Name),
          Country_Name = if_else(Country_Name == "St. Helena",'Saint Helena', Country_Name),
          Country_Name = if_else(Country_Name ==  "São Tomé & Príncipe",'Sao Tome and Principe', Country_Name))
+```
 
-
+```{r}
+#| echo: false
+africa_countries = read_csv("africa_countries_cache.csv", show_col_types = FALSE)
 ```
 
 ## Pulling the GDP info
 
 ```{r}
-africa_gdp = WDI(indicator='NY.GDP.PCAP.KD', 
-                 country=africa_countries$Country_Code, 
-                 start=1960, 
+#| eval: false
+africa_gdp = WDI(indicator='NY.GDP.PCAP.KD',
+                 country=africa_countries$Country_Code,
+                 start=1960,
                  end=2018) %>%
   rename(Country_Code = iso2c,
          GDP = NY.GDP.PCAP.KD) %>%
   select(Country_Code, GDP, year)
+```
 
+```{r}
+#| echo: false
+africa_gdp = read_csv("africa_gdp_cache.csv", show_col_types = FALSE)
 ```
 
 
