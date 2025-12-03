@@ -213,7 +213,7 @@ seasons <- 2019:2024
 load_season_results <- function(season) {
   # Get the schedule to know how many races
   schedule <- load_schedule(season)
-  n_races <- nrow(schedule %>% filter(event_name != "Pre-Season Testing"))
+  n_races <- nrow(schedule %>% dplyr::filter(event_name != "Pre-Season Testing"))
 
   results_list <- list()
 
@@ -225,8 +225,8 @@ load_season_results <- function(season) {
         result$round <- round
         # Get circuit name from schedule
         circuit_info <- schedule %>%
-          filter(round_number == round) %>%
-          slice(1)
+          dplyr::filter(round_number == round) %>%
+          dplyr::slice(1)
         result$circuit <- circuit_info$circuit_short_name[1]
         results_list[[length(results_list) + 1]] <- result
       }
@@ -264,15 +264,15 @@ For each circuit, we calculate each team's average finishing position (normalize
 # Create team performance matrix by circuit
 # Use position as performance metric (lower = better)
 team_circuit_performance <- all_results %>%
-  filter(!is.na(position), position <= 20) %>%
-  group_by(circuit, constructor_name) %>%
-  summarise(
+  dplyr::filter(!is.na(position), position <= 20) %>%
+  dplyr::group_by(circuit, constructor_name) %>%
+  dplyr::summarise(
     avg_position = mean(as.numeric(position), na.rm = TRUE),
     races = n(),
     .groups = "drop"
   ) %>%
   # Only include team-circuit combos with at least 2 races
-  filter(races >= 2) %>%
+  dplyr::filter(races >= 2) %>%
   # Normalize performance (invert so higher = better)
   mutate(performance = 1 / avg_position)
 
@@ -320,7 +320,7 @@ if (!is.na(abu_dhabi_name)) {
     circuit = names(abu_dhabi_similarity),
     similarity = as.numeric(abu_dhabi_similarity)
   ) %>%
-    filter(circuit != abu_dhabi_name) %>%
+    dplyr::filter(circuit != abu_dhabi_name) %>%
     arrange(desc(similarity))
 } else {
   # Fallback if Abu Dhabi not found
@@ -416,16 +416,16 @@ top_3_similar <- abu_dhabi_df %>% head(3) %>% pull(circuit)
 relevant_circuits <- c(abu_dhabi_name, top_3_similar)
 
 team_performance_relevant <- all_results %>%
-  filter(circuit %in% relevant_circuits) %>%
-  filter(!is.na(position), position <= 20) %>%
-  group_by(constructor_name, circuit) %>%
-  summarise(
+  dplyr::filter(circuit %in% relevant_circuits) %>%
+  dplyr::filter(!is.na(position), position <= 20) %>%
+  dplyr::group_by(constructor_name, circuit) %>%
+  dplyr::summarise(
     avg_position = mean(as.numeric(position), na.rm = TRUE),
     best_result = min(as.numeric(position), na.rm = TRUE),
     races = n(),
     .groups = "drop"
   ) %>%
-  filter(races >= 2)
+  dplyr::filter(races >= 2)
 ```
 
 ```{r}
@@ -437,7 +437,7 @@ team_performance_relevant <- all_results %>%
 current_teams <- c("McLaren", "Red Bull", "Ferrari", "Mercedes")
 
 team_perf_plot <- team_performance_relevant %>%
-  filter(str_detect(constructor_name, paste(current_teams, collapse = "|"))) %>%
+  dplyr::filter(str_detect(constructor_name, paste(current_teams, collapse = "|"))) %>%
   mutate(constructor_short = case_when(
     str_detect(constructor_name, "McLaren") ~ "McLaren",
     str_detect(constructor_name, "Red Bull") ~ "Red Bull",
@@ -476,12 +476,12 @@ Using the performance data from similar circuits, we can estimate likely finishi
 
 # Get 2024-2025 results for our championship drivers at correlated circuits
 recent_driver_results <- all_results %>%
-  filter(season >= 2024) %>%
-  filter(circuit %in% relevant_circuits) %>%
-  filter(str_detect(driver_code, "NOR|VER|PIA")) %>%
-  filter(!is.na(position)) %>%
-  group_by(driver_code) %>%
-  summarise(
+  dplyr::filter(season >= 2024) %>%
+  dplyr::filter(circuit %in% relevant_circuits) %>%
+  dplyr::filter(str_detect(driver_code, "NOR|VER|PIA")) %>%
+  dplyr::filter(!is.na(position)) %>%
+  dplyr::group_by(driver_code) %>%
+  dplyr::summarise(
     avg_position = mean(as.numeric(position), na.rm = TRUE),
     median_position = median(as.numeric(position), na.rm = TRUE),
     races = n(),
@@ -490,10 +490,10 @@ recent_driver_results <- all_results %>%
 
 # Add similarity weights
 weighted_results <- all_results %>%
-  filter(season >= 2023) %>%
-  filter(circuit %in% relevant_circuits) %>%
-  filter(str_detect(driver_code, "NOR|VER|PIA")) %>%
-  filter(!is.na(position)) %>%
+  dplyr::filter(season >= 2023) %>%
+  dplyr::filter(circuit %in% relevant_circuits) %>%
+  dplyr::filter(str_detect(driver_code, "NOR|VER|PIA")) %>%
+  dplyr::filter(!is.na(position)) %>%
   left_join(abu_dhabi_df %>% rename(circuit = circuit), by = "circuit") %>%
   mutate(similarity = ifelse(circuit == abu_dhabi_name, 1, coalesce(similarity, 0.5))) %>%
   group_by(driver_code) %>%
