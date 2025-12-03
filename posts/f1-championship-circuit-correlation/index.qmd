@@ -212,19 +212,35 @@ seasons <- 2019:2024
 # Function to load all race results for a season
 load_season_results <- function(season) {
   # Get the schedule to know how many races
-  schedule <- load_schedule(season)
-  n_races <- nrow(schedule %>% dplyr::filter(event_name != "Pre-Season Testing"))
+  schedule <- tryCatch(
+    load_schedule(season),
+    error = function(e) NULL
+  )
+
+  # Return NULL if schedule couldn't be loaded
+
+  if (is.null(schedule) || nrow(schedule) == 0) {
+    return(NULL)
+  }
+
+  # Filter out non-race events
+  race_schedule <- schedule %>%
+    dplyr::filter(!is.na(round_number)) %>%
+    dplyr::filter(!grepl("Testing|Test", event_name, ignore.case = TRUE))
+
+  n_races <- nrow(race_schedule)
+  if (n_races == 0) return(NULL)
 
   results_list <- list()
 
-  for (round in 1:n_races) {
+  for (round in race_schedule$round_number) {
     tryCatch({
       result <- load_results(season = season, round = round)
       if (!is.null(result) && nrow(result) > 0) {
         result$season <- season
         result$round <- round
         # Get circuit name from schedule
-        circuit_info <- schedule %>%
+        circuit_info <- race_schedule %>%
           dplyr::filter(round_number == round) %>%
           dplyr::slice(1)
         result$circuit <- circuit_info$circuit_short_name[1]
