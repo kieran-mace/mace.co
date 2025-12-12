@@ -1,0 +1,238 @@
+---
+title: "A Lefty's Guide to the ZSA Voyager: APT Layout, Home Row Mods, and Trackball Integration"
+author: "Kieran Mace"
+date: "2025-12-12"
+categories: [Keyboards, Productivity]
+format:
+  html:
+    code-fold: true
+---
+
+After months of iteration, I've landed on a Voyager layout that fits my workflow as a left-handed data professional who spends most of the day in R, Python, and SQL. This post walks through the design decisions, what worked, what didn't, and how I integrated the Navigator trackball module into a seamless pointing experience.
+
+## Why APT?
+
+I'm not using QWERTY. The base layer is built on [APT](https://github.com/Apsu/APT)—an alternative layout optimized for comfort and efficiency. The home row looks like this:
+
+```
+Left:   R  S  T  H
+Right:  N  A  O  I
+```
+
+APT prioritizes rolling motions and minimizes same-finger bigrams. After the initial learning curve (about 2-3 weeks to regain usable speed), I can't imagine going back. The reduced finger travel is noticeable during long coding sessions.
+
+## The Full Base Layer
+
+```
+ESC   #   `   ~   -   +       |   !   @   *   REC  COPY
+UND   X   C   D   F   B       Q   L   U   '   :    PASTE
+DEL   R   S   T   H   K       J   N   A   O   I    TAB
+⌘SPC  W   G   M   P   V       Z   ,   .   /   Y    ⌘⇧SPC
+              SPACE  ⌥⌫            ⏎    E
+```
+
+A few things to note:
+
+- **Pipe (`|`) on the base layer**: I do a lot of bash scripting and R piping (`%>%`), so having `|` immediately accessible is worth the real estate
+- **Copy/Paste in the outer column**: Right where my pinky naturally rests when reaching
+- **`REC` is a Hyper+R chord**: This triggers MacWhisper for voice recording—more on that later
+- **The colon key (`:`)** taps for `:` and holds for `;`—colon is far more common in my code
+
+## Home Row Mods Done Right
+
+Home row mods (HRM) let you use your home row keys as modifiers when held. My setup:
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| R | r | Ctrl |
+| S | s | Alt |
+| T | t | Cmd |
+| H | h | Shift |
+| N | n | Shift |
+| A | a | Cmd |
+| O | o | Alt |
+| I | i | Ctrl |
+
+The bilateral mirroring means I can always use opposite hands for modifier + key combinations—ergonomically ideal.
+
+### Making HRM Actually Work
+
+The secret sauce is **chordal hold** combined with a 235ms tapping term. Chordal hold tells the firmware which hand each key belongs to:
+
+```c
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R',
+  'L', 'L', 'L', 'L', 'L', 'L', 'R', 'R', 'R', 'R', 'R', 'R',
+  ...
+);
+```
+
+This prevents misfires when rolling keys on the same hand. Without it, typing "the" might accidentally trigger Cmd+E. With chordal hold enabled, I rarely get accidental modifier activations.
+
+## Layer Architecture
+
+I use 8 layers, each with a specific purpose:
+
+| Layer | Purpose | Activation |
+|-------|---------|------------|
+| 0 | Base (APT) | Default |
+| 1 | Symbols | Hold Space |
+| 2 | Navigation | Hold E |
+| 3 | Media/System | Hold thumb key |
+| 4 | Numpad | Hold Enter |
+| 5 | F-keys | One-shot from numpad |
+| 6 | Gaming | Toggle from media layer |
+| 7 | Mouse | Auto-activates on trackball movement |
+
+## The Symbol Layer
+
+Holding Space activates symbols on the right hand:
+
+```
+.   .   .   .   .   .       .   .   .   .   .   .
+.   .   .   .   .   .       .   #   {   }   !   .
+.  CTL ALT GUI SFT  .       .   $   (   )   &   .
+.   .   .   .   .   .       .   %   [   ]   |   .
+            .   .               .   =
+```
+
+The bracket pairs are stacked vertically—`{}`, `()`, `[]`—which makes them easy to remember. The `=` on the thumb is perfect for assignment operators.
+
+Left hand holds plain modifiers so I can do things like `Cmd+{` for editor navigation without leaving the symbol layer.
+
+## Navigation: A Lefty's Approach
+
+As a left-handed person, I want my dominant hand on the arrows. Layer 2 puts navigation on the left:
+
+```
+.   .   .   ↑   .   .       .   .   .   .   .   .
+.   .   ←   ↓   →   .       .  SFT GUI ALT CTL  .
+```
+
+The right hand provides modifiers, enabling:
+
+- `⌘ + ←/→` — Jump to line start/end
+- `⌥ + ←/→` — Jump by word
+- `⇧ + arrows` — Selection
+- `⌘ + ⇧ + ←/→` — Select to line boundaries
+
+This opposite-hand modifier approach is more ergonomic than dedicated Home/End keys, and I get the full modifier matrix for free.
+
+## The Numpad: Designed for R
+
+The numpad (Layer 4) is optimized for statistical work:
+
+```
+.   -   7   8   9   +
+.   /   4   5   6   *
+.   :   1   2   3   ^
+        0   .
+```
+
+Notice the operator placement:
+
+- **Right column**: `+`, `*`, `^` (addition, multiplication, exponentiation)
+- **Left column**: `-`, `/`, `:` (subtraction, division, time/ratios)
+
+The `^` is crucial—in R, it's the exponentiation operator (`2^3 = 8`), not XOR like in C. Having it right there on the numpad makes statistical formulas fluid to type.
+
+F-keys are accessed via a one-shot layer (OSL) from the numpad, keeping them available but out of the way.
+
+## Trackball Integration: The Auto-Mouse Layer
+
+The Voyager with Navigator module includes a trackball. I've configured it to automatically activate Layer 7 when the ball moves:
+
+```c
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE
+#define AUTO_MOUSE_DEFAULT_LAYER 7
+#define AUTO_MOUSE_TIME 1000
+#define AUTO_MOUSE_THRESHOLD 20
+```
+
+When I touch the trackball, Layer 7 lights up with mouse controls:
+
+```
+.   .   .   .   .   .       .   .   .   .   .   .
+.   .   .   .   .   .       .   MC  TO0 ALT+M5  .   .
+.   .   .   .   .   .      LCK  L   M   R   .   .
+DPI DPI .   .   .   .       .  AIM TRB ALT CTL  .
+```
+
+- **L/M/R**: Left, middle, right click
+- **MC**: Mission Control
+- **AIM/TRB**: Precision mode and turbo mode for the trackball
+- **DPI buttons**: Adjust tracking speed on the fly
+
+The layer auto-deactivates after 1 second of no trackball movement. This means I never have to think about switching modes—move the ball, get mouse controls, stop moving, back to typing.
+
+### Cursor Glide
+
+I've also enabled cursor glide, which adds momentum to the trackball:
+
+```c
+#define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
+```
+
+A quick flick sends the cursor sailing across the screen. Combined with the AIM key for precision work, it covers both broad navigation and pixel-perfect positioning.
+
+## Productivity Shortcuts
+
+### MacWhisper Recording
+
+The `REC` key in the top row sends `Hyper+R` (all modifiers + R), which triggers MacWhisper for voice transcription. I've placed it prominently because voice input has become a significant part of my workflow for drafting documentation and notes.
+
+### Raycast Integration
+
+The outer column keys are `Meh+Delete` and `Meh+Tab` (Ctrl+Alt+Cmd). These trigger Raycast commands for app switching and window management without conflicting with standard shortcuts.
+
+### Screenshots (Planned Addition)
+
+I'm adding `Cmd+Shift+4` (selection screenshot) to the auto-mouse layer, right next to the MacWhisper record key. The logic: both are "capture" actions, and my hand is already on the trackball when I want to screenshot something I'm looking at.
+
+## Dual-Function Keys
+
+Several keys do double duty:
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| Thumb (inner) | Alt+Backspace (delete word) | Layer 3 (media) |
+| Colon position | `:` | `;` |
+| Slash position | `/` | `\` |
+
+The word-delete on tap is fantastic for editing. The colon/semicolon split acknowledges that `:` appears far more often in code than `;` (at least in R, Python, and SQL).
+
+## Gaming Layer
+
+Layer 6 is a dedicated gaming layer, toggled from the media layer. It strips away the home row mods and provides a more traditional layout where keys do exactly one thing with no tap/hold ambiguity. The left side stays mostly transparent (pass-through to base layer), while the right side has game-specific bindings.
+
+## RGB: Functional, Not Flashy
+
+Each layer has its own color scheme so I always know where I am at a glance. I've disabled all the animated effects—static colors only:
+
+```c
+#undef ENABLE_RGB_MATRIX_BREATHING
+#undef ENABLE_RGB_MATRIX_RAINBOW_BEACON
+// ... (all animations disabled)
+```
+
+The LEDs are tools for layer indication, not decoration.
+
+## What I'd Change
+
+After extensive use, the only real gap is that **Undo (`Cmd+Z`) on the left outer column goes unused**. I've built muscle memory for the standard shortcut. That key position might become something else eventually—or maybe I'll finally train myself to use it.
+
+## Lessons Learned
+
+1. **Chordal hold is essential for HRM**: Without it, I'd have abandoned home row mods entirely
+2. **235ms tapping term is my sweet spot**: Fast enough for fluid typing, slow enough to avoid misfires
+3. **Design for your actual work**: The `^` key placement makes no sense for a C programmer but is perfect for R
+4. **Auto-mouse layers are magic**: The trackball disappears into the workflow when layer switching is automatic
+5. **Duplicate keys are okay**: I have `|` on both base and symbol layers because muscle memory matters
+
+## The Layout
+
+You can find the full source on [Oryx](https://configure.zsa.io/voyager/layouts/AnG7B/latest/0) or compile it yourself from the QMK source files.
+
+---
+
+*Built on a ZSA Voyager with Navigator module. Layout: APT-Layered-Voyager.*
