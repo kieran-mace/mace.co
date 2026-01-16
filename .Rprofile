@@ -6,6 +6,9 @@
 #
 # We detect CI via the CI environment variable (set by GitHub Actions, etc.)
 
+# Enable Posit Package Manager for pre-compiled binary packages
+options(renv.config.ppm.enabled = TRUE)
+
 if (!nzchar(Sys.getenv("CI"))) {
 
   # LOCAL: Pre-install pak to avoid subprocess bootstrap issues
