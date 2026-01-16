@@ -24,7 +24,6 @@ on:
   push:
     branches:
       - master
-      - main
     paths:
       # Quarto configuration
       - '_quarto.yml'
