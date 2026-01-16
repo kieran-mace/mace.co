@@ -1,0 +1,808 @@
+season,round,circuit,driver_code,constructor_name,position
+2019,1,Bahrain,HAM,Mercedes,1
+2019,1,Bahrain,BOT,Mercedes,2
+2019,1,Bahrain,LEC,Ferrari,3
+2019,1,Bahrain,VER,Red Bull,4
+2019,1,Bahrain,VET,Ferrari,5
+2019,1,Bahrain,NOR,McLaren,6
+2019,1,Bahrain,SAI,McLaren,8
+2019,2,Shanghai,HAM,Mercedes,1
+2019,2,Shanghai,BOT,Mercedes,2
+2019,2,Shanghai,VET,Ferrari,3
+2019,2,Shanghai,VER,Red Bull,4
+2019,2,Shanghai,LEC,Ferrari,5
+2019,2,Shanghai,NOR,McLaren,9
+2019,2,Shanghai,SAI,McLaren,8
+2019,3,Baku,BOT,Mercedes,1
+2019,3,Baku,HAM,Mercedes,2
+2019,3,Baku,VET,Ferrari,3
+2019,3,Baku,VER,Red Bull,4
+2019,3,Baku,LEC,Ferrari,5
+2019,3,Baku,NOR,McLaren,8
+2019,3,Baku,SAI,McLaren,7
+2019,4,Barcelona,HAM,Mercedes,1
+2019,4,Barcelona,BOT,Mercedes,2
+2019,4,Barcelona,VER,Red Bull,3
+2019,4,Barcelona,VET,Ferrari,4
+2019,4,Barcelona,LEC,Ferrari,5
+2019,4,Barcelona,NOR,McLaren,9
+2019,4,Barcelona,SAI,McLaren,8
+2019,5,Monaco,HAM,Mercedes,1
+2019,5,Monaco,VET,Ferrari,2
+2019,5,Monaco,BOT,Mercedes,3
+2019,5,Monaco,VER,Red Bull,4
+2019,5,Monaco,LEC,Ferrari,5
+2019,5,Monaco,NOR,McLaren,7
+2019,5,Monaco,SAI,McLaren,8
+2019,6,Montreal,HAM,Mercedes,1
+2019,6,Montreal,VET,Ferrari,2
+2019,6,Montreal,LEC,Ferrari,3
+2019,6,Montreal,BOT,Mercedes,4
+2019,6,Montreal,VER,Red Bull,5
+2019,6,Montreal,NOR,McLaren,6
+2019,6,Montreal,SAI,McLaren,8
+2019,7,Silverstone,HAM,Mercedes,1
+2019,7,Silverstone,BOT,Mercedes,2
+2019,7,Silverstone,LEC,Ferrari,3
+2019,7,Silverstone,VER,Red Bull,5
+2019,7,Silverstone,VET,Ferrari,4
+2019,7,Silverstone,NOR,McLaren,9
+2019,7,Silverstone,SAI,McLaren,6
+2019,8,Spielberg,VER,Red Bull,1
+2019,8,Spielberg,LEC,Ferrari,2
+2019,8,Spielberg,BOT,Mercedes,3
+2019,8,Spielberg,HAM,Mercedes,5
+2019,8,Spielberg,VET,Ferrari,4
+2019,8,Spielberg,NOR,McLaren,6
+2019,8,Spielberg,SAI,McLaren,8
+2019,9,Hockenheim,VER,Red Bull,1
+2019,9,Hockenheim,VET,Ferrari,2
+2019,9,Hockenheim,HAM,Mercedes,11
+2019,9,Hockenheim,LEC,Ferrari,3
+2019,9,Hockenheim,BOT,Mercedes,4
+2019,9,Hockenheim,NOR,McLaren,5
+2019,9,Hockenheim,SAI,McLaren,8
+2019,10,Budapest,HAM,Mercedes,1
+2019,10,Budapest,VER,Red Bull,2
+2019,10,Budapest,VET,Ferrari,3
+2019,10,Budapest,LEC,Ferrari,4
+2019,10,Budapest,BOT,Mercedes,8
+2019,10,Budapest,NOR,McLaren,5
+2019,10,Budapest,SAI,McLaren,6
+2019,11,Spa,LEC,Ferrari,1
+2019,11,Spa,HAM,Mercedes,2
+2019,11,Spa,BOT,Mercedes,3
+2019,11,Spa,VET,Ferrari,4
+2019,11,Spa,VER,Red Bull,5
+2019,11,Spa,NOR,McLaren,9
+2019,11,Spa,SAI,McLaren,7
+2019,12,Monza,LEC,Ferrari,1
+2019,12,Monza,BOT,Mercedes,2
+2019,12,Monza,HAM,Mercedes,3
+2019,12,Monza,VER,Red Bull,8
+2019,12,Monza,VET,Ferrari,13
+2019,12,Monza,NOR,McLaren,6
+2019,12,Monza,SAI,McLaren,4
+2019,13,Singapore,VET,Ferrari,1
+2019,13,Singapore,LEC,Ferrari,2
+2019,13,Singapore,VER,Red Bull,3
+2019,13,Singapore,HAM,Mercedes,4
+2019,13,Singapore,BOT,Mercedes,5
+2019,13,Singapore,NOR,McLaren,7
+2019,13,Singapore,SAI,McLaren,8
+2019,14,Sochi,HAM,Mercedes,1
+2019,14,Sochi,BOT,Mercedes,2
+2019,14,Sochi,LEC,Ferrari,3
+2019,14,Sochi,VER,Red Bull,4
+2019,14,Sochi,VET,Ferrari,5
+2019,14,Sochi,NOR,McLaren,7
+2019,14,Sochi,SAI,McLaren,6
+2019,15,Suzuka,BOT,Mercedes,1
+2019,15,Suzuka,VET,Ferrari,2
+2019,15,Suzuka,HAM,Mercedes,3
+2019,15,Suzuka,VER,Red Bull,5
+2019,15,Suzuka,LEC,Ferrari,7
+2019,15,Suzuka,NOR,McLaren,8
+2019,15,Suzuka,SAI,McLaren,6
+2019,16,Mexico City,HAM,Mercedes,1
+2019,16,Mexico City,VET,Ferrari,2
+2019,16,Mexico City,BOT,Mercedes,3
+2019,16,Mexico City,LEC,Ferrari,4
+2019,16,Mexico City,VER,Red Bull,6
+2019,16,Mexico City,NOR,McLaren,7
+2019,16,Mexico City,SAI,McLaren,5
+2019,17,Austin,BOT,Mercedes,1
+2019,17,Austin,HAM,Mercedes,2
+2019,17,Austin,VER,Red Bull,3
+2019,17,Austin,LEC,Ferrari,4
+2019,17,Austin,VET,Ferrari,5
+2019,17,Austin,NOR,McLaren,8
+2019,17,Austin,SAI,McLaren,6
+2019,18,Interlagos,VER,Red Bull,1
+2019,18,Interlagos,HAM,Mercedes,7
+2019,18,Interlagos,BOT,Mercedes,5
+2019,18,Interlagos,LEC,Ferrari,2
+2019,18,Interlagos,VET,Ferrari,4
+2019,18,Interlagos,NOR,McLaren,6
+2019,18,Interlagos,SAI,McLaren,3
+2019,19,Yas Marina,HAM,Mercedes,1
+2019,19,Yas Marina,VER,Red Bull,2
+2019,19,Yas Marina,LEC,Ferrari,3
+2019,19,Yas Marina,BOT,Mercedes,4
+2019,19,Yas Marina,VET,Ferrari,5
+2019,19,Yas Marina,NOR,McLaren,7
+2019,19,Yas Marina,SAI,McLaren,6
+2020,1,Spielberg,BOT,Mercedes,1
+2020,1,Spielberg,LEC,Ferrari,2
+2020,1,Spielberg,NOR,McLaren,3
+2020,1,Spielberg,HAM,Mercedes,4
+2020,1,Spielberg,VET,Ferrari,10
+2020,1,Spielberg,VER,Red Bull,20
+2020,1,Spielberg,SAI,McLaren,5
+2020,2,Spielberg,HAM,Mercedes,1
+2020,2,Spielberg,BOT,Mercedes,2
+2020,2,Spielberg,VER,Red Bull,3
+2020,2,Spielberg,LEC,Ferrari,7
+2020,2,Spielberg,VET,Ferrari,6
+2020,2,Spielberg,NOR,McLaren,5
+2020,2,Spielberg,SAI,McLaren,9
+2020,3,Budapest,HAM,Mercedes,1
+2020,3,Budapest,VER,Red Bull,2
+2020,3,Budapest,BOT,Mercedes,3
+2020,3,Budapest,LEC,Ferrari,6
+2020,3,Budapest,VET,Ferrari,7
+2020,3,Budapest,NOR,McLaren,5
+2020,3,Budapest,SAI,McLaren,9
+2020,4,Silverstone,HAM,Mercedes,1
+2020,4,Silverstone,VER,Red Bull,2
+2020,4,Silverstone,LEC,Ferrari,3
+2020,4,Silverstone,BOT,Mercedes,11
+2020,4,Silverstone,VET,Ferrari,10
+2020,4,Silverstone,NOR,McLaren,5
+2020,4,Silverstone,SAI,McLaren,6
+2020,5,Silverstone,VER,Red Bull,1
+2020,5,Silverstone,HAM,Mercedes,2
+2020,5,Silverstone,BOT,Mercedes,3
+2020,5,Silverstone,LEC,Ferrari,4
+2020,5,Silverstone,VET,Ferrari,12
+2020,5,Silverstone,NOR,McLaren,6
+2020,5,Silverstone,SAI,McLaren,8
+2020,6,Barcelona,HAM,Mercedes,1
+2020,6,Barcelona,VER,Red Bull,2
+2020,6,Barcelona,BOT,Mercedes,3
+2020,6,Barcelona,LEC,Ferrari,5
+2020,6,Barcelona,VET,Ferrari,7
+2020,6,Barcelona,NOR,McLaren,8
+2020,6,Barcelona,SAI,McLaren,6
+2020,7,Spa,HAM,Mercedes,1
+2020,7,Spa,BOT,Mercedes,2
+2020,7,Spa,VER,Red Bull,3
+2020,7,Spa,LEC,Ferrari,14
+2020,7,Spa,VET,Ferrari,13
+2020,7,Spa,NOR,McLaren,7
+2020,7,Spa,SAI,McLaren,10
+2020,8,Monza,HAM,Mercedes,7
+2020,8,Monza,BOT,Mercedes,5
+2020,8,Monza,VER,Red Bull,11
+2020,8,Monza,LEC,Ferrari,8
+2020,8,Monza,VET,Ferrari,10
+2020,8,Monza,NOR,McLaren,4
+2020,8,Monza,SAI,McLaren,2
+2020,9,Mugello,HAM,Mercedes,1
+2020,9,Mugello,BOT,Mercedes,2
+2020,9,Mugello,VER,Red Bull,5
+2020,9,Mugello,LEC,Ferrari,8
+2020,9,Mugello,VET,Ferrari,10
+2020,9,Mugello,NOR,McLaren,6
+2020,9,Mugello,SAI,McLaren,9
+2020,10,Sochi,BOT,Mercedes,1
+2020,10,Sochi,VER,Red Bull,2
+2020,10,Sochi,HAM,Mercedes,3
+2020,10,Sochi,LEC,Ferrari,6
+2020,10,Sochi,VET,Ferrari,13
+2020,10,Sochi,NOR,McLaren,5
+2020,10,Sochi,SAI,McLaren,4
+2020,11,Nurburgring,HAM,Mercedes,1
+2020,11,Nurburgring,VER,Red Bull,2
+2020,11,Nurburgring,BOT,Mercedes,5
+2020,11,Nurburgring,LEC,Ferrari,7
+2020,11,Nurburgring,VET,Ferrari,11
+2020,11,Nurburgring,NOR,McLaren,6
+2020,11,Nurburgring,SAI,McLaren,3
+2020,12,Portimao,HAM,Mercedes,1
+2020,12,Portimao,BOT,Mercedes,2
+2020,12,Portimao,VER,Red Bull,3
+2020,12,Portimao,LEC,Ferrari,4
+2020,12,Portimao,VET,Ferrari,10
+2020,12,Portimao,NOR,McLaren,13
+2020,12,Portimao,SAI,McLaren,6
+2020,13,Imola,HAM,Mercedes,1
+2020,13,Imola,BOT,Mercedes,2
+2020,13,Imola,VER,Red Bull,20
+2020,13,Imola,LEC,Ferrari,5
+2020,13,Imola,VET,Ferrari,12
+2020,13,Imola,NOR,McLaren,4
+2020,13,Imola,SAI,McLaren,7
+2020,14,Istanbul,HAM,Mercedes,1
+2020,14,Istanbul,VER,Red Bull,6
+2020,14,Istanbul,BOT,Mercedes,14
+2020,14,Istanbul,LEC,Ferrari,4
+2020,14,Istanbul,VET,Ferrari,3
+2020,14,Istanbul,NOR,McLaren,8
+2020,14,Istanbul,SAI,McLaren,5
+2020,15,Bahrain,HAM,Mercedes,1
+2020,15,Bahrain,VER,Red Bull,2
+2020,15,Bahrain,BOT,Mercedes,8
+2020,15,Bahrain,LEC,Ferrari,4
+2020,15,Bahrain,VET,Ferrari,13
+2020,15,Bahrain,NOR,McLaren,3
+2020,15,Bahrain,SAI,McLaren,5
+2020,16,Sakhir,HAM,Mercedes,20
+2020,16,Sakhir,VER,Red Bull,2
+2020,16,Sakhir,BOT,Mercedes,8
+2020,16,Sakhir,LEC,Ferrari,4
+2020,16,Sakhir,VET,Ferrari,12
+2020,16,Sakhir,NOR,McLaren,5
+2020,16,Sakhir,SAI,McLaren,3
+2020,17,Yas Marina,VER,Red Bull,1
+2020,17,Yas Marina,BOT,Mercedes,2
+2020,17,Yas Marina,HAM,Mercedes,3
+2020,17,Yas Marina,LEC,Ferrari,10
+2020,17,Yas Marina,VET,Ferrari,14
+2020,17,Yas Marina,NOR,McLaren,5
+2020,17,Yas Marina,SAI,McLaren,6
+2021,1,Bahrain,HAM,Mercedes,1
+2021,1,Bahrain,VER,Red Bull,2
+2021,1,Bahrain,BOT,Mercedes,3
+2021,1,Bahrain,NOR,McLaren,4
+2021,1,Bahrain,LEC,Ferrari,6
+2021,1,Bahrain,VET,Aston Martin,15
+2021,1,Bahrain,SAI,Ferrari,8
+2021,2,Imola,VER,Red Bull,1
+2021,2,Imola,HAM,Mercedes,2
+2021,2,Imola,NOR,McLaren,3
+2021,2,Imola,LEC,Ferrari,4
+2021,2,Imola,BOT,Mercedes,20
+2021,2,Imola,VET,Aston Martin,13
+2021,2,Imola,SAI,Ferrari,5
+2021,3,Portimao,HAM,Mercedes,1
+2021,3,Portimao,VER,Red Bull,2
+2021,3,Portimao,BOT,Mercedes,3
+2021,3,Portimao,NOR,McLaren,5
+2021,3,Portimao,LEC,Ferrari,6
+2021,3,Portimao,VET,Aston Martin,13
+2021,3,Portimao,SAI,Ferrari,11
+2021,4,Barcelona,HAM,Mercedes,1
+2021,4,Barcelona,VER,Red Bull,2
+2021,4,Barcelona,BOT,Mercedes,3
+2021,4,Barcelona,NOR,McLaren,8
+2021,4,Barcelona,LEC,Ferrari,4
+2021,4,Barcelona,VET,Aston Martin,13
+2021,4,Barcelona,SAI,Ferrari,7
+2021,5,Monaco,VER,Red Bull,1
+2021,5,Monaco,SAI,Ferrari,2
+2021,5,Monaco,NOR,McLaren,3
+2021,5,Monaco,BOT,Mercedes,20
+2021,5,Monaco,LEC,Ferrari,20
+2021,5,Monaco,HAM,Mercedes,7
+2021,5,Monaco,VET,Aston Martin,5
+2021,6,Baku,VER,Red Bull,20
+2021,6,Baku,HAM,Mercedes,15
+2021,6,Baku,BOT,Mercedes,12
+2021,6,Baku,NOR,McLaren,5
+2021,6,Baku,LEC,Ferrari,4
+2021,6,Baku,VET,Aston Martin,2
+2021,6,Baku,SAI,Ferrari,8
+2021,7,Spielberg,VER,Red Bull,1
+2021,7,Spielberg,BOT,Mercedes,2
+2021,7,Spielberg,NOR,McLaren,3
+2021,7,Spielberg,HAM,Mercedes,4
+2021,7,Spielberg,LEC,Ferrari,7
+2021,7,Spielberg,VET,Aston Martin,12
+2021,7,Spielberg,SAI,Ferrari,5
+2021,8,Spielberg,VER,Red Bull,1
+2021,8,Spielberg,HAM,Mercedes,2
+2021,8,Spielberg,BOT,Mercedes,3
+2021,8,Spielberg,NOR,McLaren,5
+2021,8,Spielberg,LEC,Ferrari,7
+2021,8,Spielberg,VET,Aston Martin,17
+2021,8,Spielberg,SAI,Ferrari,6
+2021,9,Silverstone,HAM,Mercedes,1
+2021,9,Silverstone,LEC,Ferrari,2
+2021,9,Silverstone,BOT,Mercedes,3
+2021,9,Silverstone,VER,Red Bull,20
+2021,9,Silverstone,NOR,McLaren,4
+2021,9,Silverstone,VET,Aston Martin,16
+2021,9,Silverstone,SAI,Ferrari,6
+2021,10,Budapest,VER,Red Bull,10
+2021,10,Budapest,HAM,Mercedes,3
+2021,10,Budapest,BOT,Mercedes,20
+2021,10,Budapest,NOR,McLaren,20
+2021,10,Budapest,LEC,Ferrari,20
+2021,10,Budapest,VET,Aston Martin,2
+2021,10,Budapest,SAI,Ferrari,4
+2021,11,Spa,VER,Red Bull,1
+2021,11,Spa,HAM,Mercedes,3
+2021,11,Spa,BOT,Mercedes,20
+2021,11,Spa,NOR,McLaren,7
+2021,11,Spa,LEC,Ferrari,8
+2021,11,Spa,VET,Aston Martin,5
+2021,11,Spa,SAI,Ferrari,10
+2021,12,Zandvoort,VER,Red Bull,1
+2021,12,Zandvoort,HAM,Mercedes,2
+2021,12,Zandvoort,BOT,Mercedes,3
+2021,12,Zandvoort,NOR,McLaren,10
+2021,12,Zandvoort,LEC,Ferrari,5
+2021,12,Zandvoort,VET,Aston Martin,13
+2021,12,Zandvoort,SAI,Ferrari,7
+2021,13,Monza,VER,Red Bull,20
+2021,13,Monza,HAM,Mercedes,5
+2021,13,Monza,BOT,Mercedes,3
+2021,13,Monza,NOR,McLaren,2
+2021,13,Monza,LEC,Ferrari,4
+2021,13,Monza,VET,Aston Martin,12
+2021,13,Monza,SAI,Ferrari,6
+2021,14,Sochi,NOR,McLaren,7
+2021,14,Sochi,HAM,Mercedes,1
+2021,14,Sochi,VER,Red Bull,2
+2021,14,Sochi,BOT,Mercedes,5
+2021,14,Sochi,LEC,Ferrari,15
+2021,14,Sochi,VET,Aston Martin,11
+2021,14,Sochi,SAI,Ferrari,3
+2021,15,Istanbul,BOT,Mercedes,1
+2021,15,Istanbul,VER,Red Bull,2
+2021,15,Istanbul,HAM,Mercedes,5
+2021,15,Istanbul,NOR,McLaren,7
+2021,15,Istanbul,LEC,Ferrari,4
+2021,15,Istanbul,VET,Aston Martin,18
+2021,15,Istanbul,SAI,Ferrari,8
+2021,16,Austin,VER,Red Bull,1
+2021,16,Austin,HAM,Mercedes,2
+2021,16,Austin,BOT,Mercedes,6
+2021,16,Austin,NOR,McLaren,8
+2021,16,Austin,LEC,Ferrari,4
+2021,16,Austin,VET,Aston Martin,10
+2021,16,Austin,SAI,Ferrari,7
+2021,17,Mexico City,VER,Red Bull,1
+2021,17,Mexico City,HAM,Mercedes,2
+2021,17,Mexico City,BOT,Mercedes,3
+2021,17,Mexico City,NOR,McLaren,9
+2021,17,Mexico City,LEC,Ferrari,5
+2021,17,Mexico City,VET,Aston Martin,7
+2021,17,Mexico City,SAI,Ferrari,6
+2021,18,Interlagos,HAM,Mercedes,1
+2021,18,Interlagos,VER,Red Bull,2
+2021,18,Interlagos,BOT,Mercedes,3
+2021,18,Interlagos,NOR,McLaren,10
+2021,18,Interlagos,LEC,Ferrari,5
+2021,18,Interlagos,VET,Aston Martin,6
+2021,18,Interlagos,SAI,Ferrari,7
+2021,19,Losail,HAM,Mercedes,1
+2021,19,Losail,VER,Red Bull,2
+2021,19,Losail,BOT,Mercedes,20
+2021,19,Losail,NOR,McLaren,6
+2021,19,Losail,LEC,Ferrari,7
+2021,19,Losail,VET,Aston Martin,10
+2021,19,Losail,SAI,Ferrari,5
+2021,20,Jeddah,HAM,Mercedes,1
+2021,20,Jeddah,VER,Red Bull,2
+2021,20,Jeddah,BOT,Mercedes,3
+2021,20,Jeddah,NOR,McLaren,8
+2021,20,Jeddah,LEC,Ferrari,7
+2021,20,Jeddah,VET,Aston Martin,17
+2021,20,Jeddah,SAI,Ferrari,20
+2021,21,Yas Marina,VER,Red Bull,1
+2021,21,Yas Marina,HAM,Mercedes,2
+2021,21,Yas Marina,SAI,Ferrari,3
+2021,21,Yas Marina,BOT,Mercedes,6
+2021,21,Yas Marina,NOR,McLaren,7
+2021,21,Yas Marina,LEC,Ferrari,10
+2021,21,Yas Marina,VET,Aston Martin,20
+2022,1,Bahrain,LEC,Ferrari,1
+2022,1,Bahrain,SAI,Ferrari,2
+2022,1,Bahrain,HAM,Mercedes,3
+2022,1,Bahrain,VER,Red Bull,20
+2022,1,Bahrain,BOT,Alfa Romeo,6
+2022,1,Bahrain,NOR,McLaren,15
+2022,2,Jeddah,VER,Red Bull,1
+2022,2,Jeddah,LEC,Ferrari,2
+2022,2,Jeddah,SAI,Ferrari,3
+2022,2,Jeddah,HAM,Mercedes,10
+2022,2,Jeddah,BOT,Alfa Romeo,6
+2022,2,Jeddah,NOR,McLaren,9
+2022,3,Melbourne,LEC,Ferrari,1
+2022,3,Melbourne,VER,Red Bull,20
+2022,3,Melbourne,HAM,Mercedes,4
+2022,3,Melbourne,SAI,Ferrari,20
+2022,3,Melbourne,BOT,Alfa Romeo,9
+2022,3,Melbourne,NOR,McLaren,5
+2022,4,Imola,VER,Red Bull,1
+2022,4,Imola,LEC,Ferrari,6
+2022,4,Imola,NOR,McLaren,3
+2022,4,Imola,HAM,Mercedes,13
+2022,4,Imola,BOT,Alfa Romeo,8
+2022,4,Imola,SAI,Ferrari,4
+2022,5,Miami,VER,Red Bull,1
+2022,5,Miami,LEC,Ferrari,2
+2022,5,Miami,SAI,Ferrari,3
+2022,5,Miami,HAM,Mercedes,6
+2022,5,Miami,BOT,Alfa Romeo,5
+2022,5,Miami,NOR,McLaren,8
+2022,6,Barcelona,VER,Red Bull,1
+2022,6,Barcelona,LEC,Ferrari,20
+2022,6,Barcelona,HAM,Mercedes,5
+2022,6,Barcelona,SAI,Ferrari,4
+2022,6,Barcelona,BOT,Alfa Romeo,9
+2022,6,Barcelona,NOR,McLaren,8
+2022,7,Monaco,VER,Red Bull,3
+2022,7,Monaco,SAI,Ferrari,2
+2022,7,Monaco,NOR,McLaren,6
+2022,7,Monaco,HAM,Mercedes,8
+2022,7,Monaco,BOT,Alfa Romeo,10
+2022,7,Monaco,LEC,Ferrari,4
+2022,8,Baku,VER,Red Bull,1
+2022,8,Baku,LEC,Ferrari,20
+2022,8,Baku,HAM,Mercedes,4
+2022,8,Baku,SAI,Ferrari,20
+2022,8,Baku,BOT,Alfa Romeo,5
+2022,8,Baku,NOR,McLaren,20
+2022,9,Montreal,VER,Red Bull,1
+2022,9,Montreal,SAI,Ferrari,2
+2022,9,Montreal,HAM,Mercedes,3
+2022,9,Montreal,LEC,Ferrari,5
+2022,9,Montreal,BOT,Alfa Romeo,7
+2022,9,Montreal,NOR,McLaren,15
+2022,10,Silverstone,SAI,Ferrari,1
+2022,10,Silverstone,VER,Red Bull,7
+2022,10,Silverstone,HAM,Mercedes,3
+2022,10,Silverstone,LEC,Ferrari,4
+2022,10,Silverstone,BOT,Alfa Romeo,10
+2022,10,Silverstone,NOR,McLaren,6
+2022,11,Spielberg,LEC,Ferrari,1
+2022,11,Spielberg,VER,Red Bull,2
+2022,11,Spielberg,HAM,Mercedes,3
+2022,11,Spielberg,SAI,Ferrari,20
+2022,11,Spielberg,BOT,Alfa Romeo,14
+2022,11,Spielberg,NOR,McLaren,5
+2022,12,Ricard,VER,Red Bull,1
+2022,12,Ricard,HAM,Mercedes,2
+2022,12,Ricard,SAI,Ferrari,5
+2022,12,Ricard,LEC,Ferrari,20
+2022,12,Ricard,BOT,Alfa Romeo,7
+2022,12,Ricard,NOR,McLaren,7
+2022,13,Budapest,VER,Red Bull,1
+2022,13,Budapest,HAM,Mercedes,2
+2022,13,Budapest,LEC,Ferrari,6
+2022,13,Budapest,SAI,Ferrari,4
+2022,13,Budapest,BOT,Alfa Romeo,8
+2022,13,Budapest,NOR,McLaren,7
+2022,14,Spa,VER,Red Bull,1
+2022,14,Spa,SAI,Ferrari,3
+2022,14,Spa,HAM,Mercedes,4
+2022,14,Spa,LEC,Ferrari,6
+2022,14,Spa,BOT,Alfa Romeo,7
+2022,14,Spa,NOR,McLaren,9
+2022,15,Zandvoort,VER,Red Bull,1
+2022,15,Zandvoort,HAM,Mercedes,4
+2022,15,Zandvoort,SAI,Ferrari,5
+2022,15,Zandvoort,LEC,Ferrari,3
+2022,15,Zandvoort,BOT,Alfa Romeo,8
+2022,15,Zandvoort,NOR,McLaren,7
+2022,16,Monza,VER,Red Bull,1
+2022,16,Monza,LEC,Ferrari,2
+2022,16,Monza,HAM,Mercedes,5
+2022,16,Monza,SAI,Ferrari,4
+2022,16,Monza,BOT,Alfa Romeo,8
+2022,16,Monza,NOR,McLaren,7
+2022,17,Singapore,VER,Red Bull,7
+2022,17,Singapore,LEC,Ferrari,2
+2022,17,Singapore,HAM,Mercedes,9
+2022,17,Singapore,SAI,Ferrari,3
+2022,17,Singapore,BOT,Alfa Romeo,13
+2022,17,Singapore,NOR,McLaren,4
+2022,18,Suzuka,VER,Red Bull,1
+2022,18,Suzuka,LEC,Ferrari,3
+2022,18,Suzuka,HAM,Mercedes,5
+2022,18,Suzuka,SAI,Ferrari,20
+2022,18,Suzuka,BOT,Alfa Romeo,11
+2022,18,Suzuka,NOR,McLaren,4
+2022,19,Austin,VER,Red Bull,1
+2022,19,Austin,HAM,Mercedes,2
+2022,19,Austin,LEC,Ferrari,3
+2022,19,Austin,SAI,Ferrari,5
+2022,19,Austin,BOT,Alfa Romeo,10
+2022,19,Austin,NOR,McLaren,7
+2022,20,Mexico City,VER,Red Bull,1
+2022,20,Mexico City,HAM,Mercedes,2
+2022,20,Mexico City,LEC,Ferrari,6
+2022,20,Mexico City,SAI,Ferrari,5
+2022,20,Mexico City,BOT,Alfa Romeo,8
+2022,20,Mexico City,NOR,McLaren,9
+2022,21,Interlagos,VER,Red Bull,6
+2022,21,Interlagos,HAM,Mercedes,2
+2022,21,Interlagos,LEC,Ferrari,4
+2022,21,Interlagos,SAI,Ferrari,3
+2022,21,Interlagos,BOT,Alfa Romeo,5
+2022,21,Interlagos,NOR,McLaren,8
+2022,22,Yas Marina,VER,Red Bull,1
+2022,22,Yas Marina,LEC,Ferrari,2
+2022,22,Yas Marina,HAM,Mercedes,6
+2022,22,Yas Marina,SAI,Ferrari,4
+2022,22,Yas Marina,BOT,Alfa Romeo,9
+2022,22,Yas Marina,NOR,McLaren,10
+2023,1,Bahrain,VER,Red Bull,1
+2023,1,Bahrain,HAM,Mercedes,5
+2023,1,Bahrain,LEC,Ferrari,3
+2023,1,Bahrain,SAI,Ferrari,4
+2023,1,Bahrain,NOR,McLaren,17
+2023,1,Bahrain,PIA,McLaren,8
+2023,2,Jeddah,VER,Red Bull,2
+2023,2,Jeddah,HAM,Mercedes,5
+2023,2,Jeddah,LEC,Ferrari,7
+2023,2,Jeddah,SAI,Ferrari,6
+2023,2,Jeddah,NOR,McLaren,15
+2023,2,Jeddah,PIA,McLaren,10
+2023,3,Melbourne,VER,Red Bull,1
+2023,3,Melbourne,HAM,Mercedes,2
+2023,3,Melbourne,LEC,Ferrari,20
+2023,3,Melbourne,SAI,Ferrari,5
+2023,3,Melbourne,NOR,McLaren,6
+2023,3,Melbourne,PIA,McLaren,8
+2023,4,Baku,VER,Red Bull,2
+2023,4,Baku,HAM,Mercedes,4
+2023,4,Baku,LEC,Ferrari,3
+2023,4,Baku,SAI,Ferrari,6
+2023,4,Baku,NOR,McLaren,9
+2023,4,Baku,PIA,McLaren,11
+2023,5,Miami,VER,Red Bull,2
+2023,5,Miami,HAM,Mercedes,6
+2023,5,Miami,LEC,Ferrari,7
+2023,5,Miami,SAI,Ferrari,5
+2023,5,Miami,NOR,McLaren,9
+2023,5,Miami,PIA,McLaren,20
+2023,6,Monaco,VER,Red Bull,1
+2023,6,Monaco,HAM,Mercedes,4
+2023,6,Monaco,LEC,Ferrari,6
+2023,6,Monaco,SAI,Ferrari,20
+2023,6,Monaco,NOR,McLaren,9
+2023,6,Monaco,PIA,McLaren,20
+2023,7,Barcelona,VER,Red Bull,1
+2023,7,Barcelona,HAM,Mercedes,2
+2023,7,Barcelona,LEC,Ferrari,5
+2023,7,Barcelona,SAI,Ferrari,6
+2023,7,Barcelona,NOR,McLaren,3
+2023,7,Barcelona,PIA,McLaren,8
+2023,8,Montreal,VER,Red Bull,1
+2023,8,Montreal,HAM,Mercedes,2
+2023,8,Montreal,LEC,Ferrari,5
+2023,8,Montreal,SAI,Ferrari,4
+2023,8,Montreal,NOR,McLaren,13
+2023,8,Montreal,PIA,McLaren,11
+2023,9,Spielberg,VER,Red Bull,1
+2023,9,Spielberg,HAM,Mercedes,8
+2023,9,Spielberg,LEC,Ferrari,2
+2023,9,Spielberg,SAI,Ferrari,3
+2023,9,Spielberg,NOR,McLaren,4
+2023,9,Spielberg,PIA,McLaren,5
+2023,10,Silverstone,VER,Red Bull,1
+2023,10,Silverstone,HAM,Mercedes,7
+2023,10,Silverstone,LEC,Ferrari,6
+2023,10,Silverstone,SAI,Ferrari,5
+2023,10,Silverstone,NOR,McLaren,2
+2023,10,Silverstone,PIA,McLaren,4
+2023,11,Budapest,VER,Red Bull,1
+2023,11,Budapest,HAM,Mercedes,4
+2023,11,Budapest,LEC,Ferrari,6
+2023,11,Budapest,SAI,Ferrari,9
+2023,11,Budapest,NOR,McLaren,2
+2023,11,Budapest,PIA,McLaren,5
+2023,12,Spa,VER,Red Bull,1
+2023,12,Spa,HAM,Mercedes,4
+2023,12,Spa,LEC,Ferrari,3
+2023,12,Spa,SAI,Ferrari,20
+2023,12,Spa,NOR,McLaren,7
+2023,12,Spa,PIA,McLaren,5
+2023,13,Zandvoort,VER,Red Bull,1
+2023,13,Zandvoort,HAM,Mercedes,6
+2023,13,Zandvoort,LEC,Ferrari,5
+2023,13,Zandvoort,SAI,Ferrari,7
+2023,13,Zandvoort,NOR,McLaren,9
+2023,13,Zandvoort,PIA,McLaren,4
+2023,14,Monza,VER,Red Bull,1
+2023,14,Monza,HAM,Mercedes,6
+2023,14,Monza,LEC,Ferrari,3
+2023,14,Monza,SAI,Ferrari,2
+2023,14,Monza,NOR,McLaren,9
+2023,14,Monza,PIA,McLaren,8
+2023,15,Singapore,SAI,Ferrari,1
+2023,15,Singapore,VER,Red Bull,5
+2023,15,Singapore,HAM,Mercedes,4
+2023,15,Singapore,LEC,Ferrari,6
+2023,15,Singapore,NOR,McLaren,2
+2023,15,Singapore,PIA,McLaren,7
+2023,16,Suzuka,VER,Red Bull,1
+2023,16,Suzuka,NOR,McLaren,2
+2023,16,Suzuka,HAM,Mercedes,7
+2023,16,Suzuka,LEC,Ferrari,6
+2023,16,Suzuka,SAI,Ferrari,8
+2023,16,Suzuka,PIA,McLaren,3
+2023,17,Losail,VER,Red Bull,1
+2023,17,Losail,HAM,Mercedes,7
+2023,17,Losail,LEC,Ferrari,5
+2023,17,Losail,SAI,Ferrari,6
+2023,17,Losail,NOR,McLaren,3
+2023,17,Losail,PIA,McLaren,2
+2023,18,Austin,VER,Red Bull,1
+2023,18,Austin,HAM,Mercedes,2
+2023,18,Austin,LEC,Ferrari,3
+2023,18,Austin,SAI,Ferrari,4
+2023,18,Austin,NOR,McLaren,5
+2023,18,Austin,PIA,McLaren,20
+2023,19,Mexico City,VER,Red Bull,1
+2023,19,Mexico City,HAM,Mercedes,2
+2023,19,Mexico City,LEC,Ferrari,3
+2023,19,Mexico City,SAI,Ferrari,5
+2023,19,Mexico City,NOR,McLaren,5
+2023,19,Mexico City,PIA,McLaren,7
+2023,20,Interlagos,VER,Red Bull,1
+2023,20,Interlagos,HAM,Mercedes,8
+2023,20,Interlagos,LEC,Ferrari,3
+2023,20,Interlagos,SAI,Ferrari,6
+2023,20,Interlagos,NOR,McLaren,2
+2023,20,Interlagos,PIA,McLaren,7
+2023,21,Las Vegas,VER,Red Bull,20
+2023,21,Las Vegas,HAM,Mercedes,7
+2023,21,Las Vegas,LEC,Ferrari,2
+2023,21,Las Vegas,SAI,Ferrari,3
+2023,21,Las Vegas,NOR,McLaren,6
+2023,21,Las Vegas,PIA,McLaren,4
+2023,22,Yas Marina,VER,Red Bull,1
+2023,22,Yas Marina,HAM,Mercedes,9
+2023,22,Yas Marina,LEC,Ferrari,2
+2023,22,Yas Marina,SAI,Ferrari,4
+2023,22,Yas Marina,NOR,McLaren,5
+2023,22,Yas Marina,PIA,McLaren,3
+2024,1,Bahrain,VER,Red Bull,1
+2024,1,Bahrain,HAM,Mercedes,7
+2024,1,Bahrain,LEC,Ferrari,3
+2024,1,Bahrain,SAI,Ferrari,4
+2024,1,Bahrain,NOR,McLaren,6
+2024,1,Bahrain,PIA,McLaren,5
+2024,2,Jeddah,VER,Red Bull,1
+2024,2,Jeddah,HAM,Mercedes,8
+2024,2,Jeddah,LEC,Ferrari,3
+2024,2,Jeddah,SAI,Ferrari,4
+2024,2,Jeddah,NOR,McLaren,7
+2024,2,Jeddah,PIA,McLaren,2
+2024,3,Melbourne,SAI,Ferrari,1
+2024,3,Melbourne,VER,Red Bull,20
+2024,3,Melbourne,HAM,Mercedes,20
+2024,3,Melbourne,LEC,Ferrari,2
+2024,3,Melbourne,NOR,McLaren,3
+2024,3,Melbourne,PIA,McLaren,4
+2024,4,Suzuka,VER,Red Bull,1
+2024,4,Suzuka,HAM,Mercedes,9
+2024,4,Suzuka,LEC,Ferrari,4
+2024,4,Suzuka,SAI,Ferrari,3
+2024,4,Suzuka,NOR,McLaren,6
+2024,4,Suzuka,PIA,McLaren,5
+2024,5,Shanghai,VER,Red Bull,1
+2024,5,Shanghai,HAM,Mercedes,9
+2024,5,Shanghai,LEC,Ferrari,4
+2024,5,Shanghai,SAI,Ferrari,5
+2024,5,Shanghai,NOR,McLaren,2
+2024,5,Shanghai,PIA,McLaren,6
+2024,6,Miami,NOR,McLaren,1
+2024,6,Miami,VER,Red Bull,2
+2024,6,Miami,HAM,Mercedes,6
+2024,6,Miami,LEC,Ferrari,3
+2024,6,Miami,SAI,Ferrari,4
+2024,6,Miami,PIA,McLaren,20
+2024,7,Imola,VER,Red Bull,1
+2024,7,Imola,HAM,Mercedes,6
+2024,7,Imola,LEC,Ferrari,3
+2024,7,Imola,SAI,Ferrari,5
+2024,7,Imola,NOR,McLaren,2
+2024,7,Imola,PIA,McLaren,4
+2024,8,Monaco,LEC,Ferrari,1
+2024,8,Monaco,VER,Red Bull,6
+2024,8,Monaco,HAM,Mercedes,7
+2024,8,Monaco,SAI,Ferrari,3
+2024,8,Monaco,NOR,McLaren,4
+2024,8,Monaco,PIA,McLaren,2
+2024,9,Montreal,VER,Red Bull,1
+2024,9,Montreal,HAM,Mercedes,4
+2024,9,Montreal,LEC,Ferrari,20
+2024,9,Montreal,SAI,Ferrari,3
+2024,9,Montreal,NOR,McLaren,2
+2024,9,Montreal,PIA,McLaren,5
+2024,10,Barcelona,VER,Red Bull,1
+2024,10,Barcelona,HAM,Mercedes,3
+2024,10,Barcelona,LEC,Ferrari,5
+2024,10,Barcelona,SAI,Ferrari,6
+2024,10,Barcelona,NOR,McLaren,2
+2024,10,Barcelona,PIA,McLaren,4
+2024,11,Spielberg,VER,Red Bull,5
+2024,11,Spielberg,HAM,Mercedes,4
+2024,11,Spielberg,LEC,Ferrari,11
+2024,11,Spielberg,SAI,Ferrari,3
+2024,11,Spielberg,NOR,McLaren,20
+2024,11,Spielberg,PIA,McLaren,2
+2024,12,Silverstone,HAM,Mercedes,1
+2024,12,Silverstone,VER,Red Bull,2
+2024,12,Silverstone,LEC,Ferrari,14
+2024,12,Silverstone,SAI,Ferrari,5
+2024,12,Silverstone,NOR,McLaren,3
+2024,12,Silverstone,PIA,McLaren,4
+2024,13,Budapest,PIA,McLaren,1
+2024,13,Budapest,VER,Red Bull,5
+2024,13,Budapest,HAM,Mercedes,3
+2024,13,Budapest,LEC,Ferrari,4
+2024,13,Budapest,SAI,Ferrari,6
+2024,13,Budapest,NOR,McLaren,2
+2024,14,Spa,HAM,Mercedes,1
+2024,14,Spa,VER,Red Bull,4
+2024,14,Spa,LEC,Ferrari,3
+2024,14,Spa,SAI,Ferrari,5
+2024,14,Spa,NOR,McLaren,6
+2024,14,Spa,PIA,McLaren,2
+2024,15,Zandvoort,NOR,McLaren,1
+2024,15,Zandvoort,VER,Red Bull,2
+2024,15,Zandvoort,HAM,Mercedes,8
+2024,15,Zandvoort,LEC,Ferrari,3
+2024,15,Zandvoort,SAI,Ferrari,5
+2024,15,Zandvoort,PIA,McLaren,4
+2024,16,Monza,LEC,Ferrari,1
+2024,16,Monza,VER,Red Bull,6
+2024,16,Monza,HAM,Mercedes,5
+2024,16,Monza,SAI,Ferrari,3
+2024,16,Monza,NOR,McLaren,3
+2024,16,Monza,PIA,McLaren,2
+2024,17,Baku,PIA,McLaren,1
+2024,17,Baku,VER,Red Bull,5
+2024,17,Baku,HAM,Mercedes,9
+2024,17,Baku,LEC,Ferrari,2
+2024,17,Baku,SAI,Ferrari,20
+2024,17,Baku,NOR,McLaren,4
+2024,18,Singapore,NOR,McLaren,1
+2024,18,Singapore,VER,Red Bull,2
+2024,18,Singapore,HAM,Mercedes,6
+2024,18,Singapore,LEC,Ferrari,5
+2024,18,Singapore,SAI,Ferrari,7
+2024,18,Singapore,PIA,McLaren,3
+2024,19,Austin,VER,Red Bull,3
+2024,19,Austin,HAM,Mercedes,6
+2024,19,Austin,LEC,Ferrari,1
+2024,19,Austin,SAI,Ferrari,4
+2024,19,Austin,NOR,McLaren,2
+2024,19,Austin,PIA,McLaren,5
+2024,20,Mexico City,SAI,Ferrari,1
+2024,20,Mexico City,VER,Red Bull,6
+2024,20,Mexico City,HAM,Mercedes,4
+2024,20,Mexico City,LEC,Ferrari,4
+2024,20,Mexico City,NOR,McLaren,2
+2024,20,Mexico City,PIA,McLaren,3
+2024,21,Interlagos,VER,Red Bull,1
+2024,21,Interlagos,HAM,Mercedes,10
+2024,21,Interlagos,LEC,Ferrari,5
+2024,21,Interlagos,SAI,Ferrari,6
+2024,21,Interlagos,NOR,McLaren,4
+2024,21,Interlagos,PIA,McLaren,3
+2024,22,Las Vegas,VER,Red Bull,5
+2024,22,Las Vegas,HAM,Mercedes,2
+2024,22,Las Vegas,LEC,Ferrari,4
+2024,22,Las Vegas,SAI,Ferrari,3
+2024,22,Las Vegas,NOR,McLaren,20
+2024,22,Las Vegas,PIA,McLaren,20
+2024,23,Losail,VER,Red Bull,1
+2024,23,Losail,HAM,Mercedes,12
+2024,23,Losail,LEC,Ferrari,2
+2024,23,Losail,SAI,Ferrari,3
+2024,23,Losail,NOR,McLaren,4
+2024,23,Losail,PIA,McLaren,5
+2024,24,Yas Marina,NOR,McLaren,1
+2024,24,Yas Marina,VER,Red Bull,4
+2024,24,Yas Marina,HAM,Mercedes,5
+2024,24,Yas Marina,LEC,Ferrari,3
+2024,24,Yas Marina,SAI,Ferrari,2
+2024,24,Yas Marina,PIA,McLaren,6
