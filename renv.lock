@@ -32,9 +32,9 @@
     "Version": "3.18"
   },
   "Python": {
-    "Version": "3.14.0",
+    "Version": "3.12.0",
     "Type": "virtualenv",
-    "Name": "./renv/python/virtualenvs/renv-python-3.14"
+    "Name": "./renv/python/virtualenvs/renv-python-3.12"
   },
   "Packages": {
     "BH": {
