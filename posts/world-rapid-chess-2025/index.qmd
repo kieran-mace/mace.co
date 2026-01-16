@@ -346,9 +346,9 @@ tie_stats <- results_r %>%
 
 In Swiss tournaments, ties are common. Across our simulations:
 
-- **`r sprintf("%.1f%%", tie_stats$\`Sole Winner\` * 100)`** of tournaments end with a sole winner
-- **`r sprintf("%.1f%%", tie_stats$\`2-Way Tie\` * 100)`** end in a 2-way tie
-- **`r sprintf("%.1f%%", tie_stats$\`3+ Way Tie\` * 100)`** end in a 3+ way tie
+- **`r sprintf("%.1f%%", tie_stats[["Sole Winner"]] * 100)`** of tournaments end with a sole winner
+- **`r sprintf("%.1f%%", tie_stats[["2-Way Tie"]] * 100)`** end in a 2-way tie
+- **`r sprintf("%.1f%%", tie_stats[["3+ Way Tie"]] * 100)`** end in a 3+ way tie
 
 # Caveats and Limitations
 
