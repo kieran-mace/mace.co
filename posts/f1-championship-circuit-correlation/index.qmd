@@ -43,7 +43,6 @@ This is the first time since 2010 that three drivers enter the final round with 
 library(tidyverse)
 library(scales)
 library(viridis)
-library(f1dataR)
 library(reticulate)
 
 # Set ggplot2 theme
@@ -204,63 +203,10 @@ We'll use 6 years of race results (2019-2024) to build our correlation matrix:
 ```{r}
 #| label: load-f1-data
 #| echo: true
-#| cache: true
 
-# Load race results for 2019-2024 seasons
-seasons <- 2019:2024
-
-# Function to load all race results for a season
-load_season_results <- function(season) {
-  # Get the schedule to know how many races
-  schedule <- tryCatch(
-    load_schedule(season),
-    error = function(e) NULL
-  )
-
-  # Return NULL if schedule couldn't be loaded
-
-  if (is.null(schedule) || nrow(schedule) == 0) {
-    return(NULL)
-  }
-
-  # Filter out non-race events
-  race_schedule <- schedule %>%
-    dplyr::filter(!is.na(round_number)) %>%
-    dplyr::filter(!grepl("Testing|Test", event_name, ignore.case = TRUE))
-
-  n_races <- nrow(race_schedule)
-  if (n_races == 0) return(NULL)
-
-  results_list <- list()
-
-  for (round in race_schedule$round_number) {
-    tryCatch({
-      result <- load_results(season = season, round = round)
-      if (!is.null(result) && nrow(result) > 0) {
-        result$season <- season
-        result$round <- round
-        # Get circuit name from schedule
-        circuit_info <- race_schedule %>%
-          dplyr::filter(round_number == round) %>%
-          dplyr::slice(1)
-        result$circuit <- circuit_info$circuit_short_name[1]
-        results_list[[length(results_list) + 1]] <- result
-      }
-    }, error = function(e) {
-      # Skip races with errors
-    })
-  }
-
-  if (length(results_list) > 0) {
-    bind_rows(results_list)
-  } else {
-    NULL
-  }
-}
-
-# Load all results
-all_results <- map(seasons, load_season_results) %>%
-  bind_rows()
+# Load cached race results (2019-2024)
+# Data originally sourced from f1dataR package
+all_results <- read_csv("f1_results_cache.csv", show_col_types = FALSE)
 
 # Preview the data
 cat(sprintf("Loaded %d race results across %d seasons\n",
@@ -766,7 +712,7 @@ Abu Dhabi awaits.
 
 This analysis uses:
 
-- **f1dataR** R package for accessing historical F1 race results (2019-2024)
+- **Historical F1 race results** (2019-2024) for circuit correlation analysis
 - **Data-driven circuit correlation** based on constructor performance patterns
 - **Python** for championship probability calculations
 - **R/ggplot2** for data visualization
