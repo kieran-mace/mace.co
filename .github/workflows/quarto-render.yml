@@ -1,0 +1,181 @@
+# Loop-proof Quarto Build Workflow
+#
+# This workflow renders the Quarto site and commits the output back to the
+# same branch. It prevents infinite loops through multiple mechanisms:
+#
+# 1. Actor guard: Skips if the commit was made by github-actions[bot]
+# 2. Path filters: Only triggers on Quarto source changes, NOT on _site/
+# 3. [skip ci] in commit message: Additional safety belt
+# 4. No-op detection: Only commits if there are actual changes
+#
+# Order of operations (from build-test.yml):
+# 1. Checkout
+# 2. Setup Python + install packages (BEFORE R/renv for reticulate)
+# 3. Set RETICULATE_PYTHON
+# 4. Setup R
+# 5. Setup renv
+# 6. Install Quarto
+# 7. Render
+# 8. Commit and push (if changes exist)
+
+name: Quarto Render and Commit
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      # Quarto configuration
+      - '_quarto.yml'
+      - '.quartoignore'
+      # Source content
+      - '*.qmd'
+      - '*.md'
+      - 'posts/**'
+      - 'images/**'
+      - 'assets/**'
+      # Styling and scripts
+      - '*.css'
+      - '*.scss'
+      - '*.js'
+      - 'styles/**'
+      # Dependencies that might affect output
+      - 'requirements.txt'
+      - 'renv.lock'
+      # Static assets that should be copied
+      - 'resume.pdf'
+    paths-ignore:
+      # Never trigger on output directory changes
+      - '_site/**'
+      # Ignore workflow file changes (prevent accidental loops)
+      - '.github/workflows/**'
+
+  workflow_dispatch:  # Allow manual triggering
+
+permissions:
+  contents: write  # Required to push commits
+
+jobs:
+  render-and-commit:
+    runs-on: ubuntu-latest
+
+    # PRIMARY LOOP GUARD: Skip if this commit was made by the bot
+    if: github.actor != 'github-actions[bot]'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Need write access to push commits back
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ============================================================
+      # PYTHON SETUP - Must come BEFORE R/renv
+      # ============================================================
+      # reticulate needs to know which Python to use before renv loads.
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure Python for reticulate
+        run: |
+          echo "RETICULATE_PYTHON=$(which python)" >> $GITHUB_ENV
+
+      # ============================================================
+      # R SETUP - After Python is configured
+      # ============================================================
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3'
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libcurl4-openssl-dev \
+            libssl-dev \
+            libxml2-dev \
+            libfontconfig1-dev \
+            libfreetype6-dev \
+            libpng-dev \
+            libtiff5-dev \
+            libjpeg-dev \
+            libharfbuzz-dev \
+            libfribidi-dev \
+            libgdal-dev \
+            libgeos-dev \
+            libproj-dev \
+            libudunits2-dev \
+            libmagick++-dev
+
+      - name: Set up renv
+        uses: r-lib/actions/setup-renv@v2
+
+      # ============================================================
+      # QUARTO SETUP AND RENDER
+      # ============================================================
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.4.553'
+
+      - name: Render Quarto site
+        run: quarto render
+
+      - name: Validate build output
+        run: |
+          if [ ! -d "_site" ]; then
+            echo "Error: _site directory not created"
+            exit 1
+          fi
+          if [ ! -f "_site/index.html" ]; then
+            echo "Error: index.html not created"
+            exit 1
+          fi
+          echo "Build successful!"
+
+      # ============================================================
+      # COMMIT AND PUSH (only if there are changes)
+      # ============================================================
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          # Stage all changes in the output directory
+          git add _site/
+
+          # Check if there are any staged changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit - output is identical"
+            exit 0
+          fi
+
+          # Count what changed for informative commit message
+          CHANGED_FILES=$(git diff --cached --name-only | wc -l)
+          echo "Committing ${CHANGED_FILES} changed files"
+
+          # Commit with [skip ci] to prevent triggering another workflow run
+          git commit -m "Build site [skip ci]
+
+          Rendered Quarto site from ${{ github.sha }}
+          Changed files: ${CHANGED_FILES}"
+
+          # Push to the same branch
+          git push origin ${{ github.ref_name }}
