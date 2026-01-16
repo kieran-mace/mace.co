@@ -2497,6 +2497,50 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
+    "f1dataR": {
+      "Package": "f1dataR",
+      "Version": "2.0.1",
+      "Source": "Repository",
+      "Title": "Access Formula 1 Data",
+      "Description": "Obtain Formula 1 data via the 'Jolpica API' <https://github.com/jolpica/jolpica-f1> and the unofficial API <https://www.formula1.com> via the 'fastf1' Python library <https://docs.fastf1.dev/>.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://scasanova.github.io/f1dataR/, https://github.com/SCasanova/f1dataR",
+      "BugReports": "https://github.com/SCasanova/f1dataR/issues",
+      "Depends": [
+        "R (>= 3.5.0)",
+        "reticulate (>= 1.14)"
+      ],
+      "Imports": [
+        "glue",
+        "magrittr",
+        "tibble",
+        "jsonlite",
+        "httr2",
+        "memoise",
+        "janitor",
+        "dplyr",
+        "tidyr",
+        "rlang",
+        "lifecycle",
+        "cli",
+        "rappdirs",
+        "cachem",
+        "withr"
+      ],
+      "Suggests": [
+        "ggplot2",
+        "httptest2",
+        "knitr",
+        "rmarkdown",
+        "testthat (>= 3.0.0)"
+      ],
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "NeedsCompilation": "no",
+      "Author": "Santiago Casanova [aut, cre, cph], Philip Bulsink [aut]",
+      "Maintainer": "Santiago Casanova <santiago.casanova@yahoo.com>",
+      "Repository": "CRAN"
+    },
     "farver": {
       "Package": "farver",
       "Version": "2.1.2",
@@ -3495,6 +3539,58 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
+    "httr2": {
+      "Package": "httr2",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Title": "Perform HTTP Requests and Process the Responses",
+      "Description": "Tools for creating and modifying HTTP requests, then performing them and processing the results. 'httr2' is a modern re-imagining of 'httr' that uses a pipe-based interface and solves more of the problems that API wrapping packages face.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://httr2.r-lib.org, https://github.com/r-lib/httr2",
+      "BugReports": "https://github.com/r-lib/httr2/issues",
+      "Depends": [
+        "R (>= 4.1)"
+      ],
+      "Imports": [
+        "cli (>= 3.0.0)",
+        "curl (>= 6.4.0)",
+        "glue",
+        "lifecycle",
+        "magrittr",
+        "openssl",
+        "R6",
+        "rappdirs",
+        "rlang (>= 1.1.0)",
+        "vctrs (>= 0.6.3)",
+        "withr"
+      ],
+      "Suggests": [
+        "askpass",
+        "bench",
+        "clipr",
+        "covr",
+        "docopt",
+        "httpuv",
+        "jose",
+        "jsonlite",
+        "knitr",
+        "later (>= 1.4.0)",
+        "nanonext",
+        "paws.common",
+        "promises",
+        "rmarkdown",
+        "testthat (>= 3.1.8)",
+        "tibble",
+        "webfakes (>= 1.4.0)",
+        "xml2"
+      ],
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "NeedsCompilation": "no",
+      "Author": "Hadley Wickham [aut, cre], Posit Software, PBC [cph, fnd]",
+      "Maintainer": "Hadley Wickham <hadley@posit.co>",
+      "Repository": "CRAN"
+    },
     "ids": {
       "Package": "ids",
       "Version": "1.0.1",
@@ -3598,6 +3694,49 @@
       "NeedsCompilation": "no",
       "Author": "Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>), Joe Cheng [aut], RStudio [cph], jQuery Foundation [cph] (jQuery library and jQuery UI library), jQuery contributors [ctb, cph] (jQuery library; authors listed in inst/lib/jquery-AUTHORS.txt)",
       "Maintainer": "Carson Sievert <carson@rstudio.com>",
+      "Repository": "CRAN"
+    },
+    "janitor": {
+      "Package": "janitor",
+      "Version": "2.2.1",
+      "Source": "Repository",
+      "Title": "Simple Tools for Examining and Cleaning Dirty Data",
+      "Description": "The main janitor functions can: perfectly format data.frame column names; provide quick counts of variable combinations (i.e., frequency tables and crosstabs); and explore duplicate records. Other janitor functions nicely format the tabulation results. These tabulate-and-report functions approximate popular features of SPSS and Microsoft Excel. This package follows the principles of the 'tidyverse' and works well with the pipe function %>%. janitor was built with beginning-to-intermediate R users in mind and is optimized for user-friendliness.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://github.com/sfirke/janitor, https://sfirke.github.io/janitor/",
+      "BugReports": "https://github.com/sfirke/janitor/issues",
+      "Depends": [
+        "R (>= 3.1.2)"
+      ],
+      "Imports": [
+        "dplyr (>= 1.0.0)",
+        "hms",
+        "lifecycle",
+        "lubridate",
+        "magrittr",
+        "purrr",
+        "rlang",
+        "stringi",
+        "stringr",
+        "snakecase (>= 0.9.2)",
+        "tidyselect (>= 1.0.0)",
+        "tidyr (>= 0.7.0)"
+      ],
+      "Suggests": [
+        "dbplyr",
+        "knitr",
+        "rmarkdown",
+        "RSQLite",
+        "sf",
+        "testthat (>= 3.0.0)",
+        "tibble",
+        "tidygraph"
+      ],
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "NeedsCompilation": "no",
+      "Author": "Sam Firke [aut, cre], Bill Denney [ctb], Chris Haid [ctb], Ryan Knight [ctb], Malte Grosser [ctb], Jonathan Zadra [ctb]",
+      "Maintainer": "Sam Firke <samuel.firke@gmail.com>",
       "Repository": "CRAN"
     },
     "jsonlite": {
@@ -5923,6 +6062,37 @@
       "License": "GPL-2 | GPL-3",
       "NeedsCompilation": "yes",
       "Author": "Gordon Smyth [cre, aut], Lizhong Chen [aut], Yifang Hu [ctb], Peter Dunn [ctb], Belinda Phipson [ctb], Yunshun Chen [ctb]",
+      "Repository": "CRAN"
+    },
+    "snakecase": {
+      "Package": "snakecase",
+      "Version": "0.11.1",
+      "Source": "Repository",
+      "Title": "Convert Strings into any Case",
+      "Description": "A consistent, flexible and easy to use tool to parse and convert strings into cases like snake or camel among others.",
+      "License": "GPL-3",
+      "URL": "https://github.com/Tazinho/snakecase",
+      "BugReports": "https://github.com/Tazinho/snakecase/issues",
+      "Depends": [
+        "R (>= 3.2)"
+      ],
+      "Imports": [
+        "stringr",
+        "stringi"
+      ],
+      "Suggests": [
+        "testthat",
+        "covr",
+        "tibble",
+        "purrrlyr",
+        "knitr",
+        "rmarkdown",
+        "magrittr"
+      ],
+      "Encoding": "UTF-8",
+      "NeedsCompilation": "no",
+      "Author": "Malte Grosser [aut, cre]",
+      "Maintainer": "Malte Grosser <malte.grosser@gmail.com>",
       "Repository": "CRAN"
     },
     "stringi": {
