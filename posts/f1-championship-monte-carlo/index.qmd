@@ -1,5 +1,5 @@
 ---
-title: "Can Lando Norris Still Win the 2024 F1 Championship?"
+title: "Can Lando Norris Still Win the 2025 F1 Championship?"
 subtitle: "A Monte Carlo Exploration of Championship Probabilities"
 author: "Kieran Mace"
 date: "2025-11-23"
@@ -20,7 +20,7 @@ execute:
 
 # Introduction
 
-The 2024 Formula 1 Drivers Championship took a dramatic turn after both **Lando Norris** and **Oscar Piastri** were disqualified from the Las Vegas Grand Prix for skid-block violations. With only two rounds remaining (Qatar Sprint + Qatar GP + Abu Dhabi GP), the standings tightened considerably:
+The 2025 Formula 1 Drivers Championship took a dramatic turn after both **Lando Norris** and **Oscar Piastri** were disqualified from the Las Vegas Grand Prix for skid-block violations. With only two rounds remaining (Qatar Sprint + Qatar GP + Abu Dhabi GP), the standings tightened considerably:
 
 :::{.callout-note appearance="simple"}
 ## Current Championship Standings
@@ -415,4 +415,4 @@ All code is available in this document via the "Code" buttons.
 
 ---
 
-*Analysis current as of Las Vegas GP, November 2024. Actual 2024 F1 championship standings may differ from this hypothetical scenario.*
+*Analysis current as of Las Vegas GP, November 2025. Actual 2025 F1 championship standings may differ from this hypothetical scenario.*
