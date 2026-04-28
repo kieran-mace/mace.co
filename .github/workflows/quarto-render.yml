@@ -44,11 +44,9 @@ on:
       - 'renv.lock'
       # Static assets that should be copied
       - 'resume.pdf'
-    paths-ignore:
-      # Never trigger on output directory changes
-      - '_site/**'
-      # Ignore workflow file changes (prevent accidental loops)
-      - '.github/workflows/**'
+    # Note: paths and paths-ignore can't be combined under the same trigger,
+    # so _site/** and .github/workflows/** are excluded by being absent from
+    # the paths list above. The actor guard below handles the loop case.
 
   workflow_dispatch:  # Allow manual triggering
 
