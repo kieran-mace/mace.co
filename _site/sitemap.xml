@@ -1,47 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/posts.html</loc>
-    <lastmod>2025-08-18T16:30:05.381Z</lastmod>
-  </url>
-  <url>
     <loc>/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.381Z</lastmod>
+    <lastmod>2026-04-28T20:47:18.991Z</lastmod>
   </url>
   <url>
-    <loc>/posts/africa-gdp/index.html</loc>
-    <lastmod>2025-12-01T04:29:17.838Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/firearm-storage/firearm-storage-analysis.html</loc>
-    <lastmod>2025-11-25T13:56:40.682Z</lastmod>
+    <loc>/posts/zsa-voyager-apt-layout/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.112Z</lastmod>
   </url>
   <url>
     <loc>/posts/war-card-game/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.449Z</lastmod>
+    <lastmod>2026-04-28T20:47:19.096Z</lastmod>
   </url>
   <url>
-    <loc>/posts/exploring-homoscedasticity/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.390Z</lastmod>
+    <loc>/posts/boston-chicago-weather/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.004Z</lastmod>
   </url>
   <url>
     <loc>/posts/ncaa-predictions/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.390Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/mandelbrot/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.390Z</lastmod>
-  </url>
-  <url>
-    <loc>/posts/f1-championship-monte-carlo/index.html</loc>
-    <lastmod>2025-12-01T04:16:41.826Z</lastmod>
+    <lastmod>2026-04-28T20:47:19.012Z</lastmod>
   </url>
   <url>
     <loc>/posts/uscis-ead/index.html</loc>
-    <lastmod>2025-08-18T16:30:05.446Z</lastmod>
+    <lastmod>2026-04-28T20:47:19.093Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/firearm-storage/firearm-storage-analysis.html</loc>
+    <lastmod>2026-04-28T20:47:19.011Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts.html</loc>
+    <lastmod>2026-04-28T20:47:18.991Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/f1-championship-circuit-correlation/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.006Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/africa-gdp/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.004Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/f1-championship-monte-carlo/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.006Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/exploring-homoscedasticity/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.005Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/mandelbrot/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.012Z</lastmod>
+  </url>
+  <url>
+    <loc>/posts/world-rapid-chess-2025/index.html</loc>
+    <lastmod>2026-04-28T20:47:19.111Z</lastmod>
   </url>
   <url>
     <loc>/about.html</loc>
-    <lastmod>2025-08-18T16:30:05.380Z</lastmod>
+    <lastmod>2026-04-28T20:47:18.991Z</lastmod>
   </url>
 </urlset>

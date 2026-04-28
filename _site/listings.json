@@ -1,7 +1,11 @@
 [
   {
-    "listing": "/posts.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/boston-chicago-weather/index.html",
+      "/posts/world-rapid-chess-2025/index.html",
+      "/posts/zsa-voyager-apt-layout/index.html",
+      "/posts/f1-championship-circuit-correlation/index.html",
       "/posts/f1-championship-monte-carlo/index.html",
       "/posts/firearm-storage/firearm-storage-analysis.html",
       "/posts/mandelbrot/index.html",
@@ -13,8 +17,12 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/posts.html",
     "items": [
+      "/posts/boston-chicago-weather/index.html",
+      "/posts/world-rapid-chess-2025/index.html",
+      "/posts/zsa-voyager-apt-layout/index.html",
+      "/posts/f1-championship-circuit-correlation/index.html",
       "/posts/f1-championship-monte-carlo/index.html",
       "/posts/firearm-storage/firearm-storage-analysis.html",
       "/posts/mandelbrot/index.html",
